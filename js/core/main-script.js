@@ -27,11 +27,11 @@ function setupGlobalKeyListener(){
     
     addEventListener('keydown', e => {
         /** The e.preventDefault to if(isTyping) means:
-    Arrow keys:
-        Enter, Numbers, Letters
-    Without this guard, your keyboard system will:
+            Arrow keys:
+            Enter, Numbers, Letters
+        Without this guard, your keyboard system will:
         hijack typing inside inputs,break future search boxes,make textareas unusable
-        && cause “why is arrow left changing focus instead of moving my cursor?” bugs*/
+        bugs*/
         if (e.defaultPrevented) return
         const tag = e.target.tagName
         const isTyping =

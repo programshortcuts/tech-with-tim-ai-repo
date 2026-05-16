@@ -203,7 +203,7 @@ export function stepNav({ e, navState }) {
         const intLet = parseInt(key)
         iSteps = steps[intLet - 1]
         if (intLet >= steps.length) iSteps = steps.length - 1
-
+        if(!steps) return
         steps[intLet - 1].focus()
         return true
     }
