@@ -1,0 +1,69 @@
+<!-- home-page.html -->
+    <div id="targetDivInjected">
+        <header class="header-colorCode-lesson">
+            <h3 id="lessonTitle">Javascript Inheritance</h3>
+            <h4>home page</h4>
+        </header>
+        <div class="main-container-colorCode">
+            <div class="steps-container">
+                
+                <div tabindex="0" class="step-float">
+                    <div   class="step-img">
+                        <!-- <img src="images/01.png" alt=""> -->
+                        <!-- <img src="images/01.png" alt=""> -->
+                         <p>put image here or so and whats</p>
+                    </div>
+                    <div class="step-txt">
+                        <!-- <h4>01</h4> -->
+                        <p>
+                            This Page covers
+                        </p>
+                        <h5>Inheritance</h5>
+                        <ul>
+                            <li>(...i forgot), then </li>
+                            <li>classe inheritance thing i forgot</li>
+                            <li>and something else </li>
+
+                        </ul>
+                        <p>
+                            Here is example code to fix format of
+                        </p>
+                        <div class="code-container txt85">
+                            <pre class="copy-code">
+class Dog {
+    bark(){
+        return 'barking'
+    }
+}
+const fido = new Dog()
+fido</pre>
+                        </div>
+                        <ul>
+                            <li>fido doesn't have a bark method directly on it.</li>
+                            <li>Instead, fido.__proto__ (or Object.getPrototypeOf(fido)) points to
+                                    Dog.prototype, where bark lives.</li>
+                            <li>So fido.bark() works because JavaScript looks up the prototype chain and finds it there.
+                            </li>
+                        </ul>
+                        <p>
+                            ⛓️ Think of It Like a Chain
+                            When you call a method on an object:
+                        </p>
+                        <ul>
+                            <li>JS looks on the object itself.</li>
+                            <li>If it doesn't find it, it goes to the object's prototype.</li>
+                            <li>If still not found, it keeps going up the chain until it hits null.</li>
+                        </ul>
+                        <p>
+                            So you're not seeing methods directly on instances because they're not there — they're on the prototype.
+
+                        </p>
+                
+                    </div>
+                    <p>
+                        We use promises when we need to wait for information or data
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
