@@ -1,15 +1,5 @@
 /* toggle-img-sizes.css */
-.step-img img.enlarge {
-    position: fixed;
-    transform: scale(1.02);
-    top: 30%;
-    min-width: 200px;
-    min-height: 150px;
-    /* max-width: 300px ; */
-    /* max-height: 300px ; */
-    right: 0;
-    transition: all .3s;
-}
+
 .imgs-container img.enlarge {
     position: fixed !important;
     min-width: 200px;
@@ -30,11 +20,9 @@ video.enlarge-vid {
     min-width: 250px;
     right: 20%;
 }
-
 .imgs-container {
     display: flex;
 }
-
 .imgs-container .step-img {
     width: 50%;
     display: flex;
@@ -46,3 +34,22 @@ video.enlarge-vid {
     width: 100%;
 }
 
+
+.step-img {
+    position: relative;
+}
+
+.step-img img.enlarge {
+    position: fixed;
+    /* transform: scale(1.02); */
+    /* top: 30%; */
+    min-width: 200px;
+    min-height: 150px;
+    /* max-width: 300px ; */
+    /* max-height: 300px ; */
+    right: 0;
+
+    transition: all .3s;
+    z-index: 999;
+    border: 1px solid magenta;
+}

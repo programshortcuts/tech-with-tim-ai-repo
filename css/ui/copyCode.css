@@ -9,7 +9,7 @@
     box-shadow: 0 0 3px 2px whitesmoke;
     background-color: whitesmoke;
     color:black;
-    z-index: 100;
+    z-index: 2;
     transform: scale(1.09);
     transition: all .8s;
 }

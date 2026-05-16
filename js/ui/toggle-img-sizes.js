@@ -16,7 +16,7 @@ function resetImageState(){
     allImgs.forEach(img => {
         img.addEventListener('click', e => {
             e.preventDefault()
-            console.log(e.target)
+            toggleImgSize(img)
             
             return
         });
@@ -26,7 +26,6 @@ function resetImageState(){
 // --- Image handling ---
 export function handleClickImgSizes({ e }) {
     if(e.target.tagName === 'IMG'){
-        console.log('here')
         toggleImgSize(e.target)
     }
 
@@ -61,7 +60,7 @@ export function handleImgSizes({ e }) {
 }
 function toggleImgSize(img){
     img.classList.toggle("enlarge");
-    img.style.zIndex = img.classList.contains("enlarge") ? 100 : 0;
+    // img.style.zIndex = img.classList.contains("enlarge") ? 100 : 0;
 }
 // --- Utility ---
 export function denlargeAllImages() {

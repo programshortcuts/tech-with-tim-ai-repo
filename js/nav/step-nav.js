@@ -72,12 +72,13 @@ export function updateSteps(){
         });
         el.addEventListener('keydown', e => {
             const key = e.key.toLowerCase()
+            const step = e.target.closest('.step-float')
             if(e.shiftKey && key === 'enter'){
-                const step = e.target.closest('.step-float')
                 step.focus()
                 return
             }
             if(key === 'enter' && !e.shiftKey){
+                console.log(e.target)
                 handleImgSizes({e})
                 const el = e.target
             }
@@ -118,8 +119,9 @@ export function updateSteps(){
             const step = e.target.closest('.step-float')
             if(!step.classList.contains('step-float')) return
             if(key === 'enter' && !step.querySelector('.copy-code')){
+                scrollToCenter({ el })
                 handleImgSizes({e})
-                
+                return
             }
             if (e.shiftKey && key === 'enter') {
                 const el = e.target
@@ -194,7 +196,7 @@ export function stepNav({ e, navState }) {
             step?.classList.add('step-clicked')
         }
         iCopyCodes = handleStepClickedNav({ e, iCopyCodes })
-        // handleStepClickedNav({ e })
+        handleStepClickedNav({ e })
         return true
     }
     if (!isNaN(key)) {

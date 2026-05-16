@@ -80,7 +80,6 @@ function routeKey({ e }) {
         if (isHandled )return
     }
     if (zone === 'mainTargetDiv') {
-        console.log('here')
         const isHandled = stepNav({e,navState})
         if (isHandled )return
     }
