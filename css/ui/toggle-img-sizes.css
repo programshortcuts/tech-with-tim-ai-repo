@@ -39,17 +39,21 @@ video.enlarge-vid {
     position: relative;
 }
 
+.step-img img{
+    /* z-index: 0 !important; */
+}
 .step-img img.enlarge {
-    position: fixed;
-    /* transform: scale(1.02); */
+    position: absolute !important;
+    transform: scale(2);
     /* top: 30%; */
+    right: 5%;
     min-width: 200px;
     min-height: 150px;
     /* max-width: 300px ; */
     /* max-height: 300px ; */
     right: 0;
 
-    transition: all .3s;
-    z-index: 999;
+    transition: all .23s;
+    /* z-index: 101 !important; */
     border: 1px solid magenta;
 }

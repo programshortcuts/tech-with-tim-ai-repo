@@ -74,7 +74,7 @@ export function updateSteps(){
             const key = e.key.toLowerCase()
             const step = e.target.closest('.step-float')
             if(e.shiftKey && key === 'enter'){
-                step.focus()
+                // step.focus()
                 return
             }
             if(key === 'enter' && !e.shiftKey){

@@ -66,6 +66,6 @@ function toggleImgSize(img){
 export function denlargeAllImages() {
     allImgs.forEach(img => {
         if (img.classList.contains('enlarge')) img.classList.remove("enlarge");
-        img.style.zIndex = 0;
+        // img.style.zIndex = 0;
     });
 }

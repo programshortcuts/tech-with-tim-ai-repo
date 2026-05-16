@@ -91,7 +91,7 @@
     color: white;
     /* position: relative; */
     /* ADD THIS */
-    z-index: 5;
+    z-index: 999 !important;
     background-color: var(--bg-primary);
     /* padding: 1.5% 5% 2% 1.2%; */
 }
