@@ -8,19 +8,19 @@ main > .side-bar {
 .side-bar > .side-bar-links-container{
     margin-top: 10%;
 }
-.side-bar-links-container ul {
+.side-bar-links-container > ul {
     margin-top: 4%;
     margin-left: 5%;
-    li {
-        margin-top: 2%;
-        margin-bottom: 10%;
-    }
+}
+.side-bar-links-container > ul li {
+    margin-top: 2%;
+    margin-bottom: 10%;
 }
 .main-container-colorCode{
     padding-top: 2%;
     padding-left: 3%;
-    padding-bottom: 50%;
-        margin-bottom: 50%;
+    padding-bottom: 80%;
+        margin-bottom: 80%;
 
 }
 .step-float {

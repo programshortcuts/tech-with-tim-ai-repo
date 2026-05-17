@@ -112,6 +112,7 @@ export function updateSteps(){
                 stepClicked = true
                 handleImgSizes({e})
                 handleStepClickedNav({e})
+                changeTutorialLink(e)
             }
             // if(key === 'enter' && !step.querySelector('.copy-code')){
             //     scrollToCenter({ el })

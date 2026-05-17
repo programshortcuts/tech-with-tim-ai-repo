@@ -1,23 +1,11 @@
 /* zIndex.css */
-.copy-code {
-    position: relative;
-    z-index: 50 yy \
-    
-}
+
 .page-header,
 .tutorial-link-img-container {
     z-index: 10
 }
-.imgs-container img.enlarge {
-    /* z-index: 6; */
-}
-.step-float{
-    z-index: 4;
-}
-.step-img,
-.step-img img {
-    /* z-index: 5; */
-}
+
+
 
 .page-wrapper>nav.nav-lesson-title {
     /* z-index: 2 */
@@ -33,3 +21,19 @@
 }
 
 
+.step-img{
+    /* position: relative; */
+}
+.step-img img {
+    /* position: absolute; */
+    z-index: 600;
+}
+
+.step-float {
+    z-index: 1;
+}
+
+.copy-code {
+    position: relative;
+    z-index: 2;
+}

@@ -40,7 +40,7 @@ video.enlarge-vid {
 }
 
 .step-img img{
-    /* z-index: 0 !important; */
+    z-index: 0;
 }
 .step-img video{
     width: 50%;
@@ -56,7 +56,7 @@ video.enlarge-vid {
     max-width: 300px ;
     max-height: 300px ;
     right: 0;
-
+    z-index: 9999 !important;
     transition: all .23s;
     /* z-index: 101 !important; */
 }
