@@ -1,7 +1,7 @@
 // main-script.js
 export const pageWrapper = document.querySelector('.page-wrapper') 
-import { navLessonTitle } from "../nav/nav-lesson-title-nav.js";
 export const mainContainer = document.querySelector('.main-container')
+import { navLessonTitle } from "../nav/nav-lesson-title-nav.js";
 import { getFocusZone } from "../nav/get-focus-zone.js";
 import { initDarkMode } from "../dark-mode.js";
 import { keyboardNav } from "../nav/keyboard-nav.js";
@@ -14,24 +14,23 @@ import { refreshImages,handleImgSizes,denlargeAllImages } from "../ui/toggle-img
 // No feature enters main - script unless it can survive a rewrite. !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 document.addEventListener('DOMContentLoaded', initMain)
 function initMain(){
-    initStepNav()
+    
     initCopyCode()
     initSideBarListeners()
     initInjectContentListeners()
     initToggleSideBar()
     initDarkMode()
     setupGlobalKeyListener()
-    refreshImages()
+
+    // refreshImages()
+//  Img and Video handling is in HERE StepNav -----------
+    initStepNav() // 
+// ------------
 }
 function setupGlobalKeyListener(){
     
     addEventListener('keydown', e => {
-        /** The e.preventDefault to if(isTyping) means:
-            Arrow keys:
-            Enter, Numbers, Letters
-        Without this guard, your keyboard system will:
-        hijack typing inside inputs,break future search boxes,make textareas unusable
-        bugs*/
+        /** The e.preventDefault to if(isTyping) means: prevents bugs*/
         if (e.defaultPrevented) return
         const tag = e.target.tagName
         const isTyping =

@@ -10,13 +10,13 @@ import { popupLetterNav } from "../ui/popups.js"
 import { letterNav } from "./letter-nav.js"
 import { sideBarNav } from "./sidebar-nav.js"
 import { handleNavLessonTitle } from "./nav-lesson-title-nav.js"
-import { stepNav } from "./step-nav.js"
+
 import { getLastStep } from "./step-nav.js"
 import { mainTargetDiv } from "../core/inject-content.js"
 import { getLastCLICKEDLink, getLastFocusedLink } from "./sidebar-state.js"
 import { sideBar, sideBarBtn } from "../ui/toggle-sidebar.js"
-import { scrollToCenter } from "./step-nav.js"
-// import {navTi}
+// i think Img and Video handling is in stepNav
+import { stepNav,scrollToCenter } from "./step-nav.js"
 export const navState = {
     zone: null,
     isLetterNavEnabled: false
@@ -24,7 +24,7 @@ export const navState = {
 export function keyboardNav({e}){
     navState.zone = getFocusZone({ e })
     if (!navState.zone) return
-    // if
+    // Navigation Mode
     if (e.key === 'x' && e.shiftKey && e.metaKey) {
         navState.isLetterNavEnabled = !navState.isLetterNavEnabled
         popupLetterNav.innerText = `letter navigation : ${navState.isLetterNavEnabled}`

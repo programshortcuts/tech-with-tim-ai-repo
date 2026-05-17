@@ -128,4 +128,15 @@ export async function injectFromHref(href) {
     } catch (err) {
         mainTargetDiv.innerHTML = `<p>Failed to load content.</p>`
     }
+    const autoFocusEl = mainTargetDiv.querySelector('[data-auto-focus]');
+
+    if (autoFocusEl) {
+        requestAnimationFrame(() => {
+            autoFocusEl.focus();
+            autoFocusEl.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        });
+    }
 }

@@ -33,13 +33,12 @@ export function handleStepClickedNav({ e, iCopyCodes }) {
             step?.focus()
         }
         if (key === 't') {
-            console.log(tutorialLink)
             tutorialLink?.focus()
             return
         }
 
         if (key === 'enter') {
-
+            console.log('here')
             if (!step) return
             if(e.shiftKey){
                 const el = e.target

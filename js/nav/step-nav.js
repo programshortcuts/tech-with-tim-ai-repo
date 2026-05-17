@@ -2,7 +2,7 @@
 import { sideBarAs } from "../nav/sidebar-nav.js"
 import { getLastCLICKEDLink } from "./sidebar-state.js"
 import { mainTargetDiv } from "../core/inject-content.js"
-import { handleImgSizes,denlargeAllImages } from "../ui/toggle-img-sizes.js"
+import { handleImgSizes, denlargeAllImages } from "../ui/toggle-img-sizes.js"
 import { changeTutorialLink } from "../ui/change-tutorial-link.js"
 import { handleStepClickedNav, } from "./step-clicked-nav.js"
 import { refreshImages } from "../ui/toggle-img-sizes.js";
@@ -71,17 +71,7 @@ export function updateSteps(){
             denlargeAllImages(allImgs)
         });
         el.addEventListener('keydown', e => {
-            const key = e.key.toLowerCase()
-            const step = e.target.closest('.step-float')
-            if(e.shiftKey && key === 'enter'){
-                // step.focus()
-                return
-            }
-            if(key === 'enter' && !e.shiftKey){
-                console.log(e.target)
-                handleImgSizes({e})
-                const el = e.target
-            }
+            // handleImgSizes({e})
             
         });
     })
@@ -118,28 +108,33 @@ export function updateSteps(){
             let key = e.key.toLowerCase()
             const step = e.target.closest('.step-float')
             if(!step.classList.contains('step-float')) return
-            if(key === 'enter' && !step.querySelector('.copy-code')){
-                scrollToCenter({ el })
+            if(key === 'enter'){
+                stepClicked = true
                 handleImgSizes({e})
-                return
+                handleStepClickedNav({e})
             }
-            if (e.shiftKey && key === 'enter') {
-                const el = e.target
-                scrollToCenter({el})
-                handleImgSizes({ e })
-                return
-            }
-            if (!e.shiftKey && key === 'enter') {
-                const imgsContainer = step.querySelector('.imgs-container')
+            // if(key === 'enter' && !step.querySelector('.copy-code')){
+            //     scrollToCenter({ el })
+            //     handleImgSizes({e})
+            //     return
+            // }
+            // if (e.shiftKey && key === 'enter') {
+            //     const el = e.target
+            //     scrollToCenter({el})
+            //     handleImgSizes({ e })
+            //     return
+            // }
+            // if (!e.shiftKey && key === 'enter') {
+            //     const imgsContainer = step.querySelector('.imgs-container')
 
-                if (!imgsContainer) {
-                    stepClicked = true
-                }
-                let smooth = true
-                // handleStepClickedNav({e})
-                if(!step.classList.contains('step-float')) return
-                changeTutorialLink(e)
-            }
+            //     if (!imgsContainer) {
+            //         stepClicked = true
+            //     }
+            //     let smooth = true
+            //     // handleStepClickedNav({e})
+            //     if(!step.classList.contains('step-float')) return
+            //     changeTutorialLink(e)
+            // }
             if(key === 'm'){
                 denlargeAllImages()
                 mainTargetDiv.scrollTo(0,0)
@@ -196,14 +191,14 @@ export function stepNav({ e, navState }) {
             step?.classList.add('step-clicked')
         }
         iCopyCodes = handleStepClickedNav({ e, iCopyCodes })
-        handleStepClickedNav({ e })
+        // handleStepClickedNav({ e }) Don't run this it runs when initialized in declaration above
         return true
     }
     if (!isNaN(key)) {
         const intLet = parseInt(key)
         iSteps = steps[intLet - 1]
         if (intLet >= steps.length) iSteps = steps.length - 1
-        if(!steps) return
+        if(!steps[intLet - 1]) return
         steps[intLet - 1].focus()
         return true
     }

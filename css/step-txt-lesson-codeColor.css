@@ -1,6 +1,8 @@
 /* step-txt-lesson-codeColor.css */
+
 .mainTargetDiv:active,.mainTargetDiv:focus {
     outline: none;
+
 }
 .min-half {
     min-width: 50px !important;
