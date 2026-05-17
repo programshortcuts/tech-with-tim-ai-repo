@@ -9,8 +9,10 @@ export function refreshImages(root = mainTargetDiv){
 }
 export function handleImgSizes({e}){
     const step = e.target.closest('.step-float')
+    console.log(e.target)
     if(e.type === 'click'){
-        console.log('click')
+        // this wont work here
+        // toggleImgSize(step)            
         return
     }
 
@@ -25,13 +27,14 @@ export function handleImgSizes({e}){
     }
     
 }
-function toggleImgSize(step) {
+export function toggleImgSize(step) {
     const imgsContainer = step.querySelector('.imgs-container')
     if(imgsContainer){
         const imgs = imgsContainer.querySelectorAll('.step-img,.step-vid')
         console.log(imgs)
         return
     }
+
     const stepImgVid = step.querySelector('.step-img') ?
         step.querySelector('.step-img') :
         step.querySelector('.step-vid')
