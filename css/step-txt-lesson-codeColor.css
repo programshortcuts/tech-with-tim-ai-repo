@@ -4,9 +4,7 @@
     outline: none;
 
 }
-.min-half {
-    min-width: 50px !important;
-}
+
 .header-codeColor-lesson {
     padding-left: 2.5%;
 }
@@ -21,41 +19,17 @@
 }
 
 /* .step, */
-.step-float:focus,.step-float:focus{
+.step-float:focus{
     z-index: 100;
 }
 .step-float{
     position: relative;
     padding-bottom: 5%;
 }
-.step-img,
-.step-vid {
-    float: right;
-    width: 45%;
-    margin-top: 5%;
-    /* Adjust as needed */
-    margin-right: 5%;
-    margin-left: 10px;
-    /* z-index: 0; */
-    /* Optional: adds space between console and text */
-}
-
-.step-img>img,
-.step-vid>video {
-    position: relative;
-    width: 98%;
-    border: 1px solid white;
-    max-width: 500px;
-    z-index: 0;
-    transition: all 0.025s ease;
-}
-
-
 .step:active,.step:focus, 
 .step-float:active,.step-float:focus{
     /* font-style: bold; */
 }
-
 .step > .step-txt{
     padding: 1%;
 }
@@ -100,8 +74,36 @@
 .clear {
     clear: both;
 }
-
+.step-img,
+.step-vid {
+    float: right;
+    width: 45%;
+    margin-top: 5%;
+    /* Adjust as needed */
+    margin-right: 5%;
+    margin-left: 10px;
+    /* z-index: 0; */
+    /* Optional: adds space between console and text */
+}
 .step-float>.step-vid>video  {
     z-index: 0;
 }
 
+.step-img>img,
+.step-vid>video {
+    position: relative;
+    width: 98%;
+    border: 1px solid white;
+    
+    z-index: 0;
+    transition: all 0.025s ease;
+}
+
+.step-vid{
+    height: fit-content;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+.step-vid>video {
+    max-height: 28vh;
+}

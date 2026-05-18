@@ -1,15 +1,16 @@
 // import { denlargeAllImages } from "./toggle-img-sizesOG"
+let iImg = 0
 let allStepImgs = []
 let allStepVids = []
 // toggle-img-sizes.js
 export function refreshImages(root = mainTargetDiv){
-    allStepImgs = root.querySelectorAll('.step-.step-img > img, .step-imgs > vid')
-    allStepVids = root.querySelectorAll('.step-.step-img > img, .step-imgs > vid')
+    allStepImgs = root.querySelectorAll('.step-img , .step-vid')
+    allStepVids = root.querySelectorAll('.step-img , .step-vid')
     // resetImageState()
 }
 export function handleImgSizes({e}){
     const step = e.target.closest('.step-float')
-    console.log(e.target)
+    
     if(e.type === 'click'){
         // this wont work here
         // toggleImgSize(step)            
@@ -31,16 +32,17 @@ export function toggleImgSize(step) {
     const imgsContainer = step.querySelector('.imgs-container')
     if(imgsContainer){
         const imgs = imgsContainer.querySelectorAll('.step-img,.step-vid')
-        console.log(imgs)
+        
+        toggleImgSize(imgs[iImg])
+        iImg += 1
         return
     }
 
     const stepImgVid = step.querySelector('.step-img') ?
         step.querySelector('.step-img') :
         step.querySelector('.step-vid')
-
+    if(!stepImgVid) return
     stepImgVid.classList.toggle("enlarge");
-    // img.style.zIndex = img.classList.contains("enlarge") ? 100 : 0;
 } 
 export function denlargeAllImages(){
     allStepImgs.forEach(el => {
