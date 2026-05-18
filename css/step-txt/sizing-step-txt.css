@@ -1,0 +1,23 @@
+/* step-txt/step-txt.css */
+
+.code-container {
+    width: fit-content;
+    min-width: 400px;
+}
+
+.step-img,
+.step-vid {
+    width: 45%;
+}
+.step-img>img,
+.step-vid>video {
+    width: 98%;
+    
+}
+.step-vid{
+    height: fit-content;
+
+}
+.step-vid>video {
+    max-height: 28vh;
+}

@@ -1,7 +1,5 @@
-/* step-txt-lesson-codeColor.css */
-.mainTargetDiv:active,.mainTargetDiv:focus {
-    outline: none;
-}   
+/* step-txt/step-txt.css */
+
 .header-codeColor-lesson {
     padding-left: 2.5%;
 }

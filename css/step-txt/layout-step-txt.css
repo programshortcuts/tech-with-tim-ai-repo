@@ -1,0 +1,9 @@
+/* step-txt/text-step-txt.css */
+.step {
+    display: flex;
+    justify-content: space-between;
+}
+.step-vid {
+    overflow: hidden;
+    overflow-y: scroll;
+}

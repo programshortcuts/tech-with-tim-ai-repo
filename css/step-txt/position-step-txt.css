@@ -1,0 +1,28 @@
+/* step-txt/step-txt.css */
+
+.step-container{
+    position: relative;
+    z-index: 0;
+}
+.step-float:focus{
+    z-index: 100;
+}
+.step-float{
+    position: relative;
+}
+.clear {
+    clear: both;
+}
+.step-img,
+.step-vid {
+    float: right;
+}
+.step-float>.step-vid>video  {
+    z-index: 0;
+}
+
+.step-img>img,
+.step-vid>video {
+    position: relative;
+    transition: all 0.025s ease;
+}

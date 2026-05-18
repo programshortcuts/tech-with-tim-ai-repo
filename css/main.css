@@ -1,6 +1,14 @@
 /* main.css */
 
-@import url('step-txt-lesson-codeColor.css');
+/* @import url('step-txt/step-txt.css'); */
+@import url('step-txt/layout-step-txt.css');
+@import url('step-txt/position-step-txt.css');
+@import url('step-txt/sizing-step-txt.css');
+@import url('step-txt/spacing-step-txt.css');
+@import url('step-txt/text-step-txt.css');
+
+
+
 @import url('responsive.css');
 @import url('dark-mode-colorCode.css');
 /* media */
