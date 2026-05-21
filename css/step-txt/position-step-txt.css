@@ -5,11 +5,24 @@
     z-index: 0;
 }
 .step-float:focus{
-    z-index: 100;
-}
-.step-float{
-    position: relative;
+    /* z-index: 100; */
 }
 .clear {
     clear: both;
+}
+
+
+.step-float{
+    position: relative;
+    z-index: 1;
+}
+.copy-code {
+    position: relative;
+    z-index: 2;
+}
+.step-float .step-img {
+    z-index: 999;
+}
+.step-float .step-img img {
+    z-index: 999;
 }

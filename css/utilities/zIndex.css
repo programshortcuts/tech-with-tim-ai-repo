@@ -1,14 +1,7 @@
 /* zIndex.css */
-
 .page-header,
 .tutorial-link-img-container {
     z-index: 10
-}
-
-
-
-.page-wrapper>nav.nav-lesson-title {
-    /* z-index: 2 */
 }
 .main-landing-page>nav#nxtPrevLessonsBtns {
     z-index: 2;
@@ -21,19 +14,3 @@
 }
 
 
-.step-img{
-    /* position: relative; */
-}
-.step-img img {
-    /* position: absolute; */
-    z-index: 600;
-}
-
-.step-float {
-    z-index: 1;
-}
-
-.copy-code {
-    position: relative;
-    z-index: 2;
-}

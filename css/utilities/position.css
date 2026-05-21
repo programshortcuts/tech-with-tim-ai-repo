@@ -16,25 +16,3 @@
     bottom: 0;
     right: 0;
 }
-.page-wrapper >nav.nav-lesson-title {
-    /* position: sticky; */
-    /* top: 0 !important; */
-}
-.main-landing-page {
-    /* position: relative; */
-}
-/* Steps */
-.steps-container {
-    /* position: relative; */
-}
-
-#sideBarBtn {
-    /* position: absolute; */
-}
-
-
-
-
-.step-float {
-    /* position: relative; */
-}

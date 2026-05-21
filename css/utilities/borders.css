@@ -18,6 +18,9 @@ main>.side-bar {
     border: 1px solid black;
     border-radius: 8px;
 }
+.code-container > .copy-code{
+    border-radius: 3px;
+}
 .step-float{
     border: 1px solid black;
 }

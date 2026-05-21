@@ -1,11 +1,18 @@
 /* main.css */
+/* ui */
+@import url('ui/toggle-side-bar.css');
+/* @import url('ui/toggle-img-sizes.css'); */
+@import url('ui/copyCode.css');
+@import url('ui/popup-letterNav.css');
 
+/* step-txt INJECT HTML PAGES */
 /* @import url('step-txt/step-txt.css'); */
 @import url('step-txt/layout-step-txt.css');
  @import url('step-txt/position-step-txt.css');
 @import url('step-txt/sizing-step-txt.css');
-/* @import url('step-txt/spacing-step-txt.css'); */
+@import url('step-txt/spacing-step-txt.css');
 /* @import url('step-txt/text-step-txt.css'); */
+
 
 /* @import url('step-txt/step-vid.css'); */
 /* @import url('step-txt/step-img.css'); */
@@ -27,12 +34,8 @@
 @import url('utilities/text.css');
 @import url('utilities/position.css');
 @import url('utilities/layout.css');
-@import url('utilities/zIndex.css');
-/* ui */
-@import url('ui/toggle-side-bar.css');
-@import url('ui/toggle-img-sizes.css');
-@import url('ui/copyCode.css');
-@import url('ui/popup-letterNav.css');
+/* @import url('utilities/zIndex.css'); */
+
 * {
     box-sizing: border-box;
     margin: 0;
