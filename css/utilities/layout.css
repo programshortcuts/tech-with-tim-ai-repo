@@ -1,4 +1,12 @@
 /* layout.css */
+.page-wrapper>nav.nav-lesson-title {
+    display: flex;
+    position: fixed;
+    top: 4%;
+    width: 80%;
+    margin-top: 0%;
+    z-index: 2;
+}
 .page-wrapper{
     display: flex;
     flex-direction: column;
@@ -6,6 +14,10 @@
 }
 .page-wrapper > .page-header {
     display: flex;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: inherit;
     .page-header-links{
         display: flex;    
         flex-basis: 80%;
@@ -41,9 +53,7 @@
         max-width: 100px;
     }
 }
-.page-wrapper > nav.section-lesson-title {
-    display: flex;
-}
+
 .side-bar>.side-bar-links-container ul {
     display: flex;
     flex-direction: column;

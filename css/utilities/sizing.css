@@ -1,5 +1,8 @@
 
 /* sizing.css */
+.page-wrapper>nav.nav-lesson-title {
+    width: 80%;
+}
 .tutorial-link-img-container {
 }
 .tutorial-link-img-container img {
@@ -10,9 +13,7 @@
     width: fit-content;
     height: 4vh;
 }
-.page-wrapper>nav.section-lesson-title {
-    height: fit-content;
-}
+
 .side-bar ul {
     li {
         width: fit-content;

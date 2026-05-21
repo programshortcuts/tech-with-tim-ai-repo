@@ -1,9 +1,13 @@
 /* spacing.css */
+.page-wrapper>nav.nav-lesson-title {
+    margin-top: 0%;
+}
 .main-landing-page>nav#nxtPrevLessonsBtns button {
     padding: 0 1%
 }
 main > .side-bar {
     padding-right: 2%;
+    padding-top: 5%;
 }
 .side-bar > .side-bar-links-container{
     margin-top: 10%;
