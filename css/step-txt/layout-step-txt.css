@@ -3,7 +3,17 @@
     display: flex;
     justify-content: space-between;
 }
-.step-vid {
-    overflow: hidden;
-    overflow-y: scroll;
+.step-float{
+    display: block;
+}
+.step-float::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+.step-float > .step-vid{
+    float: right;
+}
+.step-float > .step-txt{
+    display: block;
 }

@@ -13,16 +13,3 @@
 .clear {
     clear: both;
 }
-.step-img,
-.step-vid {
-    float: right;
-}
-.step-float>.step-vid>video  {
-    z-index: 0;
-}
-
-.step-img>img,
-.step-vid>video {
-    position: relative;
-    transition: all 0.025s ease;
-}

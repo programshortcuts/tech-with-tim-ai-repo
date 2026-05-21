@@ -14,21 +14,18 @@ import { refreshImages,handleImgSizes,denlargeAllImages } from "../ui/toggle-img
 // No feature enters main - script unless it can survive a rewrite. !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 document.addEventListener('DOMContentLoaded', initMain)
 function initMain(){
-    
     initCopyCode()
     initSideBarListeners()
     initInjectContentListeners()
     initToggleSideBar()
     initDarkMode()
     setupGlobalKeyListener()
-
     // refreshImages()
 //  Img and Video handling is in HERE StepNav -----------
     initStepNav() // 
 // ------------
 }
 function setupGlobalKeyListener(){
-    
     addEventListener('keydown', e => {
         /** The e.preventDefault to if(isTyping) means: prevents bugs*/
         if (e.defaultPrevented) return

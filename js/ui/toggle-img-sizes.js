@@ -31,7 +31,7 @@ export function handleImgSizes({e}){
 export function toggleImgSize(step) {
     const imgsContainer = step.querySelector('.imgs-container')
     if(imgsContainer){
-        const imgs = imgsContainer.querySelectorAll('.step-img,.step-vid')
+    const imgs = imgsContainer.querySelectorAll('.step-img,.step-vid')
         
         toggleImgSize(imgs[iImg])
         iImg += 1
