@@ -21,8 +21,8 @@
     z-index: 2;
 }
 .step-float .step-img {
-    z-index: 999;
+    z-index: 10;
 }
 .step-float .step-img img {
-    z-index: 999;
+    z-index: 11;
 }

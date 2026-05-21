@@ -20,29 +20,21 @@ export function handleImgSizes({e}){
     const key = e.key.toLowerCase()
     if (e.shiftKey && key === 'enter') {
         
-        toggleImgSize(step)            
+        // toggleImgSize(step)            
         return
     }
     if(e.target.classList.contains('copy-code')){
-        toggleImgSize(step)
+        // toggleImgSize(step)
     }
     
 }
-export function toggleImgSize(step) {
-    const imgsContainer = step.querySelector('.imgs-container')
-    if(imgsContainer){
-    const imgs = imgsContainer.querySelectorAll('.step-img,.step-vid')
-        
-        toggleImgSize(imgs[iImg])
-        iImg += 1
-        return
-    }
-
-    const stepImgVid = step.querySelector('.step-img') ?
-        step.querySelector('.step-img') :
-        step.querySelector('.step-vid')
-    if(!stepImgVid) return
-    stepImgVid.classList.toggle("enlarge");
+export function toggleImgSize(img) {
+    console.log('here')
+    console.log(img)
+    img.classList.toggle('enlarge')
+} 
+export function clickToggleImgSize(img) {
+    toggleImgSize(img)
 } 
 export function denlargeAllImages(){
     allStepImgs.forEach(el => {

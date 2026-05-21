@@ -16,6 +16,7 @@ function handleInjectContentBtnsContainer(e){
     if(e.type == 'click'){
         e.preventDefault()
         e.stopPropagation()
+        
         console.log(e.target)
         const lastClicked = getLastCLICKEDLink()
         let iSideBarAs = sideBarAsARRAY.indexOf(lastClicked)

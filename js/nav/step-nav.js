@@ -5,7 +5,7 @@ import { mainTargetDiv } from "../core/inject-content.js"
 import { handleImgSizes, denlargeAllImages } from "../ui/toggle-img-sizes.js"
 import { changeTutorialLink } from "../ui/change-tutorial-link.js"
 import { handleStepClickedNav, } from "./step-clicked-nav.js"
-import { refreshImages,toggleImgSize } from "../ui/toggle-img-sizes.js";
+import { clickToggleImgSize,refreshImages,toggleImgSize } from "../ui/toggle-img-sizes.js";
 import { endNxtBtn,prevBtn } from "../core/inject-content.js"
 
 // nonSideBarEls is an awfule way to do this but i'm desperate right now
@@ -97,11 +97,10 @@ export function updateSteps(){
         el.addEventListener('click', e => {
             lastStep = steps[iSteps]
             // if(e.type != 'click') return
+            
             if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO'){
-                const step = e.target.closest('.step-float')
                 
-                console.log(step)
-                toggleImgSize(step)
+                clickToggleImgSize(e.target)
             }
             scrollToCenter({el})
             changeTutorialLink(e)
