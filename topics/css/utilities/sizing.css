@@ -1,0 +1,27 @@
+
+/* sizing.css */
+.page-wrapper>nav.nav-lesson-title {
+    width: 80%;
+}
+
+#darkModeBtn {
+    width: fit-content;
+    height: 4vh;
+}
+
+.code-container {
+    width: fit-content;
+}
+.code-container>.copy-code {
+    width: 100%;
+    height: 100%;
+    transition: all .35s;
+}
+
+.main-container-colorCode {
+    width: 100%;
+}
+main.main-container {
+    width: 100%;
+}
+

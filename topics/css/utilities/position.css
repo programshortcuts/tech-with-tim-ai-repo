@@ -1,23 +1,20 @@
 /* position.css */
+.page-wrapper {
+    position: relative;
+}
 .page-wrapper>nav.nav-lesson-title {
     position: fixed;
     top: 4%;
     z-index: 2;
 }
-.page-wrapper {
-    position:relative;
-}
-.main-container>.side-bar {
-    position: sticky;
-    top: 4%;
-}
-.tutorial-link-img-container {
-    position: fixed;
-    right: 0;
-    top: 0;
-}
 .inject-content-btns-container {
     position: fixed;
     bottom: 0;
     right: 0;
+}
+.page-wrapper > .main-container{
+    top: 10%;
+}
+.main-container{
+    
 }

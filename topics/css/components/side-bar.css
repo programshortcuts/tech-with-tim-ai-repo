@@ -1,0 +1,44 @@
+/* components/side-bar.css */
+main>.side-bar {
+}
+main>.side-bar::-webkit-scrollbar {
+    display: none;
+}
+.main-container>.side-bar {
+    top: 4%;
+    width: fit-content;
+    border-right: 1px solid black;
+    border-top: none !important;
+    flex-basis: 10%;
+    padding-right: 2%;
+    padding-top: 10%;
+    position: sticky;
+    top: 10%;
+    height: 90vh;
+}
+main.main-container >.side-bar {
+}
+
+
+
+.side-bar-links-container ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    margin-top: 2%;
+    margin-left: 5%;
+}
+.side-bar-links-container>ul li {
+    margin-top: 2%;
+    margin-bottom: 10%;
+}
+.side-bar-links-container>ul code {
+    display: inline;
+}
+.side-bar ul li a {
+    display: block;
+    box-sizing: border-box;
+    min-width: 150px;
+    width: 100%;
+}
