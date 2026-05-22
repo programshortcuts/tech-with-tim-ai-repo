@@ -22,6 +22,7 @@
 .tutorial-link-img-container {
     position: fixed;
     display: flex;
+    align-items: flex-end;
     flex-direction: column;
     right: 0;
     top: 0;

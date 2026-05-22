@@ -12,9 +12,6 @@
     margin-top: 0%;
     z-index: 2;
 }
-
-
-
 main.main-container.collapsed {
     display: static
 }
