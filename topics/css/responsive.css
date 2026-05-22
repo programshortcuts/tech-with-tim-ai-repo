@@ -95,6 +95,7 @@
 
 @media screen and (max-width:520px) {
     .main-container>.side-bar {
-        flex-basis: 10%;
+        /* flex-basis% !important; */
+        width: 28% !important;
     }
 }

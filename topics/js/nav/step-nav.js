@@ -23,20 +23,9 @@ export function initStepNav(){{
     // refreshImages()
     updateSteps()
     updateCopyCodes()
-    initLessonBtnFocusListeners()
     
 }}
-export function removeALLSideLinkChange() {
-    sideBarAs.forEach(el =>
-        el.classList.remove('sideLinkChange')
-    )
-}
-function initLessonBtnFocusListeners(e){
-    // endNxtBtn.addEventListener('keydown', handleLessonBtnsFocus);
-    // prevBtn.addEventListener('keydown', handleLessonBtnsFocus);
-    // endNxtBtn.addEventListener('click', handleLessonBtnsFocus);
-    // prevBtn.addEventListener('click', handleLessonBtnsFocus);
-}
+export function removeALLSideLinkChange() {sideBarAs.forEach(el => el.classList.remove('sideLinkChange'))}
 function handleLessonBtnsFocus(e){
     if(e.type === 'keydown'){
         let key = e.key.toLowerCase()
@@ -54,10 +43,12 @@ function handleLessonBtnsFocus(e){
         
     }
 }
+function updateCopyCodes() {
+    const copyCodes = document.querySelectorAll('.copy-code')
+    return copyCodes
 
-export function getSteps(){
-    return steps
 }
+export function getSteps(){return steps}
 export function updateSteps(){
     steps = mainTargetDiv.querySelectorAll('.step-float')
     // I don't fully know why nonSideBarEls is working
@@ -71,8 +62,7 @@ export function updateSteps(){
             denlargeAllImages(allImgs)
         });
         el.addEventListener('keydown', e => {
-            // handleImgSizes({e})
-            
+            handleImgSizes({e})
         });
     })
     // This should not be here, this needs to get implemented into  toggle-img-sizes.js i think
@@ -113,34 +103,14 @@ export function updateSteps(){
             let key = e.key.toLowerCase()
             const step = e.target.closest('.step-float')
             if(!step.classList.contains('step-float')) return
+            
             if(key === 'enter'){
                 stepClicked = true
-                handleImgSizes({e})
+                // handleImgSizes({e})
                 handleStepClickedNav({e})
                 changeTutorialLink(e)
             }
-            // if(key === 'enter' && !step.querySelector('.copy-code')){
-            //     scrollToCenter({ el })
-            //     handleImgSizes({e})
-            //     return
-            // }
-            // if (e.shiftKey && key === 'enter') {
-            //     const el = e.target
-            //     scrollToCenter({el})
-            //     handleImgSizes({ e })
-            //     return
-            // }
-            // if (!e.shiftKey && key === 'enter') {
-            //     const imgsContainer = step.querySelector('.imgs-container')
-
-            //     if (!imgsContainer) {
-            //         stepClicked = true
-            //     }
-            //     let smooth = true
-            //     // handleStepClickedNav({e})
-            //     if(!step.classList.contains('step-float')) return
-            //     changeTutorialLink(e)
-            // }
+            
             if(key === 'm'){
                 denlargeAllImages()
                 mainTargetDiv.scrollTo(0,0)
@@ -162,10 +132,7 @@ function stepFocus(index){
     steps[index]?.focus()
 }
 export function getLastStep(){return lastStep}
-
-function removeStepClicked(steps){
-    steps.forEach(el => el.classList.remove('step-clicked'))
-}
+function removeStepClicked(steps){steps.forEach(el => el.classList.remove('step-clicked'))}
 export function scrollToCenter({el,smooth}){
     if(!el) return
     if(smooth){
@@ -178,12 +145,6 @@ export function stepNav({ e, navState }) {
     if (navState.zone !== 'mainTargetDiv') return false
     const key = e.key.toLowerCase()
     const step = e.target.closest('.step-float')
-    if(e.target === mainTargetDiv){
-        if(key === 'enter'){
-            // step.focus()
-            
-        }
-    }
     if (key === 'enter' && e.target === mainTargetDiv) {
         iSteps = 0
         steps[0].focus()
@@ -208,26 +169,17 @@ export function stepNav({ e, navState }) {
         steps[intLet - 1].focus()
         return true
     }
-
-    
-    
     if (key === 'm') {
-        if (e.target === mainTargetDiv) {
-            // lastStep?.focus()
-        } else {
-
-            mainTargetDiv.focus()
-            mainTargetDiv.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-                // inline: 'nearest',
-            })
-        }
+        mainTargetDiv.focus()
+        mainTargetDiv.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+            // inline: 'nearest',
+        })
         return true
     }
     if (key === 'a') {
         iSteps = (iSteps - 1 + steps.length) % steps.length
-        // steps[iSteps].focus()
         stepFocus(iSteps)
         return true
     }
@@ -241,10 +193,4 @@ export function stepNav({ e, navState }) {
         return true
     }
     return false
-}
-
-function updateCopyCodes() {
-    const copyCodes = document.querySelectorAll('.copy-code')
-    return copyCodes
-
 }

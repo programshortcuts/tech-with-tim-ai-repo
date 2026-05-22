@@ -10,28 +10,42 @@ export function refreshImages(root = mainTargetDiv){
 }
 export function handleImgSizes({e}){
     const step = e.target.closest('.step-float')
-    
-    if(e.type === 'click'){
-        // this wont work here
-        // toggleImgSize(step)            
-        return
-    }
-
     const key = e.key.toLowerCase()
+    const stepImgs = step.querySelectorAll('.step-img')        
+    
+    if(e.target.classList.contains('copy-code')){
+        if(key === 'enter' || 
+            key === 'enter' && e.shiftKey
+        ){
+            console.log(iImg)
+            toggleImgSize(stepImgs[iImg])
+            if(stepImgs.length <= 1){
+                iImg = 0
+            } else {
+                iImg = (iImg + 1) % stepImgs.length 
+            }
+            
+        }
+        return
+
+    }
     if (e.shiftKey && key === 'enter') {
+        console.log(iImg)
+        toggleImgSize(stepImgs[iImg])
+        if(stepImgs <= 1){
+            iImg = 0
+        } else {
+            iImg = (iImg + 1) % stepImgs.length 
+        }
         
-        // toggleImgSize(step)            
         return
     }
-    if(e.target.classList.contains('copy-code')){
-        // toggleImgSize(step)
-    }
+    
     
 }
-export function toggleImgSize(img) {
-    console.log('here')
-    console.log(img)
-    img.classList.toggle('enlarge')
+export function toggleImgSize(stepImg) {
+    if(!stepImg) return
+    stepImg.classList.toggle('enlarge')
 } 
 export function clickToggleImgSize(img) {
     toggleImgSize(img)

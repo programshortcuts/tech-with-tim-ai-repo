@@ -1,7 +1,7 @@
 /* step-txt/step-txt.css */
 
 .step-container{
-    position: relative;
+    /* position: relative; */
     z-index: 0;
 }
 .step-float:focus{
@@ -13,7 +13,7 @@
 
 
 .step-float{
-    position: relative;
+    /* position: relative; */
     z-index: 1;
 }
 .copy-code {

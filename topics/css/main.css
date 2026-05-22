@@ -20,7 +20,7 @@
 /* @import url('step-txt/step-img.css'); */
 
 
-/* @import url('responsive.css'); */
+@import url('responsive.css');
 @import url('dark-mode-colorCode.css');
 /* media */
 /* @import url('media/images.css'); */

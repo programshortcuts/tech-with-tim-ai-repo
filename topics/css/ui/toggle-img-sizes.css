@@ -3,5 +3,5 @@
     position: fixed !important;
     min-width: 200px;
     top: 20%;
-    transform: scale(1.05);
+    transform: scale(.8);
 }
