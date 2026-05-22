@@ -7,6 +7,9 @@
     background-color: var(--bg-primary-db);
     color: var(--font-primary-db)
 }
+.dark-mode .page-header{
+    background-color: var(--bg-primary-db);
+}
 .dark-mode .side-bar a:active, .dark-mode .side-bar a:focus,
 .dark-mode .step:active, .dark-mode .step:focus,
 .dark-mode .step-float:active, .dark-mode .step-float:focus {
