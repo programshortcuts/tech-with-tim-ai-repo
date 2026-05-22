@@ -1,8 +1,13 @@
 
 /* sizing.css */
 .page-wrapper>nav.nav-lesson-title {
-    width: 80%;
+    width: fit-content;
 }
+.page-wrapper>nav.nav-lesson-title  > h1{
+    width: 100%
+}
+
+
 
 #darkModeBtn {
     width: fit-content;

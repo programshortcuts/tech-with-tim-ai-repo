@@ -92,3 +92,9 @@
         /* top: 90%; */
     }
 }
+
+@media screen and (max-width:520px) {
+    .main-container>.side-bar {
+        flex-basis: 10%;
+    }
+}

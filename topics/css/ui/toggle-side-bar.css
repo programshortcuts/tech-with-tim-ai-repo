@@ -16,7 +16,7 @@
 }
 
 .main-container.collapsed #sideBarBtn {
-    transform: scale(2.2);
+    transform: scale(1.8);
     left: 20%;
     margin-left: 10%;
     top: 80% !important;
