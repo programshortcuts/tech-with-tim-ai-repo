@@ -62,6 +62,8 @@ export function updateSteps(){
     copyCodes = updateCopyCodes()
     copyCodes.forEach(el => {
         el.addEventListener('focusin', e => {
+            console.log('here')
+            console.log(e.target)
             denlargeAllImages(allImgs)
         });
         el.addEventListener('keydown', e => {

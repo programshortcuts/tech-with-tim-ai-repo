@@ -12,17 +12,56 @@
 }
 
 
-.step-float{
-    /* position: relative; */
-    z-index: 1;
-}
 .copy-code {
     position: relative;
     z-index: 2;
 }
-.step-float .step-img {
+
+
+/* Base layers */
+.step-float {
+    position: relative;
+    z-index: 1;
+}
+
+.step-img,
+.step-vid,
+.copy-code,
+.code-container {
+    position: relative;
+}
+
+
+.step-txt {
+    position: relative;
+    z-index: 1;
+}
+
+/* when code inside step-txt is focused */
+.step-txt:focus-within {
+    z-index: 500;
+}
+
+/* Normal media */
+.step-img,
+.step-vid {
+    position: relative;
     z-index: 10;
 }
-.step-float .step-img img {
-    z-index: 11;
+
+/* Focused step rises above nearby media */
+.step-float:focus-within {
+    z-index: 100;
+}
+
+/* Focused code rises above NON enlarged media */
+.copy-code:focus,
+.copy-code:focus-visible {
+    z-index: 500;
+}
+
+/* Enlarged media ALWAYS wins */
+.step-img.enlarge,
+.step-vid.enlarge {
+    z-index: 9999 !important;
 }
