@@ -18,6 +18,7 @@
 }
 .step-float > .step-txt{
     display: block;
+    overflow: visible;
 }
 
 .step-float > .imgs-container{

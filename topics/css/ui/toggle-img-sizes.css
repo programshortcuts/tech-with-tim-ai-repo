@@ -2,13 +2,21 @@
 .step-img,.step-vid {
     /* position: static; */
 }
-.enlarge {
+
+/* Enlarged media ALWAYS wins */
+.step-img.enlarge,
+.step-vid.enlarge {
+    z-index: 9999 !important;
     transform: scale(1.5);
     position: fixed !important;
     min-width: 200px;
+    float: none;
     top: 20%;
     transform: scale(1.01);
 }
+
+
+
 .step-vid.enlarge video,
 .step-img.enlarge img {
     /* box-shadow: 0 0 1px 1px white; */

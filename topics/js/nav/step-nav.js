@@ -65,6 +65,14 @@ export function updateSteps(){
             console.log('here')
             console.log(e.target)
             denlargeAllImages(allImgs)
+            document.querySelectorAll('.copy-code').forEach(c => {
+                c.classList.remove('is-active-code');
+            });
+
+            e.target.classList.add('is-active-code');
+        });
+        el.addEventListener('focusout', e => {
+            e.target.classList.remove('is-active-code');
         });
         el.addEventListener('keydown', e => {
             handleImgSizes({e})

@@ -10,14 +10,15 @@
 
 }
 .step>.step-txt {
-    padding: 1%;
+    /* padding: 1%; */
 }
 .step-float>.step-txt {
     padding: 0 2%;
 }
 .step-float>.step-txt>p {
-    padding: 0 2%;
+    /* padding: 0 2%; */
     margin-top: 2%;
+    line-height: 1.5;
 }
 .step-txt ul {
     margin-left: 3%;
