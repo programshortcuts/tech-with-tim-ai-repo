@@ -2,10 +2,13 @@
 import { sideBarAs } from "../nav/sidebar-nav.js"
 import { getLastCLICKEDLink } from "./sidebar-state.js"
 import { mainTargetDiv } from "../core/inject-content.js"
-import { handleImgSizes, denlargeAllImages } from "../ui/toggle-img-sizes.js"
 import { changeTutorialLink } from "../ui/change-tutorial-link.js"
 import { handleStepClickedNav, } from "./step-clicked-nav.js"
-import { clickToggleImgSize,refreshImages,toggleImgSize } from "../ui/toggle-img-sizes.js";
+import { clickToggleImgSize, 
+    refreshImages, 
+    handleImgSizes,
+    denlargeAllImages
+ } from "../ui/toggle-img-sizes.js";
 import { endNxtBtn,prevBtn } from "../core/inject-content.js"
 
 // nonSideBarEls is an awfule way to do this but i'm desperate right now

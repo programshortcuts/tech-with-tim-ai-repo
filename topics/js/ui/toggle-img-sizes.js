@@ -1,60 +1,87 @@
 // import { denlargeAllImages } from "./toggle-img-sizesOG"
-let iImg = 0
-let allStepImgs = []
-let allStepVids = []
 // toggle-img-sizes.js
-export function refreshImages(root = mainTargetDiv){
-    allStepImgs = root.querySelectorAll('.step-img , .step-vid')
-    allStepVids = root.querySelectorAll('.step-img , .step-vid')
-    // resetImageState()
-}
-export function handleImgSizes({e}){
-    const step = e.target.closest('.step-float')
-    const key = e.key.toLowerCase()
-    const stepImgs = step.querySelectorAll('.step-img')        
-    
-    if(e.target.classList.contains('copy-code')){
-        if(key === 'enter' || 
-            key === 'enter' && e.shiftKey
-        ){
-            console.log(iImg)
-            toggleImgSize(stepImgs[iImg])
-            if(stepImgs.length <= 1){
-                iImg = 0
-            } else {
-                iImg = (iImg + 1) % stepImgs.length 
-            }
-            
-        }
-        return
 
-    }
-    if (e.shiftKey && key === 'enter') {
-        console.log(iImg)
-        toggleImgSize(stepImgs[iImg])
-        if(stepImgs <= 1){
-            iImg = 0
-        } else {
-            iImg = (iImg + 1) % stepImgs.length 
-        }
+let allMedia = []
+
+export function refreshImages(root = document) {
+    allMedia = root.querySelectorAll('.step-img, .step-vid')
+}
+
+export function denlargeAllImages() {
+    allMedia.forEach(el => {
+        el.classList.remove('enlarge')
+    })
+}
+
+export function handleImgSizes({ e }) {
+
+    const key = e.key.toLowerCase()
+
+    // if (key !== 'enter') return
+    
+    const step = e.target.closest('.step-float')
+    if(key === 'enter'){
+
         
+        if (!step) return
+        
+        const selector = e.shiftKey
+        ? '.step-vid'
+        : '.step-img'
+        
+        cycleMedia(step, selector)
+    }
+}
+
+function cycleMedia(step, selector) {
+
+    const items = [...step.querySelectorAll(selector)]
+
+    if (!items.length) return
+
+    const stateKey =
+        selector === '.step-img'
+            ? 'imgIndex'
+            : 'vidIndex'
+
+    let index = Number(step.dataset[stateKey] ?? -1)
+
+    // remove all enlarged first
+    items.forEach(el => {
+        el.classList.remove('enlarge')
+    })
+
+    // SINGLE ITEM
+    if (items.length === 1) {
+
+        if (index === -1) {
+            items[0].classList.add('enlarge')
+            step.dataset[stateKey] = 0
+        } else {
+            step.dataset[stateKey] = -1
+        }
+
         return
     }
-    
-    
+
+    // MULTIPLE ITEMS
+    index++
+
+    // finished cycle
+    if (index >= items.length) {
+
+        step.dataset[stateKey] = -1
+        return
+    }
+
+    items[index].classList.add('enlarge')
+
+    step.dataset[stateKey] = index
 }
-export function toggleImgSize(stepImg) {
-    if(!stepImg) return
-    stepImg.classList.toggle('enlarge')
-} 
 export function clickToggleImgSize(img) {
-    toggleImgSize(img)
+
+    toggleImgSize(img.closest('.step-img, .step-vid'))
 } 
-export function denlargeAllImages(){
-    allStepImgs.forEach(el => {
-        el.classList.remove('enlarge')
-    })
-    allStepVids.forEach(el => {
-        el.classList.remove('enlarge')
-    })
+function toggleImgSize(stepImgVid){
+    stepImgVid.classList.toggle('enlarge')
 }

@@ -6,9 +6,6 @@
 .page-wrapper>nav.nav-lesson-title  > h1{
     width: 100%
 }
-
-
-
 #darkModeBtn {
     width: fit-content;
     height: 2vh;
@@ -19,6 +16,7 @@
 }
 .code-container>.copy-code {
     width: 100%;
+    display: block;
     height: 100%;
     transition: all .35s;
 }
@@ -29,4 +27,5 @@
 main.main-container {
     width: 100%;
 }
+
 

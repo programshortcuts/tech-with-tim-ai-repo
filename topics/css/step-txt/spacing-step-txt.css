@@ -5,6 +5,10 @@
 .step-float {
     padding-bottom: 5%;
 }
+.step-float h4{
+    margin-top: 3%;
+
+}
 .step>.step-txt {
     padding: 1%;
 }
@@ -35,5 +39,5 @@
 }
 
 .step-vid{
-    margin-right: 12%;
+    /* margin-right: 12%; */
 }

@@ -98,4 +98,7 @@
         /* flex-basis% !important; */
         width: 28% !important;
     }
+        .enlarge {
+            transform: scale(1.5);
+        }
 }

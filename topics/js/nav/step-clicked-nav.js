@@ -1,7 +1,7 @@
 // step-clicked-nav.js
 import { tutorialLink } from "../ui/change-tutorial-link.js"
 import { scrollToCenter } from "./step-nav.js"
-import { handleImgSizes } from "../ui/toggle-img-sizes.js"
+// import { handleImgSizes } from "../ui/toggle-img-sizes.js"
 let allStepCopyCodes = []
 export function handleStepClickedNav({ e, iCopyCodes }) {
     const step = e.target.closest('.step-float')
