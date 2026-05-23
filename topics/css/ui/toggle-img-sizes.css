@@ -12,4 +12,5 @@
 .step-vid.enlarge video,
 .step-img.enlarge img {
     box-shadow: 0 0 1px 1px white;
+    max-height: 350px !important;
 }
