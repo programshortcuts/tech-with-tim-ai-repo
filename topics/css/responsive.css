@@ -98,6 +98,9 @@
         /* flex-basis% !important; */
         width: 28% !important;
     }
+    .step-img.enlarge > img {
+        min-height: 400px;
+    }
         .enlarge {
             transform: scale(1.5);
         }
