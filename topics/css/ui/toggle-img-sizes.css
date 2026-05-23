@@ -13,5 +13,5 @@
 .step-img.enlarge img {
     /* box-shadow: 0 0 1px 1px white; */
     border: none;
-    max-height: 350px !important;
+    /* max-height: 350px !important; */
 }

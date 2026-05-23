@@ -18,11 +18,11 @@
     height: 100%;
 }
 .step-vid > video{
-    max-height: 200px !important;
+    max-height: 200px ;
     border: 2px solid blue;
 }
 
 .step-img > img{
-    /* max-height: 300px !important; */
+    max-height: 500px !important;
 }
 
