@@ -20,11 +20,11 @@ export function handleImgSizes({ e }) {
     // if (key !== 'enter') return
     
     const step = e.target.closest('.step-float')
-    if(key === 'enter'){
-
-        
+    if(key === 'enter' ||
+        (key === 'enter' && e.shiftKey)
+    ){
         if (!step) return
-        
+
         const selector = e.shiftKey
         ? '.step-vid'
         : '.step-img'
