@@ -22,5 +22,6 @@ main.main-container {
 
 #mainTargetDiv {
     flex-grow: 1;
-    overflow-x: clip;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
