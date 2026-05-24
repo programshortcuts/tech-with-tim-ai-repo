@@ -1,0 +1,21 @@
+/* step-txt/step-txt.css */
+/* Base layers */
+.step-float {
+    position: relative;
+}
+.step-img,
+.step-vid,
+.copy-code,
+.code-container {
+    position: relative;
+}
+.step-txt {
+    position: relative;
+}
+.copy-code {
+    position: relative;
+}
+
+.clear {
+    clear: both;
+}

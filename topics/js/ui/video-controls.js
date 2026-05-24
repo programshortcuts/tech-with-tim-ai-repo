@@ -1,91 +1,231 @@
 // video-controls.js
+// video-controls.js
 
 export function initAllVideos(root = document) {
-    const steps = root.querySelectorAll('.step-float');
 
-    steps.forEach(step => {
-        bindVideo(step);
-    });
+    const stepFloats = root.querySelectorAll('.step-float')
+
+    stepFloats.forEach(bindVideoControls)
 }
 
-function bindVideo(step) {
-    const vid = step.querySelector('video');
-    if (!vid) return;
+function bindVideoControls(step) {
 
-    // prevent duplicate binding after inject-content
-    if (vid.dataset.bound === "true") return;
-    vid.dataset.bound = "true";
+    const stepVid = step.querySelector('.step-vid')
+    const vid = step.querySelector('video')
 
-    // CLICK = toggle enlarge (your old behavior)
-    vid.addEventListener('click', (e) => {
-        toggleStepMedia(step);
-    });
+    if (!stepVid || !vid) return
 
-    // KEYBOARD = ONLY when step is focused (important for StepNav)
-    step.addEventListener('keydown', (e) => {
-        handleKeys(vid, step, e);
-    });
+    // prevent duplicate listeners
+    if (step.dataset.videoBound === 'true') return
+
+    step.dataset.videoBound = 'true'
+
+    // make sure video itself is focusable
+    if (!vid.hasAttribute('tabindex')) {
+        vid.setAttribute('tabindex', '0')
+    }
+
+    /*
+    -------------------------
+    CLICK VIDEO
+    -------------------------
+    */
+
+    stepVid.addEventListener('click', e => {
+
+        const clickedControls = e.target.closest(
+            '.playbtn, .fwdBtn, .rwdBtn'
+        )
+
+        // don't toggle enlarge when clicking controls
+        if (clickedControls) return
+
+        e.stopPropagation()
+
+        toggleEnlarge(stepVid, vid)
+    })
+
+    /*
+    -------------------------
+    BUTTON CONTROLS
+    -------------------------
+    */
+
+    const playBtn = step.querySelector('.playbtn')
+    const fwdBtn = step.querySelector('.fwdBtn')
+    const rwdBtn = step.querySelector('.rwdBtn')
+
+    playBtn?.addEventListener('click', e => {
+
+        e.stopPropagation()
+
+        togglePlay(vid)
+
+        updatePlayBtn(playBtn, vid)
+    })
+
+    fwdBtn?.addEventListener('click', e => {
+
+        e.stopPropagation()
+
+        vid.currentTime = Math.min(
+            vid.duration,
+            vid.currentTime + 5
+        )
+    })
+
+    rwdBtn?.addEventListener('click', e => {
+
+        e.stopPropagation()
+
+        vid.currentTime = Math.max(
+            0,
+            vid.currentTime - 5
+        )
+    })
+
+    /*
+    -------------------------
+    KEYBOARD
+    IMPORTANT:
+    bind to STEP
+    not VIDEO
+    -------------------------
+    */
+
+    step.addEventListener('keydown', e => {
+
+        const key = e.key.toLowerCase()
+
+        const isFocusedInsideThisStep =
+            step.contains(document.activeElement)
+
+        if (!isFocusedInsideThisStep) return
+
+        /*
+        SPACE
+        */
+
+        if (
+            key === ' ' ||
+            key === 'spacebar'
+        ) {
+
+            e.preventDefault()
+            e.stopPropagation()
+
+            togglePlay(vid)
+
+            updatePlayBtn(playBtn, vid)
+
+            return
+        }
+
+        /*
+        ENTER
+        */
+
+        if (
+            key === 'enter' &&
+            !e.shiftKey
+        ) {
+
+            e.preventDefault()
+
+            togglePlay(vid)
+
+            updatePlayBtn(playBtn, vid)
+
+            return
+        }
+
+        /*
+        SHIFT + ENTER
+        */
+
+        if (
+            key === 'enter' &&
+            e.shiftKey
+        ) {
+
+            e.preventDefault()
+
+            toggleEnlarge(stepVid, vid)
+
+            return
+        }
+
+        /*
+        LEFT
+        */
+
+        if (e.keyCode === 37) {
+
+            e.preventDefault()
+
+            vid.currentTime = Math.max(
+                0,
+                vid.currentTime - 0.5
+            )
+
+            return
+        }
+
+        /*
+        RIGHT
+        */
+
+        if (e.keyCode === 39) {
+
+            e.preventDefault()
+
+            vid.currentTime = Math.min(
+                vid.duration,
+                vid.currentTime + 0.5
+            )
+
+            return
+        }
+    })
 }
 
-/**
- * OLD BEHAVIOR RESTORED:
- * click toggles enlarge on container (step-float)
- */
-function toggleStepMedia(step) {
-    step.classList.toggle('enlarge');
-}
+/*
+-----------------------------------
+HELPERS
+-----------------------------------
+*/
 
-/**
- * Old-style playback controls, but scoped to step
- */
-function handleKeys(vid, step, e) {
-    const key = e.key.toLowerCase();
+function toggleEnlarge(stepVid, vid) {
 
-    // ENTER = play/pause (old behavior style)
-    if (key === 'enter') {
-        e.preventDefault();
-        togglePlay(vid);
-        return;
-    }
+    stepVid.classList.toggle('enlarge')
 
-    // SPACE = play/pause
-    if (key === ' ') {
-        e.preventDefault();
-        togglePlay(vid);
-        return;
-    }
+    if (stepVid.classList.contains('enlarge')) {
 
-    // SHIFT + ENTER = toggle enlarge (matches your image system behavior)
-    if (key === 'enter' && e.shiftKey) {
-        step.classList.toggle('enlarge');
-        return;
-    }
+        vid.play()
 
-    // LEFT / RIGHT scrubbing
-    if (e.keyCode === 37) {
-        if(!vid.currentTime)return
-        vid.currentTime = Math.max(0, vid.currentTime - 0.5);
-        return;
-    }
+    } else {
 
-    if (e.keyCode === 39) {
-        if (!vid.currentTime) return
-        vid.currentTime = Math.min(vid.duration, vid.currentTime + 0.5);
-        return;
-    }
-
-    // ESC = collapse (new but safe)
-    if (key === 'escape') {
-        step.classList.remove('enlarge');
+        vid.pause()
     }
 }
 
 function togglePlay(vid) {
-    if (!vid) return;
 
     if (vid.paused) {
-        vid.play();
+
+        vid.play()
+
     } else {
-        vid.pause();
+
+        vid.pause()
     }
+}
+
+function updatePlayBtn(btn, vid) {
+
+    if (!btn) return
+
+    btn.innerText = vid.paused
+        ? '>'
+        : '||'
 }

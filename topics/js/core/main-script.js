@@ -24,7 +24,9 @@ function initMain(){
 //  Img and Video handling is in HERE StepNav -----------
     initStepNav() // 
 // ------------
+
 }
+
 function setupGlobalKeyListener(){
     addEventListener('keydown', e => {
         /** The e.preventDefault to if(isTyping) means: prevents bugs*/

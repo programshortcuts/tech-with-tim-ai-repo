@@ -5,6 +5,10 @@
 .side-bar {
     z-index: 100;
 }
+.step-float {
+    z-index: 1;
+}
+
 .copy-code {
     z-index: 2;
     z-index: 10;
