@@ -215,23 +215,23 @@ export function initStepNav() {
             }
         });
 
-        step.querySelectorAll('img').forEach(img => {
-            img.addEventListener('click', e => {
-                e.stopPropagation();
-                lastStep = step;
-                clickToggleImgSize(img);
-            });
+        const handleStepMediaTap = e => {
+            const mediaTarget = e.target.closest('.step-img, .step-vid, img, video');
+            if (!mediaTarget) return false;
+            e.stopPropagation();
+            lastStep = step;
+            clickToggleImgSize(mediaTarget);
+            return true;
+        };
+
+        step.addEventListener('touchend', e => {
+            if (handleStepMediaTap(e)) {
+                e.preventDefault();
+            }
         });
 
         step.addEventListener('click', e => {
-            const mediaTarget = e.target.closest('.step-img, .step-vid, img, video');
-
-            if (mediaTarget) {
-                e.stopPropagation();
-                lastStep = step;
-                clickToggleImgSize(mediaTarget);
-                return;
-            }
+            if (handleStepMediaTap(e)) return;
 
             lastStep = step;
             changeTutorialLink(e);
