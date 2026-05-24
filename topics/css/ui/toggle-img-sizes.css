@@ -13,20 +13,16 @@
     min-width: 90vw;
     max-width: 95vw;
     max-height: 90vh;
-
     object-fit: contain;
 }
-
-
-
 .step-vid.enlarge video,
 .step-img.enlarge img {
-    /* box-shadow: 0 0 1px 1px white; */
 }
 .step-img.enlarge img {
     min-height: 450px;   
 }
 
-.step-float > .step-vid.enlarge {
+.step-float > .step-vid.enlarge > video{
     margin-left: 4%;
+    box-shadow: 0 0 1px 1px blue;
 }
