@@ -215,24 +215,27 @@ export function initStepNav() {
             }
         });
 
-        step.addEventListener('click', e => {
+        step.querySelectorAll('img').forEach(img => {
+            img.addEventListener('click', e => {
+                e.stopPropagation();
+                lastStep = step;
+                clickToggleImgSize(img);
+            });
+        });
 
-            const mediaTarget = e.target.closest('.step-img, .step-vid, img, video')
+        step.addEventListener('click', e => {
+            const mediaTarget = e.target.closest('.step-img, .step-vid, img, video');
 
             if (mediaTarget) {
-                e.stopPropagation()
-
-                lastStep = step
-
-                clickToggleImgSize(mediaTarget)
-
-                return
+                e.stopPropagation();
+                lastStep = step;
+                clickToggleImgSize(mediaTarget);
+                return;
             }
 
-            lastStep = step
-
-            changeTutorialLink(e)
-        })
+            lastStep = step;
+            changeTutorialLink(e);
+        });
 
         if (step.hasAttribute('autofocus')) {
             step.focus();
