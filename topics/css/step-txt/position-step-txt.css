@@ -1,7 +1,8 @@
-/* step-txt/step-txt.css */
+/* step-txt/position-step-txt.css */
 /* Base layers */
 .step-float {
     position: relative;
+    isolation: isolate;
 }
 .step-img,
 .step-vid,

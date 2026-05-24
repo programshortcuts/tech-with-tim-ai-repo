@@ -10,27 +10,7 @@ export function refreshImages(root = document) {
         ...root.querySelectorAll('.step-vid')
     ]
 }
-export function initMediaClicks(root = document) {
 
-    const media = root.querySelectorAll(
-        '.step-img, .step-vid'
-    )
-
-    media.forEach(el => {
-
-        // prevent duplicate listeners
-        if (el.dataset.clickBound === 'true') return
-
-        el.dataset.clickBound = 'true'
-
-        el.addEventListener('click', e => {
-
-            e.stopPropagation()
-
-            el.classList.toggle('enlarge')
-        })
-    })
-}
 export function denlargeAllImages() {
     allMedia.forEach(el => {
         el.classList.remove('enlarge')

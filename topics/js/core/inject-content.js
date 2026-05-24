@@ -1,6 +1,6 @@
 // inject-content.js
+import { refreshImages } from "../ui/toggle-img-sizes.js";
 import { initAllVideos } from "../ui/video-controls.js";
-import { refreshImages,initMediaClicks } from "../ui/toggle-img-sizes.js";
 export const mainTargetDiv = document.querySelector('#mainTargetDiv')
 
 import { sideBar } from "../ui/toggle-sidebar.js"
@@ -126,7 +126,6 @@ export async function injectFromHref(href) {
         navTitleH1.innerText = lessontitle.innerText
         mainTargetDiv.scrollTo(0,0)
         refreshImages(mainTargetDiv)       
-        initMediaClicks(mainTargetDiv)
         initCopyCode()
         updateSteps()
         initAllVideos()
