@@ -182,6 +182,24 @@ SHIFT + ENTER
 
             return
         }
+        /*
+SPACE
+*/
+
+        if (
+            key === ' ' ||
+            key === 'spacebar'
+        ) {
+
+            e.preventDefault()
+            e.stopPropagation()
+
+            togglePlay(vid)
+
+            updatePlayBtn(playBtn, vid)
+
+            return
+        }
     })
 }
 
