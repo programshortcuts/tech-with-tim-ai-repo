@@ -1,17 +1,12 @@
 /* toggle-img-sizes.css */
-.step-img,.step-vid {
-    /* position: static; */
-}
 
 /* Enlarged media ALWAYS wins */
 .step-img.enlarge,
 .step-vid.enlarge {
     position: fixed;
     z-index: 999999 !important;
-
     top: 50%;
     left: 50%;
-
     transform: translate(-55%, -50%) 
                    scale(1.002);
 
@@ -30,4 +25,8 @@
 }
 .step-img.enlarge img {
     min-height: 450px;   
+}
+
+.step-float > .step-vid.enlarge {
+    box-shadow: 0 0 1px 1px lime;
 }
