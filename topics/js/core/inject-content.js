@@ -1,5 +1,6 @@
 // inject-content.js
 import { initAllVideos } from "../ui/video-controls.js";
+import { refreshImages,initMediaClicks } from "../ui/toggle-img-sizes.js";
 export const mainTargetDiv = document.querySelector('#mainTargetDiv')
 
 import { sideBar } from "../ui/toggle-sidebar.js"
@@ -8,7 +9,6 @@ let lastClickedSideBarLink = null
 import { initCopyCode } from "../ui/copy-code.js";
 import { sideBarAsARRAY } from "../nav/sidebar-nav.js";
 import { getSteps, initStepNav,updateSteps } from "../nav/step-nav.js";
-import { refreshImages } from "../ui/toggle-img-sizes.js";
 const navTitleH1 = document.querySelector('#navTitle h1')
 export const endNxtBtn = document.querySelector('#endNxtBtn')
 export const prevBtn = document.querySelector('#prevBtn')
@@ -126,6 +126,7 @@ export async function injectFromHref(href) {
         navTitleH1.innerText = lessontitle.innerText
         mainTargetDiv.scrollTo(0,0)
         refreshImages(mainTargetDiv)       
+        initMediaClicks(mainTargetDiv)
         initCopyCode()
         updateSteps()
         initAllVideos()
