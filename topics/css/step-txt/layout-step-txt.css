@@ -29,3 +29,7 @@
 .step-float > .imgs-container> *{
     display: flex;
 }
+.step-vid{
+    display: flex;
+    flex-direction: column ;
+}

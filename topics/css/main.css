@@ -2,6 +2,7 @@
 @import url('components/page-header.css');
 @import url('components/side-bar.css');
 /* ui */
+@import url('ui/vid-controls.css');
 @import url('ui/toggle-side-bar.css');
 @import url('ui/toggle-img-sizes.css');
 @import url('ui/copyCode.css');
