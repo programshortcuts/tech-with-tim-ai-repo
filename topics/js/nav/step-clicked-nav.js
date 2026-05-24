@@ -52,7 +52,7 @@ export function handleStepClickedNav({ e, iCopyCodes }) {
         stepCopyCodes[iCopyCodes]?.focus()
         return iCopyCodes
     }
-}
+}                         
 
 function updateStepCopyCodes(step){
     if (!step) return []

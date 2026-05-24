@@ -1,214 +1,327 @@
 // step-nav.js
-import { sideBarAs } from "../nav/sidebar-nav.js"
-import { getLastCLICKEDLink } from "./sidebar-state.js"
-import { mainTargetDiv } from "../core/inject-content.js"
-import { changeTutorialLink } from "../ui/change-tutorial-link.js"
-import { handleStepClickedNav, } from "./step-clicked-nav.js"
-import { clickToggleImgSize, 
-    refreshImages, 
-    handleImgSizes,
-    denlargeAllImages
- } from "../ui/toggle-img-sizes.js";
-import { endNxtBtn,prevBtn } from "../core/inject-content.js"
+import { mainTargetDiv } from "../core/inject-content.js";
+import { changeTutorialLink } from "../ui/change-tutorial-link.js";
+import { denlargeAllImages } from "../ui/toggle-img-sizes.js";
 
-// nonSideBarEls is an awfule way to do this but i'm desperate right now
-let steps = []
-let copyCodes = []
-let iSteps = 0
-let lastStep
-let allImgs = []
-let stepClicked = false
-let iCopyCodes = 0
-let stepCopyCodes = []
-export function initStepNav(){{
-    copyCodes = []
-    // refreshImages(mainTargetDiv)
-    // refreshImages()
-    updateSteps()
-    updateCopyCodes()
-    
-}}
-export function removeALLSideLinkChange() {sideBarAs.forEach(el => el.classList.remove('sideLinkChange'))}
-function handleLessonBtnsFocus(e){
-    if(e.type === 'keydown'){
-        let key = e.key.toLowerCase()
-        
-        if (key === 'a') {
-            steps[steps.length - 1].focus()
+let steps = [];
+let lastStep = null;
+const stepStates = new WeakMap();
+
+function createStepState(step) {
+    const state = {
+        mode: 'stepNav',
+        copyIndex: 0,
+        mediaIndex: -1,
+    };
+    stepStates.set(step, state);
+    return state;
+}
+
+function getStepState(step) {
+    if (!step) return null;
+    return stepStates.get(step) || createStepState(step);
+}
+
+function getStepCopyCodes(step) {
+    return step ? [...step.querySelectorAll('.copy-code')] : [];
+}
+
+function getStepMedia(step) {
+    return step ? [...step.querySelectorAll('.step-img, .step-vid')] : [];
+}
+
+function focusCopyCode(step, state, index = 0) {
+    const copyCodes = getStepCopyCodes(step);
+    if (!copyCodes.length) return false;
+    const newIndex = Math.max(0, Math.min(index, copyCodes.length - 1));
+    state.copyIndex = newIndex;
+    copyCodes[newIndex].focus();
+    return true;
+}
+
+function enterStepMode(step) {
+    const state = getStepState(step);
+    const selected = focusCopyCode(step, state, 0);
+    if (selected) {
+        state.mode = 'stepMode';
+        return true;
+    }
+    state.mode = 'stepNav';
+    return false;
+}
+
+function resetStepState(step) {
+    if (!step) return;
+    const state = getStepState(step);
+    state.mode = 'stepNav';
+    state.copyIndex = 0;
+    state.mediaIndex = -1;
+    getStepMedia(step).forEach(el => el.classList.remove('enlarge'));
+}
+
+function clearStepMedia(step) {
+    if (!step) return;
+    const state = getStepState(step);
+    state.mediaIndex = -1;
+    getStepMedia(step).forEach(el => el.classList.remove('enlarge'));
+}
+
+function hasEnlargedMedia(step) {
+    return getStepMedia(step).some(el => el.classList.contains('enlarge'));
+}
+
+function cycleStepMedia(step) {
+    const state = getStepState(step);
+    const media = getStepMedia(step);
+    if (!media.length) return false;
+
+    media.forEach(el => el.classList.remove('enlarge'));
+
+    if (media.length === 1) {
+        if (state.mediaIndex === -1) {
+            media[0].classList.add('enlarge');
+            state.mediaIndex = 0;
+        } else {
+            state.mediaIndex = -1;
         }
-        if(key === 'enter'){
-            removeALLSideLinkChange() 
-            return
+        return true;
+    }
+
+    const nextIndex = state.mediaIndex + 1;
+    if (nextIndex >= media.length) {
+        state.mediaIndex = -1;
+        return true;
+    }
+
+    media[nextIndex].classList.add('enlarge');
+    state.mediaIndex = nextIndex;
+    return true;
+}
+
+function focusStep(index) {
+    if (!steps.length) return;
+    let normalized = index;
+    if (normalized < 0) normalized = steps.length - 1;
+    if (normalized >= steps.length) normalized = 0;
+    steps[normalized]?.focus();
+}
+
+export function getSteps() {
+    return steps;
+}
+
+export function updateSteps() {
+    initStepNav();
+    return steps;
+}
+
+export function removeALLSideLinkChange() {
+    document.querySelectorAll('.sideLinkChange').forEach(el => el.classList.remove('sideLinkChange'));
+}
+function handleStepNavKey({ e, step, state, key }) {
+    if (key === 'enter') {
+        const copyCodes = getStepCopyCodes(step);
+        if (!copyCodes.length) {
+            cycleStepMedia(step);
+            return true;
+        }
+        enterStepMode(step);
+        return true;
+    }
+
+    if (key === 'a' || key === 'arrowleft' || key === 'arrowup') {
+        const currentIndex = steps.indexOf(step);
+        focusStep(currentIndex - 1);
+        return true;
+    }
+
+    if (key === 'f' || key === 'arrowright' || key === 'arrowdown') {
+        const currentIndex = steps.indexOf(step);
+        focusStep(currentIndex + 1);
+        return true;
+    }
+
+    if (!isNaN(key)) {
+        const targetIndex = parseInt(key, 10) - 1;
+        if (targetIndex >= 0 && targetIndex < steps.length) {
+            steps[targetIndex].focus();
+            return true;
         }
     }
-    if (e.type === 'click') {
-        removeALLSideLinkChange()
-        
-    }
-}
-function updateCopyCodes() {
-    const copyCodes = document.querySelectorAll('.copy-code')
-    return copyCodes
 
+    return false;
 }
-export function getSteps(){return steps}
-export function updateSteps(){
-    steps = mainTargetDiv.querySelectorAll('.step-float')
-    // I don't fully know why nonSideBarEls is working
-    const sideBarEls = [...document.querySelectorAll('[id],a')].filter(el => {
-        if(!el.closest('.side-bar'))
-        return 
-    })
-    copyCodes = updateCopyCodes()
-    copyCodes.forEach(el => {
-        el.addEventListener('focusin', e => {
-            denlargeAllImages(allImgs)
-            document.querySelectorAll('.copy-code').forEach(c => {
-                c.classList.remove('is-active-code');
-            });
 
-            e.target.classList.add('is-active-code');
-        });
-        el.addEventListener('focusout', e => {
-            e.target.classList.remove('is-active-code');
-        });
-        el.addEventListener('keydown', e => {
-            handleImgSizes({e})
-        });
-    })
-    // This should not be here, this needs to get implemented into  toggle-img-sizes.js i think
-    steps.forEach((el,i) => {
-        if(el.hasAttribute('autofocus')){
-            el.focus()
-            lastStep = el
-            iSteps = i
+function handleStepModeKey({ e, step, state, key, isCopyCode }) {
+    if (key === 'enter') {
+        if (isCopyCode) {
+            cycleStepMedia(step);
+            return true;
         }
-        
-        el.addEventListener('focus', e => {
-            scrollToCenter({el})
-            denlargeAllImages(allImgs)
-            removeStepClicked(steps)            
-            stepClicked = false
-            iSteps = i
-            iCopyCodes = 0
-            lastStep = steps[iSteps]
-            
-
-        })
-        el.addEventListener('click', e => {
-            lastStep = steps[iSteps]
-            // if(e.type != 'click') return
-            
-            if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO'){
-                
-                clickToggleImgSize(e.target)
-            }
-            scrollToCenter({el})
-            changeTutorialLink(e)
-        });
-        el.addEventListener('mousedown', e => {
-            lastStep = steps[iSteps]
-            changeTutorialLink(e)
-        });
-        el.addEventListener('keydown', e => {
-            let key = e.key.toLowerCase()
-            const step = e.target.closest('.step-float')
-            if(!step.classList.contains('step-float')) return
-            // handleImgSizes({e})
-            if (key === 'enter' && e.shiftKey) {
-                handleImgSizes({e})
-                stepClicked = false
-                return
-            }
-            if(key === 'enter'){
-                stepClicked = true
-                handleStepClickedNav({e})
-                changeTutorialLink(e)
-                return
-            }
-            
-            if(key === 'm'){
-                denlargeAllImages()
-                mainTargetDiv.scrollTo(0,0)
-                return
-            }
-            if(key === 's'){
-                denlargeAllImages()
-                return
-            }
-        });
-    })
-    
-}
-
-
-function stepFocus(index){
-    if(index >= steps.length){
-        index = steps.length -1
+        enterStepMode(step);
+        return true;
     }
-    steps[index]?.focus()
-}
-export function getLastStep(){return lastStep}
-function removeStepClicked(steps){steps.forEach(el => el.classList.remove('step-clicked'))}
-export function scrollToCenter({el,smooth}){
-    if(!el) return
-    if(smooth){
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }else {
-        el.scrollIntoView({ behavior: 'instant', block: 'center' })
+
+    if (key === 'a') {
+        const copyCodes = getStepCopyCodes(step);
+        if (!copyCodes.length) return false;
+        const nextIndex = (state.copyIndex - 1 + copyCodes.length) % copyCodes.length;
+        state.mode = 'stepMode';
+        focusCopyCode(step, state, nextIndex);
+        return true;
     }
-}
-export function stepNav({ e, navState }) {
-    if (navState.zone !== 'mainTargetDiv') return false
-    const key = e.key.toLowerCase()
-    const step = e.target.closest('.step-float')
-    
-    if (key === 'enter' && e.target === mainTargetDiv) {
-        iSteps = 0
-        steps[0].focus()
-        scrollTo(0, 0)
-        return true
+
+    if (key === 'f') {
+        const copyCodes = getStepCopyCodes(step);
+        if (!copyCodes.length) return false;
+        const nextIndex = (state.copyIndex + 1) % copyCodes.length;
+        state.mode = 'stepMode';
+        focusCopyCode(step, state, nextIndex);
+        return true;
     }
-    if (stepClicked) {
-        if (!step) return
-        
-        if (!step.classList.contains('step-clicked')) {
-            step?.classList.add('step-clicked')
+
+    if (!isNaN(key)) {
+        const copyCodes = getStepCopyCodes(step);
+        const targetIndex = parseInt(key, 10) - 1;
+        if (targetIndex >= 0 && targetIndex < copyCodes.length) {
+            state.mode = 'stepMode';
+            focusCopyCode(step, state, targetIndex);
+            return true;
         }
-        iCopyCodes = handleStepClickedNav({ e, iCopyCodes })
-        // handleStepClickedNav({ e }) Don't run this it runs when initialized in declaration above
-        return true
+    }
+
+    return false;
+}
+
+export function initStepNav() {
+    steps = [...mainTargetDiv.querySelectorAll('.step-float')];
+    steps.forEach((step, index) => {
+        if (!step.hasAttribute('tabindex')) {
+            step.setAttribute('tabindex', '0');
+        }
+        getStepState(step);
+
+        step.addEventListener('focusin', () => {
+            lastStep = step;
+            const state = getStepState(step);
+            state.mode = 'stepNav';
+            state.copyIndex = 0;
+        });
+
+        step.addEventListener('focusout', e => {
+            if (!e.relatedTarget || !step.contains(e.relatedTarget)) {
+                resetStepState(step);
+                denlargeAllImages();
+            }
+        });
+
+        step.addEventListener('click', e => {
+            lastStep = step;
+            changeTutorialLink(e);
+        });
+
+        if (step.hasAttribute('autofocus')) {
+            step.focus();
+            lastStep = step;
+        }
+    });
+}
+
+export function getLastStep() {
+    return lastStep;
+}
+
+export function scrollToCenter({ el, smooth }) {
+    if (!el) return;
+    el.scrollIntoView({ behavior: smooth ? 'smooth' : 'instant', block: 'center' });
+}
+
+function handleRootStepNavigation({ e, key, isMainTarget }) {
+    if (!steps.length) return false;
+    if (key === 'enter') {
+        steps[0].focus();
+        return true;
+    }
+    if (key === 'a' || key === 'arrowleft' || key === 'arrowup') {
+        if (isMainTarget || !lastStep) {
+            focusStep(steps.length - 1);
+        } else {
+            focusStep(steps.indexOf(lastStep) - 1);
+        }
+        return true;
+    }
+    if (key === 'f' || key === 'arrowright' || key === 'arrowdown') {
+        if (isMainTarget || !lastStep) {
+            focusStep(0);
+        } else {
+            focusStep(steps.indexOf(lastStep) + 1);
+        }
+        return true;
     }
     if (!isNaN(key)) {
-        const intLet = parseInt(key)
-        iSteps = steps[intLet - 1]
-        if (intLet >= steps.length) iSteps = steps.length - 1
-        if(!steps[intLet - 1]) return
-        steps[intLet - 1].focus()
-        return true
-    }
-    if (key === 'm') {
-        mainTargetDiv.focus()
-        mainTargetDiv.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-            // inline: 'nearest',
-        })
-        return true
-    }
-    if (key === 'a') {
-        iSteps = (iSteps - 1 + steps.length) % steps.length
-        stepFocus(iSteps)
-        return true
-    }
-    if (key === 'f') {
-        if (e.target === mainTargetDiv) {
-            iSteps = 0
-        } else {
-            iSteps = (iSteps + 1) % steps.length
+        const targetIndex = parseInt(key, 10) - 1;
+        if (targetIndex >= 0 && targetIndex < steps.length) {
+            steps[targetIndex].focus();
+            return true;
         }
-        stepFocus(iSteps)
-        return true
     }
-    return false
+    return false;
+}
+
+export function stepNav({ e, navState }) {
+    if (navState.zone !== 'mainTargetDiv') return false;
+    const key = e.key.toLowerCase();
+    const step = e.target.closest('.step-float');
+    const isMainTarget = e.target === mainTargetDiv || e.target.closest('#mainTargetDiv') === mainTargetDiv;
+    const activeStep = step || (isMainTarget ? null : lastStep);
+    const isCopyCode = !!e.target.closest('.copy-code');
+    const isStepFocused = step && e.target === step;
+
+    if (key === 'enter' && e.shiftKey && activeStep) {
+        e.preventDefault();
+        if (e.target !== activeStep) {
+            resetStepState(activeStep);
+            activeStep.focus();
+            return true;
+        }
+        cycleStepMedia(activeStep);
+        return true;
+    }
+
+    if (key === 'enter' && isStepFocused && !getStepCopyCodes(step).length) {
+        e.preventDefault();
+        cycleStepMedia(step);
+        return true;
+    }
+
+    if (key === 'enter' && !e.shiftKey && isStepFocused && hasEnlargedMedia(step) && getStepCopyCodes(step).length) {
+        e.preventDefault();
+        clearStepMedia(step);
+        return true;
+    }
+
+    if (!activeStep) {
+        const handled = handleRootStepNavigation({ e, key, isMainTarget });
+        if (handled) {
+            e.preventDefault();
+        }
+        return handled;
+    }
+
+    const state = getStepState(activeStep);
+    if (state.mode === 'stepMode' || isCopyCode) {
+        if (handleStepModeKey({ e, step: activeStep, state, key, isCopyCode })) {
+            e.preventDefault();
+            return true;
+        }
+    }
+
+    if (step) {
+        if (handleStepNavKey({ e, step: activeStep, state, key })) {
+            e.preventDefault();
+            return true;
+        }
+    }
+
+    return false;
 }
