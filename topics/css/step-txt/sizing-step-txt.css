@@ -16,7 +16,6 @@
 }
 .step-vid > video{
     /* max-height: 200px ; */
-    border: 2px solid blue;
 }
 
 .step-img > img{

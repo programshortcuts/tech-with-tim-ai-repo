@@ -96,6 +96,8 @@ function bindVideoControls(step) {
     step.addEventListener('keydown', e => {
 
         const key = e.key.toLowerCase()
+        const hasCopyCodes =
+            step.querySelectorAll('.copy-code').length > 0
 
         const isFocusedInsideThisStep =
             step.contains(document.activeElement)
@@ -103,33 +105,21 @@ function bindVideoControls(step) {
         if (!isFocusedInsideThisStep) return
 
         /*
-        SPACE
-        */
-
-        if (
-            key === ' ' ||
-            key === 'spacebar'
-        ) {
-
-            e.preventDefault()
-            e.stopPropagation()
-
-            togglePlay(vid)
-
-            updatePlayBtn(playBtn, vid)
-
-            return
-        }
-
-        /*
-        ENTER
-        */
+ENTER
+*/
 
         if (
             key === 'enter' &&
             !e.shiftKey
         ) {
 
+            // IMPORTANT:
+            // if no copy-codes,
+            // let step-nav handle enlarge
+            if (!hasCopyCodes) {
+                return
+            }
+
             e.preventDefault()
 
             togglePlay(vid)
@@ -138,15 +128,21 @@ function bindVideoControls(step) {
 
             return
         }
-
         /*
-        SHIFT + ENTER
-        */
+SHIFT + ENTER
+*/
 
         if (
             key === 'enter' &&
             e.shiftKey
         ) {
+
+            // IMPORTANT:
+            // if no copy-codes,
+            // let step-nav handle enlarge
+            if (!hasCopyCodes) {
+                return
+            }
 
             e.preventDefault()
 
