@@ -1,88 +1,91 @@
 // video-controls.js
 
-const state = {
-    activeVideo: null
-};
+export function initAllVideos(root = document) {
+    const steps = root.querySelectorAll('.step-float');
 
-/**
- * Attach controls to a video inside a step
- */
-export function bindVideoControls(stepFloat) {
-    if (!stepFloat) return;
-
-    const vid = stepFloat.querySelector("video");
-    if (!vid) return;
-
-    // CLICK: toggle enlarge + set active video
-    vid.addEventListener("click", (e) => {
-        setActiveVideo(vid);
-        toggleEnlarge(stepFloat);
-    });
-
-    // KEYBOARD: only when video or container is focused
-    stepFloat.addEventListener("keydown", (e) => {
-        handleKey(vid, e);
+    steps.forEach(step => {
+        bindVideo(step);
     });
 }
 
-/**
- * Set current active video for keyboard control
- */
-function setActiveVideo(vid) {
-    state.activeVideo = vid;
-}
-
-/**
- * Toggle UI enlarge state only (NO playback logic here)
- */
-function toggleEnlarge(stepFloat) {
-    stepFloat.classList.toggle("enlarge");
-}
-
-/**
- * Keyboard handler (single video only)
- */
-function handleKey(vid, e) {
-    const key = e.keyCode;
-
+function bindVideo(step) {
+    const vid = step.querySelector('video');
     if (!vid) return;
 
-    switch (key) {
-        case 13: // Enter → play/pause
-            if (vid.paused) {
-                vid.play();
-            } else {
-                vid.pause();
-            }
-            break;
+    // prevent duplicate binding after inject-content
+    if (vid.dataset.bound === "true") return;
+    vid.dataset.bound = "true";
 
-        case 32: // Space
-            e.preventDefault();
-            if (vid.currentTime >= vid.duration) {
-                vid.currentTime = 0;
-            }
-            vid.paused ? vid.play() : vid.pause();
-            break;
+    // CLICK = toggle enlarge (your old behavior)
+    vid.addEventListener('click', (e) => {
+        toggleStepMedia(step);
+    });
 
-        case 37: // Left
-            vid.currentTime = Math.max(0, vid.currentTime - 0.5);
-            break;
+    // KEYBOARD = ONLY when step is focused (important for StepNav)
+    step.addEventListener('keydown', (e) => {
+        handleKeys(vid, step, e);
+    });
+}
 
-        case 39: // Right
-            vid.currentTime = Math.min(vid.duration, vid.currentTime + 0.5);
-            break;
+/**
+ * OLD BEHAVIOR RESTORED:
+ * click toggles enlarge on container (step-float)
+ */
+function toggleStepMedia(step) {
+    step.classList.toggle('enlarge');
+}
 
-        case 27: // ESC → collapse
-            const step = vid.closest(".step-float");
-            if (step) step.classList.remove("enlarge");
-            break;
+/**
+ * Old-style playback controls, but scoped to step
+ */
+function handleKeys(vid, step, e) {
+    const key = e.key.toLowerCase();
+
+    // ENTER = play/pause (old behavior style)
+    if (key === 'enter') {
+        e.preventDefault();
+        togglePlay(vid);
+        return;
+    }
+
+    // SPACE = play/pause
+    if (key === ' ') {
+        e.preventDefault();
+        togglePlay(vid);
+        return;
+    }
+
+    // SHIFT + ENTER = toggle enlarge (matches your image system behavior)
+    if (key === 'enter' && e.shiftKey) {
+        step.classList.toggle('enlarge');
+        return;
+    }
+
+    // LEFT / RIGHT scrubbing
+    if (e.keyCode === 37) {
+        if(!vid.currentTime)return
+        vid.currentTime = Math.max(0, vid.currentTime - 0.5);
+        return;
+    }
+
+    if (e.keyCode === 39) {
+        if (!vid.currentTime) return
+        vid.currentTime = Math.min(vid.duration, vid.currentTime + 0.5);
+        return;
+    }
+
+    // ESC = collapse (new but safe)
+    if (key === 'escape') {
+        step.classList.remove('enlarge');
     }
 }
 
-/**
- * Optional: call this when injecting new content
- */
-export function initAllVideos(root = document) {
-    const steps = root.querySelectorAll(".step-float");
-    steps.forEach(bindVideoControls);
+function togglePlay(vid) {
+    if (!vid) return;
+
+    if (vid.paused) {
+        vid.play();
+    } else {
+        vid.pause();
+    }
 }
