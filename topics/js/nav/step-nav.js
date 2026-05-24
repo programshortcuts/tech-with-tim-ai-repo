@@ -1,7 +1,7 @@
 // step-nav.js
 import { mainTargetDiv } from "../core/inject-content.js";
 import { changeTutorialLink } from "../ui/change-tutorial-link.js";
-import { denlargeAllImages } from "../ui/toggle-img-sizes.js";
+import { denlargeAllImages, clickToggleImgSize } from "../ui/toggle-img-sizes.js";
 
 let steps = [];
 let lastStep = null;
@@ -217,6 +217,11 @@ export function initStepNav() {
 
         step.addEventListener('click', e => {
             lastStep = step;
+            const media = e.target.closest('.step-img, .step-vid');
+            if (media) {
+                clickToggleImgSize(media);
+                return;
+            }
             changeTutorialLink(e);
         });
 

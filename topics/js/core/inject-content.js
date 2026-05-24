@@ -1,4 +1,5 @@
 // inject-content.js
+import { initAllVideos } from "../ui/video-controls.js";
 export const mainTargetDiv = document.querySelector('#mainTargetDiv')
 
 import { sideBar } from "../ui/toggle-sidebar.js"
@@ -127,6 +128,7 @@ export async function injectFromHref(href) {
         refreshImages(mainTargetDiv)       
         initCopyCode()
         updateSteps()
+        initAllVideos()
     } catch (err) {
         mainTargetDiv.innerHTML = `<p>Failed to load content.</p>`
     }
