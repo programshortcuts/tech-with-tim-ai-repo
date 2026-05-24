@@ -37,7 +37,7 @@
 }
 /* Focused step rises above nearby media */
 .step-float:focus-within {
-    z-index: 100;
+    z-index: auto;
 }
 /* when code inside step-txt is focused */
 .step-txt:focus-within {
