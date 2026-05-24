@@ -62,8 +62,6 @@ export function updateSteps(){
     copyCodes = updateCopyCodes()
     copyCodes.forEach(el => {
         el.addEventListener('focusin', e => {
-            console.log('here')
-            console.log(e.target)
             denlargeAllImages(allImgs)
             document.querySelectorAll('.copy-code').forEach(c => {
                 c.classList.remove('is-active-code');
@@ -116,22 +114,28 @@ export function updateSteps(){
             let key = e.key.toLowerCase()
             const step = e.target.closest('.step-float')
             if(!step.classList.contains('step-float')) return
-            
+            // handleImgSizes({e})
+            if (key === 'enter' && e.shiftKey) {
+                handleImgSizes({e})
+                stepClicked = false
+                return
+            }
             if(key === 'enter'){
                 stepClicked = true
-                // handleImgSizes({e})
                 handleStepClickedNav({e})
                 changeTutorialLink(e)
+                return
             }
             
             if(key === 'm'){
                 denlargeAllImages()
                 mainTargetDiv.scrollTo(0,0)
+                return
             }
             if(key === 's'){
                 denlargeAllImages()
+                return
             }
-            
         });
     })
     
@@ -158,6 +162,7 @@ export function stepNav({ e, navState }) {
     if (navState.zone !== 'mainTargetDiv') return false
     const key = e.key.toLowerCase()
     const step = e.target.closest('.step-float')
+    
     if (key === 'enter' && e.target === mainTargetDiv) {
         iSteps = 0
         steps[0].focus()

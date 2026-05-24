@@ -18,18 +18,15 @@ export function handleImgSizes({ e }) {
     const key = e.key.toLowerCase()
 
     // if (key !== 'enter') return
-    
+    console.log(e.target)
     const step = e.target.closest('.step-float')
-    if(key === 'enter' ||
-        (key === 'enter' && e.shiftKey)
-    ){
+    if(key === 'enter' && e.shiftKey){
         if (!step) return
-
-        const selector = e.shiftKey
-        ? '.step-vid'
-        : '.step-img'
+        
+        const selector = '.step-img,.step-vid'
         
         cycleMedia(step, selector)
+        return
     }
 }
 
@@ -38,12 +35,8 @@ function cycleMedia(step, selector) {
     const items = [...step.querySelectorAll(selector)]
 
     if (!items.length) return
-
-    const stateKey =
-        selector === '.step-img'
-            ? 'imgIndex'
-            : 'vidIndex'
-
+    console.log(step)
+    const stateKey = 'mediaIndex'
     let index = Number(step.dataset[stateKey] ?? -1)
 
     // remove all enlarged first
