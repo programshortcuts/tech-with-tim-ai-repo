@@ -37,7 +37,7 @@
 @import url('utilities/text.css');
 @import url('utilities/position.css');
 @import url('utilities/layout.css');
-/* @import url('utilities/zIndex.css'); */
+@import url('utilities/zindex.css');
 
 * {
     box-sizing: border-box;

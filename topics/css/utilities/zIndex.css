@@ -1,19 +1,7 @@
-/* zIndex.css */
-/* .page-header,
-.tutorial-link-img-container {
-    z-index: 10
+/* zindex.css */
+#mainTargetDiv{
+    z-index: 200;
 }
-.main-landing-page>nav#nxtPrevLessonsBtns {
-    z-index: 2;
+.side-bar {
+    z-index: 100;
 }
-#sideBarBtn {
-    z-index: 5;
-}
-.inject-content-btns-container{
-    z-index: 5;
-}
-
- */
-
-
- 

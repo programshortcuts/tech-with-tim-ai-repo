@@ -36,3 +36,7 @@ main>.side-bar::-webkit-scrollbar {
     min-width: 150px;
     width: 100%;
 }
+
+.side-bar {
+    z-index: 100
+}
