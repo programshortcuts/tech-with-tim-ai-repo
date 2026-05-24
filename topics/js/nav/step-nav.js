@@ -216,14 +216,23 @@ export function initStepNav() {
         });
 
         step.addEventListener('click', e => {
-            lastStep = step;
-            const media = e.target.closest('.step-img, .step-vid');
-            if (media) {
-                clickToggleImgSize(media);
-                return;
+
+            const mediaTarget = e.target.closest('.step-img, .step-vid, img, video')
+
+            if (mediaTarget) {
+                e.stopPropagation()
+
+                lastStep = step
+
+                clickToggleImgSize(mediaTarget)
+
+                return
             }
-            changeTutorialLink(e);
-        });
+
+            lastStep = step
+
+            changeTutorialLink(e)
+        })
 
         if (step.hasAttribute('autofocus')) {
             step.focus();
