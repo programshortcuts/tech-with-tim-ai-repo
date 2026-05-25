@@ -13,7 +13,7 @@
 
 }
 .step-float:last-of-type .step-vid.enlarge {
-    transform: translate(-31%, 25%);
+    transform: translate(-31%, -150%);
 
 }
 .step-img.enlarge,

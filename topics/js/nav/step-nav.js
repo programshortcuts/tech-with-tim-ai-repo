@@ -318,7 +318,7 @@ export function initStepNav() {
         })
 
         
-        if (step.hasAttribute('autofocus')) {
+        if (step.hasAttribute('data-auto-focus')) {
             step.focus();
             lastStep = step;
         }

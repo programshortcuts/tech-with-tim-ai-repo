@@ -29,8 +29,7 @@ export function changeTutorialLink(e) {
             vidHref += (vidBase.includes("?") ? "&" : "?") + `t=${ts}s`
         }
 
-        tutorialLink.href = ts
-    console.log(vidHref)       
+        tutorialLink.href = vidHref
         return
     }
 }
