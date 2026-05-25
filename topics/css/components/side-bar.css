@@ -9,10 +9,10 @@ main>.side-bar::-webkit-scrollbar {
     width: fit-content;
     border-right: 1px solid black;
     border-top: none !important;
-    flex-basis: 10%;
+    flex-basis: 40%;
     padding-right: 2%;
     position: sticky;
-    top: 10%;
+    top: 5%;
     height: 90vh;
 }
 .side-bar-links-container ul {
