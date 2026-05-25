@@ -55,7 +55,7 @@ a:focus,
     cursor: pointer;
 }
 .sideLinkChange{
-    background-color: rgba(235, 232, 20, 0.5);
+    background-color: rgba(101, 157, 152, 0.5);
     color: black !important;
 }
 .sideLinkChange *{

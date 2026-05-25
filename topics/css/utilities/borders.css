@@ -23,3 +23,6 @@
 .step-vid video {
     box-shadow: 0 0 1px 1px rgb(86, 120, 112);
 }
+.inject-content-btns-container button{
+    border-radius: 4px;
+}

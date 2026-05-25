@@ -39,3 +39,6 @@
 .page-wrapper>nav.nav-lesson-title {
     z-index: 600;
 }
+.inject-content-btns-container {
+    z-index: 600
+}
