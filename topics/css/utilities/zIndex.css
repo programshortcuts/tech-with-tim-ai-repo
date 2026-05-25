@@ -6,42 +6,23 @@
     z-index: 100;
 }
 .step-float {
-    z-index: 1;
+    /* z-index: 1; */
 }
 
 .copy-code {
-    z-index: 2;
     z-index: 10;
 }
-/* step-txt/step-txt.css */
-/* Base layers */
-.step-float {
-    position: relative;
-    z-index: 1;
-}
-.step-img,
-.step-vid,
-.copy-code,
-.code-container {
-    position: relative;
-}
 .step-txt {
-    position: relative;
     z-index: 1;
 }
-.copy-code {
-    position: relative;
-}
-.clear {
-    clear: both;
-}
+
 /* Focused step rises above nearby media */
 .step-float:focus-within {
     z-index: 100;
 }
 /* when code inside step-txt is focused */
 .step-txt:focus-within {
-    z-index: 500;
+    z-index: 20;
 }
 .step-container {
     /* position: relative; */
