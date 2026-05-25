@@ -1,4 +1,7 @@
 /* position.css */
+body{
+    position: relative;
+}
 .page-wrapper {
     position: relative;
         transform: translateX(0);
