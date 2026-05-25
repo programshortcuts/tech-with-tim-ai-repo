@@ -25,10 +25,8 @@
     width: 100%;
 }
 main.main-container {
-    width: 100%;
+    /* width: 100%; */
+    /* height: 100max; */
 }
 
 
-#mainTargetDiv{
-    height: 100vh;
-}

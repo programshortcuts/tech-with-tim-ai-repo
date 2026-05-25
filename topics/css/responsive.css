@@ -95,8 +95,12 @@
 
 @media screen and (max-width:520px) {
     .main-container>.side-bar {
-        /* flex-basis% !important; */
-        width: 78% !important;
+        flex-basis: 90%;
+        /* width: 78% !important; */
+    }
+    .main-container.collapsed .side-bar {
+        /* width: 38% !important; */
+        flex-basis:45%;
     }
     .step-img.enlarge > img {
         min-height: 350px;
