@@ -220,7 +220,7 @@ export function initStepNav() {
         });
 
         const handleStepMediaTap = e => {
-            const mediaTarget = e.target.closest('.step-img, .step-vid, img, video');
+            const mediaTarget = e.target.closest('.step-img, img');
             if (!mediaTarget) return false;
             e.stopPropagation();
             lastStep = step;
