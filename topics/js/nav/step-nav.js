@@ -1,6 +1,6 @@
 // step-nav.js
 import { mainTargetDiv } from "../core/inject-content.js";
-import { changeTutorialLink } from "../ui/change-tutorial-link.js";
+import { syncTutorialLinkFromElement } from "../ui/change-tutorial-link.js";
 import { denlargeAllImages, clickToggleImgSize } from "../ui/toggle-img-sizes.js";
 
 let steps = [];
@@ -148,7 +148,7 @@ function handleStepNavKey({ e, step, state, key }) {
         const copyCodes = getStepCopyCodes(step);
         if (!copyCodes.length) {
             cycleStepMedia(step);
-            changeTutorialLink({ target: step });
+            syncTutorialLinkFromElement({ target: step });
             return true;
         }
         enterStepMode(step);
@@ -236,7 +236,7 @@ export function initStepNav() {
             state.mode = 'stepNav';
             state.copyIndex = 0;
             if (step.hasAttribute('data-auto-focus')) {
-                changeTutorialLink(e)
+                syncTutorialLinkFromElement(e)
 
             }
         });
@@ -249,7 +249,7 @@ export function initStepNav() {
         });
 
         const updateTutorialLinkForStep = () => {
-            changeTutorialLink({ target: step });
+            syncTutorialLinkFromElement({ target: step });
         };
 
         const handleStepMediaTap = e => {
@@ -289,7 +289,7 @@ export function initStepNav() {
             }
 
             lastStep = step;
-            changeTutorialLink(e);
+            syncTutorialLinkFromElement(e);
         });
 
         
@@ -396,7 +396,7 @@ export function stepNav({ e, navState }) {
     if (key === 'enter' && isStepFocused && !getStepCopyCodes(step).length) {
         e.preventDefault();
         cycleStepMedia(step);
-        changeTutorialLink({ target: step });
+        syncTutorialLinkFromElement({ target: step });
         return true;
     }
 
