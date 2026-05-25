@@ -5,15 +5,15 @@ main>.side-bar::-webkit-scrollbar {
     display: none;
 }
 .main-container>.side-bar {
-    top: 4%;
     width: fit-content;
     border-right: 1px solid black;
     border-top: none !important;
-    flex-basis: 50%;
+    flex-basis: 25%;
     padding-right: 2%;
     position: sticky;
-    top: 5%;
-    height: 100vmax;
+    top: 5vh;
+    height: calc(100vh - 5vh);
+    align-self: stretch;
 }
 .side-bar-links-container ul {
     list-style: none;

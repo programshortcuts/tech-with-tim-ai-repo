@@ -14,14 +14,18 @@
     z-index: 2;
 }
 main.main-container.collapsed {
-    display: static
+    display: static;
 }
 main.main-container {
-    display: flex;    
+    display: flex;
+    height: calc(100vh - 5vh);
+    align-items: stretch;
+    overflow: hidden;
 }
 
 #mainTargetDiv {
     flex-grow: 1;
+    overflow-y: auto;
     overflow-x: hidden;
-    overflow-y: scroll;
+    min-height: 0;
 }
