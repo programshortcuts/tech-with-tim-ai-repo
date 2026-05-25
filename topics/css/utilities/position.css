@@ -1,21 +1,44 @@
 /* position.css */
-body{
-    position: relative;
+html {
+    overflow-x: hidden;
 }
+
+body {
+    position: relative;
+    overflow-x: hidden;
+    width: 100%;
+}
+
 .page-wrapper {
     position: relative;
-        transform: translateX(0);
+    transform: translateX(0);
+    overflow-x: hidden;
+    width: 100%;
 }
+
 .page-wrapper>nav.nav-lesson-title {
     position: fixed;
     top: 4%;
     z-index: 2;
+    overflow-x: hidden;
 }
+
 .inject-content-btns-container {
     position: fixed;
     bottom: 0;
     right: 0;
 }
-.page-wrapper > .main-container{
+
+.page-wrapper > .main-container {
     top: 10%;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+.side-bar {
+    overflow-x: hidden;
+}
+
+#mainTargetDiv {
+    overflow-x: hidden;
 }
