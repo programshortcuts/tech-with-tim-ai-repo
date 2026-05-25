@@ -236,7 +236,7 @@ export function initStepNav() {
             state.mode = 'stepNav';
             state.copyIndex = 0;
             if (step.hasAttribute('data-auto-focus')) {
-                syncTutorialLinkFromElement(e)
+                syncTutorialLinkFromElement(step)
 
             }
         });
@@ -249,7 +249,7 @@ export function initStepNav() {
         });
 
         const updateTutorialLinkForStep = () => {
-            syncTutorialLinkFromElement({ target: step });
+            syncTutorialLinkFromElement(step);
         };
 
         const handleStepMediaTap = e => {
@@ -289,7 +289,7 @@ export function initStepNav() {
             }
 
             lastStep = step;
-            syncTutorialLinkFromElement(e);
+            syncTutorialLinkFromElement(step);
         });
 
         
