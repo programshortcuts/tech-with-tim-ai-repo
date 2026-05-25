@@ -29,3 +29,5 @@ main.main-container {
     overflow-x: hidden;
     min-height: 0;
 }
+.inject-content-btns-container {
+    display: flex;}

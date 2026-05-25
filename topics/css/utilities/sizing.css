@@ -30,3 +30,12 @@ main.main-container {
 }
 
 
+.inject-content-btns-container{
+
+    height: 5vh;
+    width: 20vw;
+}
+.inject-content-btns-container > button{
+    height: 100%;
+    width: 20vw;
+}
