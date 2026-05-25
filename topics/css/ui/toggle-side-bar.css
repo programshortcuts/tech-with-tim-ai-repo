@@ -19,7 +19,7 @@
     transform: scale(1.8);
     left: 20%;
     margin-left: 10%;
-    top: 80% !important;
-    /* bottom: 0% !important; */
+    /* top: 80% !important; */
+    bottom: 0 !important;
     /* border: 10px solid red !important; */
 }

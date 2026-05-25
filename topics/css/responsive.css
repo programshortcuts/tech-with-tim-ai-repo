@@ -109,4 +109,12 @@
         .enlarge {
             transform: scale(1.5);
         }
+                .main-container.collapsed #sideBarBtn {
+                    transform: scale(1.8);
+                    left: 20%;
+                    margin-left: 10%;
+                    top: 100% !important;
+                    bottom: 0% !important;
+                    /* border: 10px solid red !important; */
+                }
 }
