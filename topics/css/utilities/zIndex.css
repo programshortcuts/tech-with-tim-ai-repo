@@ -8,16 +8,12 @@
 .step-float {
     z-index: 1;
 }
-
+.step-txt {
+    z-index: 1;
+}
 .copy-code {
     z-index: 2;
     z-index: 10;
-}
-/* step-txt/step-txt.css */
-/* Base layers */
-.step-float {
-    position: relative;
-    z-index: 1;
 }
 .step-img,
 .step-vid,
@@ -25,17 +21,9 @@
 .code-container {
     position: relative;
 }
-.step-txt {
-    position: relative;
-    z-index: 1;
-}
-.copy-code {
-    position: relative;
-}
-.clear {
-    clear: both;
-}
+
 /* Focused step rises above nearby media */
+.step-float:active,
 .step-float:focus-within {
     z-index: 100;
 }
