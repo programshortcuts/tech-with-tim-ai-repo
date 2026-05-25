@@ -1,14 +1,10 @@
 // import { denlargeAllImages } from "./toggle-img-sizesOG"
 // toggle-img-sizes.js
-// toggle-img-sizes.js
 
 let allMedia = []
 
 export function refreshImages(root = document) {
-    allMedia = [
-        ...root.querySelectorAll('.step-img'),
-        ...root.querySelectorAll('.step-vid')
-    ]
+    allMedia = root.querySelectorAll('.step-img, .step-vid')
 }
 
 export function denlargeAllImages() {
@@ -17,38 +13,37 @@ export function denlargeAllImages() {
     })
 }
 
-/**
- * SHIFT + ENTER cycling
- */
 export function handleImgSizes({ e }) {
 
     const key = e.key.toLowerCase()
 
-    if (!(key === 'enter' && e.shiftKey)) return
-
+    // if (key !== 'enter') return
+    console.log(e.target)
     const step = e.target.closest('.step-float')
-
-    if (!step) return
-
-    cycleMedia(step)
+    if(key === 'enter' && e){
+        if (!step) return
+        
+        const selector = '.step-img,.step-vid'
+        
+        cycleMedia(step, selector)
+        return
+    }
 }
 
-/**
- * Keyboard cycle behavior
- */
-function cycleMedia(step) {
+function cycleMedia(step, selector) {
 
-    const items = [
-        ...step.querySelectorAll('.step-img'),
-        ...step.querySelectorAll('.step-vid')
-    ]
+    const items = [...step.querySelectorAll(selector)]
 
     if (!items.length) return
-
-    const stateKey = 'mediaIndex'
+    console.log(step)
+    const stateKey =
+        selector === '.step-img'
+            ? 'imgIndex'
+            : 'vidIndex'
 
     let index = Number(step.dataset[stateKey] ?? -1)
 
+    // remove all enlarged first
     items.forEach(el => {
         el.classList.remove('enlarge')
     })
@@ -66,10 +61,12 @@ function cycleMedia(step) {
         return
     }
 
-    // MULTI ITEM
+    // MULTIPLE ITEMS
     index++
 
+    // finished cycle
     if (index >= items.length) {
+
         step.dataset[stateKey] = -1
         return
     }
@@ -78,21 +75,10 @@ function cycleMedia(step) {
 
     step.dataset[stateKey] = index
 }
+export function clickToggleImgSize(img) {
 
-/**
- * CLICK behavior
- */
-export function clickToggleImgSize(target) {
-
-    if (!target) return
-
-    const media =
-        target.classList?.contains('step-img') ||
-            target.classList?.contains('step-vid')
-            ? target
-            : target.closest('.step-img, .step-vid')
-
-    if (!media) return
-
-    media.classList.toggle('enlarge')
+    toggleImgSize(img.closest('.step-img, .step-vid'))
+} 
+function toggleImgSize(stepImgVid){
+    stepImgVid.classList.toggle('enlarge')
 }
