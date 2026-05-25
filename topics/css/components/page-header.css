@@ -1,8 +1,8 @@
 /* components/page-header.css */
 .page-header{
     position: sticky;
-    top: 0;
-    height: 5vh;
+    top: 2%;
+    height: 3vh;
     z-index: 2;
 }
 .page-header-links {
@@ -20,15 +20,11 @@
 }
 .tutorial-link-img-container {
     position: fixed;
-    top: 0;
-    right: 0;
     display: flex;
     align-items: flex-end;
     flex-direction: column;
-    gap: 0.5rem;
-    padding: 0.5rem;
-    pointer-events: auto;
-    touch-action: manipulation;
+    right: 0;
+    top: 0;
 }
 
 .tutorial-link-img-container img {

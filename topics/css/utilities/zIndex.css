@@ -1,4 +1,7 @@
 /* zindex.css */
+.page-header{
+    z-index: 600
+}
 #mainTargetDiv{
     z-index: 200;
 }
@@ -33,8 +36,6 @@
 .video-controls {
     z-index: 500
 }
-
-.tutorial-link-img-container{
-    z-index: 10000;
-    pointer-events: auto;
+.page-wrapper>nav.nav-lesson-title {
+    z-index: 600;
 }

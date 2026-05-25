@@ -16,7 +16,7 @@ body {
 
 .page-wrapper>nav.nav-lesson-title {
     position: fixed;
-    top: 4%;
+     top: 10%;
     z-index: 2;
 }
 
@@ -36,10 +36,4 @@ body {
 
 #mainTargetDiv {
     overflow-x: hidden;
-}
-
-.tutorial-link-img-container{
-    position: fixed;
-    top: 0;
-    
 }

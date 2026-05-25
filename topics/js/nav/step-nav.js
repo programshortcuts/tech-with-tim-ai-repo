@@ -155,13 +155,15 @@ function handleStepNavKey({ e, step, state, key }) {
         return true;
     }
 
-    if (key === 'a'  || key === 'arrowup') {
+    // if (key === 'a'  || key === 'arrowup') {
+    if (key === 'a'  ) {
         const currentIndex = steps.indexOf(step);
         focusStep(currentIndex - 1);
         return true;
     }
 
-    if (key === 'f'  || key === 'arrowdown') {
+    // if (key === 'f'  || key === 'arrowdown') {
+    if (key === 'f'  ) {
         const currentIndex = steps.indexOf(step);
         focusStep(currentIndex + 1);
         return true;
@@ -338,7 +340,8 @@ function handleRootStepNavigation({ e, key, isMainTarget }) {
         steps[0].focus();
         return true;
     }
-    if (key === 'a'  || key === 'arrowup') {
+    // if (key === 'a'  || key === 'arrowup') {
+    if (key === 'a') {
         if (isMainTarget || !lastStep) {
             focusStep(steps.length - 1);
         } else {
@@ -346,7 +349,8 @@ function handleRootStepNavigation({ e, key, isMainTarget }) {
         }
         return true;
     }
-    if (key === 'f' || key === 'arrowdown') {
+    // if (key === 'f' || key === 'arrowdown') {
+    if (key === 'f') {
         if (isMainTarget || !lastStep) {
             focusStep(0);
         } else {
