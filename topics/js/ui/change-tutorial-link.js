@@ -1,35 +1,23 @@
 // change-tutorial-link.js
-export const tutorialLink = document.querySelector('#tutorialLink')
-export function changeTutorialLink(e) {
-    const linkEl = e.target.closest('a') || e.target.closest('.step-float')
-    if (!linkEl) return
+// change-tutorial-link.js
 
-    const isSideBar = linkEl.closest('.side-bar')
+export const tutorialLink =
+    document.querySelector('#tutorialLink')
 
-    if (isSideBar) {
-        const vidBase = linkEl.getAttribute("data-video")
-        const ts = linkEl.getAttribute("data-timestamp")
+export function syncTutorialLinkFromElement(el) {
 
-        let vidHref = vidBase
-        if (ts) {
-            vidHref += (vidBase.includes("?") ? "&" : "?") + `t=${ts}s`
-        }
+    if (!el) return
 
-        tutorialLink.href = vidHref
-        return
+    const vidBase = el.getAttribute("data-video")
+    const ts = el.getAttribute("data-timestamp")
+
+    if (!vidBase) return
+
+    let vidHref = vidBase
+
+    if (ts) {
+        vidHref += (vidBase.includes("?") ? "&" : "?") + `t=${ts}s`
     }
 
-    const step = e.target.closest('.step-float')
-    if (step) {
-        const vidBase = step.getAttribute("data-video")
-        const ts = step.getAttribute("data-timestamp")
-
-        let vidHref = vidBase
-        if (ts) {
-            vidHref += (vidBase.includes("?") ? "&" : "?") + `t=${ts}s`
-        }
-
-        tutorialLink.href = vidHref
-        return
-    }
+    tutorialLink.href = vidHref
 }
