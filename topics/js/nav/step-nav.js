@@ -267,7 +267,7 @@ export function initStepNav() {
             if (handleStepMediaTap(e)) return;
             if (isScrolling) return
 
-            toggleEnlarge(stepFloat)
+            // toggleEnlarge(stepFloat)
             const clickedInsideStep = step.contains(e.target);
             const isBlockedClick = e.target.closest('p, .step-txt, .code-container, .copy-code');
             const hasImgsContainer = !!step.querySelector('.imgs-container');
@@ -367,6 +367,11 @@ export function stepNav({ e, navState }) {
     const activeStep = step || (isMainTarget ? null : lastStep);
     const isCopyCode = !!e.target.closest('.copy-code');
     const isStepFocused = step && e.target === step;
+    const isFocusableInnerTarget = !!e.target.closest('a, button, input, textarea, select, summary, [tabindex]:not([tabindex="-1"])');
+
+    if (key === 'enter' && activeStep && e.target !== activeStep && !isCopyCode && !getStepCopyCodes(activeStep).length && isFocusableInnerTarget) {
+        return false;
+    }
 
     if (key === 'enter' && e.shiftKey && activeStep) {
         e.preventDefault();

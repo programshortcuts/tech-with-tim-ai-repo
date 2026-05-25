@@ -1,13 +1,19 @@
 /* toggle-img-sizes.css */
 /* Enlarged media ALWAYS wins */
+.step-img.enlarge{
+    top: 20%;
+    transform: translate(-55%, -50%) scale(1.2);
+}
+.step-vid.enlarge {
+    top: 30%;
+    transform: translate(-55%, -50%) scale(1.002);
+}
 .step-img.enlarge,
 .step-vid.enlarge {
     position: fixed;
     z-index: 999999 !important;
-    top: 20%;
     left: 50%;
-    transform: translate(-55%, -50%) 
-                   scale(1.002);
+    
 
     min-width: 90vw;
     max-width: 95vw;
