@@ -30,3 +30,6 @@
 .step-vid {
     z-index: 11
 }
+.video-controls {
+    z-index: 501
+}
