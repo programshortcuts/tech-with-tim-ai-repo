@@ -5,8 +5,8 @@
     transform: translate(-55%, -50%) scale(1.2);
 }
 .step-vid.enlarge {
-    top: 30%;
-    transform: translate(-55%, -50%) scale(1.002);
+    /* top: 30%; */
+    transform: translate(-55%, 0%) scale(1.002);
 }
 .step-img.enlarge,
 .step-vid.enlarge {
