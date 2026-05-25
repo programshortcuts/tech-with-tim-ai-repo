@@ -1,268 +1,154 @@
 // sidebar-nav.js
-// sidebar-nav.js
-import { handleGlobalHeaderKeys } from "./global-header-keys.js"
+import { mainContainer } from "../core/main-script.js";
 import {
     setLastFocusedLink,
     getLastFocusedLink,
+    clearLastFocusedLink,
     setLastCLICKEDLink,
-    getLastCLICKEDLink
-} from "./sidebar-state.js"
+    getLastCLICKEDLink,
+    clearLastCLICKEDLink
+} from "./sidebar-state.js";
+import { sideBarBtn } from "../ui/toggle-sidebar.js";
+import { injectFromHref, mainTargetDiv } from "../core/inject-content.js";
+import { getSteps, getLastStep } from "./step-nav.js";
+import { changeTutorialLink, tutorialLink } from "../ui/change-tutorial-link.js";
 
-import {
-    injectFromHref,
-    mainTargetDiv
-} from "../core/inject-content.js"
+export const sideBarAs = document.querySelectorAll('.side-bar-links-container ul a');
+export const sideBarAsARRAY = Array.from(sideBarAs);
 
-import { sideBarBtn } from "../ui/toggle-sidebar.js"
-export function sideBarNav({ e, navState }) {
-    const handled = handleSideBarKeyDown(e)
+let iSideBarAs = 0;
+export function setIndexSideBarAs(i) { iSideBarAs = i; }
+export function getIndexSideBarAs() { return iSideBarAs; }
 
-    return handled ?? true
+
+
+// Keep track of last link activated by user (click or enter)
+let lastUserActivated = null;
+
+// Focus a sidebar link by index
+function focusSideBarIndex(index) {
+    if (index < 0 || index >= sideBarAsARRAY.length) return;
+    const el = sideBarAsARRAY[index];
+    iSideBarAs = index;
+    el.focus();
+    setLastFocusedLink(el);
 }
-// ---------------------------------------------------
-// Always Get Fresh Sidebar Links
-// ---------------------------------------------------
 
-export function getSideBarLinks() {
+// Activate a link: handles tutorial change and mainTargetDiv focus
+function activateLink(link) {
+    if (!link) return;
 
-    return [
-        ...document.querySelectorAll(
-            '.side-bar-links-container a'
-        )
-    ]
+    changeTutorialLink({ target: link });
+
+    if (lastUserActivated === link) {
+        mainTargetDiv.focus();
+        mainTargetDiv.scrollTo(0, 0);
+        window.scrollTo(0, 0);
+    }
+
+    lastUserActivated = link;
+    setLastCLICKEDLink(link);
+    
 }
 
-// ---------------------------------------------------
-// Sidebar Index
-// ---------------------------------------------------
-
-let currentIndex = 0
-
-// ---------------------------------------------------
-// Init Sidebar
-// ---------------------------------------------------
-
+// Initialize all sidebar listeners
 export function initSideBarListeners() {
+    const sideBarContainer = document.querySelector('.side-bar-links-container');
 
-    const sideBar =
-        document.querySelector('.side-bar-links-container')
+    // Delegated click handling
+    sideBarContainer.addEventListener('click', e => {
+        const link = e.target.closest('a');
+        
+        // navTitleH1.innerText = [...sideBarAs].indexOf(link) + 1
+        if (!link) return;
+        activateLink(link);
+    });
 
-    if (!sideBar) return
+    // Keyboard handling for each sidebar link
+    sideBarAsARRAY.forEach((el, i) => {
+        // Autofocus on initial load
+        if (el.hasAttribute('autofocus')) {
+            setLastCLICKEDLink(el);
+            setLastFocusedLink(el);
+            iSideBarAs = i;
+            focusSideBarIndex(i);
+            injectFromHref(el);
+            return;
+        }
 
-    setupAutoFocus()
+        if (el.hasAttribute('focus')) {
+            clearLastCLICKEDLink();
+            clearLastFocusedLink();
+            setLastFocusedLink(el);
+            iSideBarAs = i;
+            focusSideBarIndex(i);
+        }
 
-    sideBar.addEventListener(
-        'click',
-        handleSideBarClick
-    )
+        el.addEventListener('keydown', e => {
+            const key = e.key.toLowerCase();
+            
+            console.log('here')
+            if (key === 'enter') {
+                const link = e.target.closest('a');
+                // navTitleH1.innerText = [...sideBarAs].indexOf(link) + 1
+                activateLink(link);
+            }
 
-    sideBar.addEventListener(
-        'keydown',
-        handleSideBarKeyDown
-    )
+            if (key === 'f') {
+                // Move index to this element for 'f' navigation
+                const link = e.target.closest('a');
+                if (!link) return;
+                iSideBarAs = sideBarAsARRAY.indexOf(link);
+            }
 
-    sideBar.addEventListener(
-        'focusin',
-        handleFocusIn
-    )
+            if (key === 's') sideBarBtn?.focus();
+            if (key === 'm') {
+                mainTargetDiv?.focus();
+                document.body.scrollIntoView({ behavior: 'instant', block: 'start' });
+            }
+            if (key === 't') {
+                tutorialLink?.focus();
+                document.body.scrollIntoView({ behavior: 'instant', block: 'start' });
+            }
+        });
+    });
+
+    // Optional: keydown for sidebar button
+    sideBarBtn.addEventListener('keydown', e => {
+        // Currently no behavior; kept for future expansion
+    });
 }
 
-// ---------------------------------------------------
-// Auto Focus Startup Link
-// ---------------------------------------------------
+// External navigation handling (f/a keys)
+export function sideBarNav({ e, navState }) {
+    if (navState.zone !== 'sideBar') return;
+    const key = e.key.toLowerCase();
 
-function setupAutoFocus() {
-
-    const links = getSideBarLinks()
-
-    links.forEach((link, i) => {
-
-        if (!link.hasAttribute('autofocus')) return
-
-        currentIndex = i
-
-        setLastFocusedLink(link)
-
-        setLastCLICKEDLink(link)
-
-        injectFromHref(link)
-
-        requestAnimationFrame(() => {
-            link.focus()
-        })
-    })
-}
-
-// ---------------------------------------------------
-// Sidebar Click
-// ---------------------------------------------------
-
-function handleSideBarClick(e) {
-
-    const link = e.target.closest('a')
-
-    if (!link) return
-
-    e.preventDefault()
-
-    activateLink(link)
-}
-
-// ---------------------------------------------------
-// Sidebar Keyboard Nav
-// ---------------------------------------------------
-
-function handleSideBarKeyDown(e) {
-
-    const key = e.key.toLowerCase()
-
-    // -----------------------
-    // Forward Navigation
-    // -----------------------
+    if (!isNaN(key)) {
+        focusSideBarIndex(parseInt(key) - 1);
+        return true;
+    }
 
     if (key === 'f') {
-
-        e.preventDefault()
-
-        focusNextLink()
-
-        return
+        if (!mainContainer.classList.contains('collapsed')) {
+            if (e.target === sideBarBtn) iSideBarAs = -1;
+            focusSideBarIndex((iSideBarAs + 1) % sideBarAsARRAY.length);
+        } else {
+            const steps = getSteps();
+            const lastStep = getLastStep();
+            (lastStep || steps[0])?.focus();
+        }
+        return true;
     }
-
-    // -----------------------
-    // Backward Navigation
-    // -----------------------
 
     if (key === 'a') {
-
-        e.preventDefault()
-
-        focusPreviousLink()
-
-        return
+        if (e.target.id === 'homePageSideBar') {
+            focusSideBarIndex(sideBarAsARRAY.length - 2);
+        } else {
+            focusSideBarIndex((iSideBarAs - 1 + sideBarAsARRAY.length) % sideBarAsARRAY.length);
+        }
+        return true;
     }
 
-    // -----------------------
-    // Activate Link
-    // -----------------------
-
-    if (key === 'enter') {
-
-        const link = e.target.closest('a')
-
-        if (!link) return
-
-        e.preventDefault()
-
-        activateLink(link)
-
-        return
-    }
-
-    // -----------------------
-    // Sidebar Button Focus
-    // -----------------------
-
-    if (key === 's') {
-
-        sideBarBtn?.focus()
-
-        return
-    }
-
-    // -----------------------
-    // Main Content Focus
-    // -----------------------
-
-    if (key === 'm') {
-
-        mainTargetDiv.focus()
-
-        mainTargetDiv.scrollIntoView({
-            behavior: 'instant',
-            block: 'start'
-        })
-    }
-    return false
-}
-
-// ---------------------------------------------------
-// Track Focus
-// ---------------------------------------------------
-
-function handleFocusIn(e) {
-
-    const link = e.target.closest('a')
-
-    if (!link) return
-
-    const links = getSideBarLinks()
-
-    currentIndex = links.indexOf(link)
-
-    setLastFocusedLink(link)
-}
-
-// ---------------------------------------------------
-// Activate Link
-// ---------------------------------------------------
-
-async function activateLink(link) {
-
-    if (!link) return
-
-    const previousLink =
-        getLastCLICKEDLink()
-
-    await injectFromHref(link)
-
-    setLastCLICKEDLink(link)
-
-    setLastFocusedLink(link)
-
-    // -----------------------
-    // Re-focus Main Content
-    // -----------------------
-
-    if (previousLink === link) {
-
-        mainTargetDiv.focus()
-
-        mainTargetDiv.scrollTo(0, 0)
-
-        window.scrollTo(0, 0)
-    }
-}
-
-// ---------------------------------------------------
-// Focus Next Link
-// ---------------------------------------------------
-
-function focusNextLink() {
-
-    const links = getSideBarLinks()
-
-    if (!links.length) return
-
-    currentIndex =
-        (currentIndex + 1) % links.length
-
-    links[currentIndex].focus()
-}
-
-// ---------------------------------------------------
-// Focus Previous Link
-// ---------------------------------------------------
-
-function focusPreviousLink() {
-
-    const links = getSideBarLinks()
-
-    if (!links.length) return
-
-    currentIndex =
-        (currentIndex - 1 + links.length)
-        % links.length
-
-    links[currentIndex].focus()
+    return false;
 }
