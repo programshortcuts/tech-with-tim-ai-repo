@@ -148,6 +148,7 @@ function handleStepNavKey({ e, step, state, key }) {
         const copyCodes = getStepCopyCodes(step);
         if (!copyCodes.length) {
             cycleStepMedia(step);
+            changeTutorialLink({ target: step });
             return true;
         }
         enterStepMode(step);
@@ -240,12 +241,17 @@ export function initStepNav() {
             }
         });
 
+        const updateTutorialLinkForStep = () => {
+            changeTutorialLink({ target: step });
+        };
+
         const handleStepMediaTap = e => {
             const mediaTarget = e.target.closest('.step-img, img');
             if (!mediaTarget) return false;
             e.stopPropagation();
             lastStep = step;
             clickToggleImgSize(mediaTarget);
+            updateTutorialLinkForStep();
             return true;
         };
 
@@ -266,6 +272,7 @@ export function initStepNav() {
             if (clickedInsideStep && !hasImgsContainer && singleStepImg && !isBlockedClick) {
                 lastStep = step;
                 clickToggleImgSize(singleStepImg);
+                updateTutorialLinkForStep();
                 e.stopPropagation();
                 return;
             }
