@@ -148,7 +148,7 @@ function handleStepNavKey({ e, step, state, key }) {
         const copyCodes = getStepCopyCodes(step);
         if (!copyCodes.length) {
             cycleStepMedia(step);
-            syncTutorialLinkFromElement(step);
+            syncTutorialLinkFromElement({ target: step });
             return true;
         }
         enterStepMode(step);
@@ -236,7 +236,7 @@ export function initStepNav() {
             state.mode = 'stepNav';
             state.copyIndex = 0;
             if (step.hasAttribute('data-auto-focus')) {
-                syncTutorialLinkFromElement(step)
+                syncTutorialLinkFromElement(e)
 
             }
         });
@@ -249,14 +249,13 @@ export function initStepNav() {
         });
 
         const updateTutorialLinkForStep = () => {
-            syncTutorialLinkFromElement(step);
+            syncTutorialLinkFromElement({ target: step });
         };
 
         const handleStepMediaTap = e => {
             const mediaTarget = e.target.closest('.step-img, img');
             if (!mediaTarget) return false;
             e.stopPropagation();
-            if (e.cancelable) e.preventDefault();
             lastStep = step;
             clickToggleImgSize(mediaTarget);
             updateTutorialLinkForStep();
@@ -290,7 +289,7 @@ export function initStepNav() {
             }
 
             lastStep = step;
-            syncTutorialLinkFromElement(step);
+            syncTutorialLinkFromElement(e);
         });
 
         
@@ -394,10 +393,10 @@ export function stepNav({ e, navState }) {
         return true;
     }
 
-        if (key === 'enter' && isStepFocused && !getStepCopyCodes(step).length) {
+    if (key === 'enter' && isStepFocused && !getStepCopyCodes(step).length) {
         e.preventDefault();
         cycleStepMedia(step);
-        syncTutorialLinkFromElement(step);
+        syncTutorialLinkFromElement({ target: step });
         return true;
     }
 
