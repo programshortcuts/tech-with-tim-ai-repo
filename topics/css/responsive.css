@@ -10,6 +10,12 @@
         /* background-color: blue; */
         /* flex-grow: 1; */
     }
+        .main-container>.side-bar {
+            width: fit-content;
+            
+            flex-basis: 20%;
+            
+        }
 
 }
 @media screen and (max-width:720px) {
