@@ -4,7 +4,7 @@
 .step-vid.enlarge {
     position: fixed;
     z-index: 999999 !important;
-    top: 50%;
+    top: 20%;
     left: 50%;
     transform: translate(-55%, -50%) 
                    scale(1.002);
