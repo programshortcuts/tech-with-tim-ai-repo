@@ -5,6 +5,7 @@ export const mainTargetDiv = document.querySelector('#mainTargetDiv')
 import { sideBar } from "../ui/toggle-sidebar.js"
 import { getLastFocusedLink, setLastCLICKEDLink,getLastCLICKEDLink } from "../nav/sidebar-state.js";
 let lastClickedSideBarLink = null
+let lastActivatedSidebarLink = null
 import { initCopyCode } from "../ui/copy-code.js";
 import { sideBarAsARRAY } from "../nav/sidebar-nav.js";
 import { getSteps, initStepNav,updateSteps } from "../nav/step-nav.js";
@@ -81,18 +82,39 @@ export function initInjectContentListeners(){
     sideBarAsARRAY.forEach(el =>{
         if(el.hasAttribute('autofocus')){
             linkClicked = true
+            lastActivatedSidebarLink = el
+            lastClickedSideBarLink = el
+            setLastCLICKEDLink(el)
         }
     })
     if(!linkClicked){injectFromHref('home-page.html')        }
+    async function handleSidebarActivation(a) {
+        if (!a) return;
+
+        const isRepeatActivation = a === lastActivatedSidebarLink;
+        lastActivatedSidebarLink = a;
+        setLastCLICKEDLink(a);
+        lastClickedSideBarLink = a;
+
+        await injectFromHref(a.href);
+
+        requestAnimationFrame(() => {
+            if (isRepeatActivation) {
+                mainTargetDiv.focus();
+                mainTargetDiv.scrollIntoView({ behavior: 'instant', block: 'start' });
+            } else {
+                a.focus();
+            }
+        });
+    }
+
     sideBar.addEventListener('click', e => {
         e.preventDefault()
         e.stopPropagation()
         const a = e.target.closest('a')
         if(a === null) return        
-        injectFromHref(a)
+        handleSidebarActivation(a)
         window.scrollTo(0,0)
-        lastClickedSideBarLink = a
-        setLastCLICKEDLink(a)
         linkClicked = true
         mainTargetDiv.scrollTo(0,0)
     });
@@ -104,15 +126,8 @@ export function initInjectContentListeners(){
         if(key === 'enter'){
             e.preventDefault()
             e.stopPropagation()
-            setLastCLICKEDLink(a)
-            if (a === getLastFocusedLink() && lastClickedSideBarLink == a) {
-                
-                mainTargetDiv.focus()
-                mainTargetDiv.scrollIntoView({ behavior : 'instant', block: 'start'})
-            } else {
-                injectFromHref(a)
-                document.querySelector('body').scrollIntoView({ behavior : 'instant', block: 'start'})
-            }
+            linkClicked = true
+            handleSidebarActivation(a)
         }
     });
 }
