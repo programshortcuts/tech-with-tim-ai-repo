@@ -13,11 +13,12 @@ main>.side-bar::-webkit-scrollbar {
     width: fit-content;
     border-right: 1px solid black;
     border-top: none !important;
-    flex-basis: 40%;
+    /* flex-basis: 50%; */
+    width: 50%;
     padding-right: 2%;
     position: sticky;
     top: 5%;
-    height: 90vh;
+    /* height: 90vh; */
 }
 .side-bar-links-container ul {
     list-style: none;

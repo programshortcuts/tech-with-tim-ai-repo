@@ -96,7 +96,7 @@
 @media screen and (max-width:520px) {
     .main-container>.side-bar {
         /* flex-basis% !important; */
-        width: 28% !important;
+        width: 78% !important;
     }
     .step-img.enlarge > img {
         min-height: 350px;

@@ -1,7 +1,8 @@
 
 /* toggle-side-bar.css */
 .main-container.collapsed .side-bar {
-    flex-basis: 8%;
+    flex-basis: 25%;
+    width: 20% !important;
 }
 .main-container.collapsed .side-bar-links-container {
     width: 0;
