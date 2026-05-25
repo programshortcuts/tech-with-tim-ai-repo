@@ -260,10 +260,14 @@ export function initStepNav() {
                 e.preventDefault();
             }
         });
-
+        let startX = 0
+        let startY = 0
+        let isScrolling = false
         step.addEventListener('click', e => {
             if (handleStepMediaTap(e)) return;
+            if (isScrolling) return
 
+            toggleEnlarge(stepFloat)
             const clickedInsideStep = step.contains(e.target);
             const isBlockedClick = e.target.closest('p, .step-txt, .code-container, .copy-code');
             const hasImgsContainer = !!step.querySelector('.imgs-container');
@@ -281,6 +285,32 @@ export function initStepNav() {
             changeTutorialLink(e);
         });
 
+        
+
+        step.addEventListener('touchstart', e => {
+
+            const touch = e.touches[0]
+
+            startX = touch.clientX
+            startY = touch.clientY
+
+            isScrolling = false
+        })
+
+        step.addEventListener('touchmove', e => {
+
+            const touch = e.touches[0]
+
+            const deltaX = Math.abs(touch.clientX - startX)
+            const deltaY = Math.abs(touch.clientY - startY)
+
+            // threshold before considering it a scroll/drag
+            if (deltaX > 10 || deltaY > 10) {
+                isScrolling = true
+            }
+        })
+
+        
         if (step.hasAttribute('autofocus')) {
             step.focus();
             lastStep = step;

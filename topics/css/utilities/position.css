@@ -1,7 +1,7 @@
 /* position.css */
 .page-wrapper {
     position: relative;
-    
+        transform: translateX(0);
 }
 .page-wrapper>nav.nav-lesson-title {
     position: fixed;
