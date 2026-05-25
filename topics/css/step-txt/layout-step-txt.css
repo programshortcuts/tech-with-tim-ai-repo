@@ -20,6 +20,10 @@
     display: block;
     overflow: visible;
 }
+.step-float > .step-txt > p > a{
+    display: inline;
+    text-wrap: wrap;
+}
 
 .step-float > .imgs-container{
     display: flex;
