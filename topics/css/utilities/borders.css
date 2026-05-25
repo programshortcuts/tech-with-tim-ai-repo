@@ -20,3 +20,6 @@
 .step-float{
     border: 1px solid black;
 }
+.step-vid video {
+    box-shadow: 0 0 1px 1px rgb(86, 120, 112);
+}

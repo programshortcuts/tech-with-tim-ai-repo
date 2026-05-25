@@ -14,7 +14,7 @@
 .step-float > .step-img,
 .step-float > .step-vid{
     float: right;
-    width: 70%
+    
 }
 .step-float > .step-txt{
     display: block;

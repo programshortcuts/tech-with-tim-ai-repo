@@ -24,6 +24,9 @@
 }
 
 .step-float > .step-vid.enlarge {
-    box-shadow: 0 0 1px 1px lime;
     margin-left: 4%;
+}
+.step-float > .step-vid.enlarge video {
+
+    box-shadow: 0 0 1px 1px blue !important;
 }

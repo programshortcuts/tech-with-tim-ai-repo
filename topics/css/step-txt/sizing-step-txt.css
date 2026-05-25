@@ -9,6 +9,10 @@
     height: fit-content;
     min-height: 220px;
 }
+.step-float>.step-img,
+.step-float>.step-vid {
+    width: 70%
+}
 .step-vid > video,
 .step-img > img{
     width: 100%;
