@@ -15,9 +15,9 @@ body {
 }
 
 .page-wrapper>nav.nav-lesson-title {
+
     position: fixed;
      top: 10%;
-    z-index: 2;
 }
 
 .inject-content-btns-container {
