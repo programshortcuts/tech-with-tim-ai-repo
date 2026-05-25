@@ -148,7 +148,7 @@ function handleStepNavKey({ e, step, state, key }) {
         const copyCodes = getStepCopyCodes(step);
         if (!copyCodes.length) {
             cycleStepMedia(step);
-            syncTutorialLinkFromElement({ target: step });
+            syncTutorialLinkFromElement(step);
             return true;
         }
         enterStepMode(step);
@@ -256,6 +256,7 @@ export function initStepNav() {
             const mediaTarget = e.target.closest('.step-img, img');
             if (!mediaTarget) return false;
             e.stopPropagation();
+            if (e.cancelable) e.preventDefault();
             lastStep = step;
             clickToggleImgSize(mediaTarget);
             updateTutorialLinkForStep();
@@ -393,10 +394,10 @@ export function stepNav({ e, navState }) {
         return true;
     }
 
-    if (key === 'enter' && isStepFocused && !getStepCopyCodes(step).length) {
+        if (key === 'enter' && isStepFocused && !getStepCopyCodes(step).length) {
         e.preventDefault();
         cycleStepMedia(step);
-        syncTutorialLinkFromElement({ target: step });
+        syncTutorialLinkFromElement(step);
         return true;
     }
 
