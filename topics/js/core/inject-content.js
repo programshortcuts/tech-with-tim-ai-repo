@@ -113,6 +113,8 @@ function focusAutoFocusElement() {
 
         autoFocusEl.focus()
 
+        syncTutorialLinkFromElement(autoFocusEl)
+
         autoFocusEl.scrollIntoView({
             behavior: 'smooth',
             block: 'center'
