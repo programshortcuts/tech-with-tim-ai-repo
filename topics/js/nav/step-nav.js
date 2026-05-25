@@ -235,6 +235,9 @@ export function initStepNav() {
             const state = getStepState(step);
             state.mode = 'stepNav';
             state.copyIndex = 0;
+            // If focus moved to a non-media element inside the step, close any enlarged media
+            const focusedMedia = e.target.closest('.step-img, .step-vid, img, video');
+            if (!focusedMedia) denlargeAllImages();
             if (step.hasAttribute('data-auto-focus')) {
                 changeTutorialLink(e)
 
@@ -273,6 +276,9 @@ export function initStepNav() {
         step.addEventListener('click', e => {
             if (handleStepMediaTap(e)) return;
             if (isScrolling) return
+
+            // Any non-media click should close enlarged media first
+            denlargeAllImages();
 
             // toggleEnlarge(stepFloat)
             const clickedInsideStep = step.contains(e.target);
