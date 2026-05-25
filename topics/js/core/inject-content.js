@@ -1,5 +1,4 @@
 // inject-content.js
-import { refreshImages } from "../ui/toggle-img-sizes.js";
 import { initAllVideos } from "../ui/video-controls.js";
 export const mainTargetDiv = document.querySelector('#mainTargetDiv')
 
@@ -9,6 +8,7 @@ let lastClickedSideBarLink = null
 import { initCopyCode } from "../ui/copy-code.js";
 import { sideBarAsARRAY } from "../nav/sidebar-nav.js";
 import { getSteps, initStepNav,updateSteps } from "../nav/step-nav.js";
+import { refreshImages } from "../ui/toggle-img-sizes.js";
 const navTitleH1 = document.querySelector('#navTitle h1')
 export const endNxtBtn = document.querySelector('#endNxtBtn')
 export const prevBtn = document.querySelector('#prevBtn')
