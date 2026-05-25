@@ -382,6 +382,7 @@ export function stepNav({ e, navState }) {
     if (key === 'enter' && isStepFocused && !getStepCopyCodes(step).length) {
         e.preventDefault();
         cycleStepMedia(step);
+        changeTutorialLink({ target: step });
         return true;
     }
 
