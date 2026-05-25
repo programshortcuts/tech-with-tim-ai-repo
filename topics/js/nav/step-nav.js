@@ -384,6 +384,11 @@ export function stepNav({ e, navState }) {
     const isStepFocused = step && e.target === step;
     const isFocusableInnerTarget = !!e.target.closest('a, button, input, textarea, select, summary, [tabindex]:not([tabindex="-1"])');
 
+    // Always sync tutorial link when Enter is pressed anywhere inside a step
+    if (key === 'enter' && activeStep) {
+        try { changeTutorialLink({ target: activeStep }); } catch (err) { /* ignore */ }
+    }
+
     if (key === 'enter' && activeStep && e.target !== activeStep && !isCopyCode && !getStepCopyCodes(activeStep).length && isFocusableInnerTarget) {
         return false;
     }
