@@ -5,9 +5,13 @@
     gap: 5%;
     margin-top: -4%;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    position: relative;
+    z-index: 2;
 }
 
 .vid-cntrl-btns>button {
+    position: relative;
+    z-index: 2;
     background-color: inherit;
     color: goldenrod;
     flex-basis: 25%;
