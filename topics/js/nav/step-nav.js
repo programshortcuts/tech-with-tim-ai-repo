@@ -225,13 +225,18 @@ export function initStepNav() {
         if (!step.hasAttribute('tabindex')) {
             step.setAttribute('tabindex', '0');
         }
+        
         getStepState(step);
 
-        step.addEventListener('focusin', () => {
+        step.addEventListener('focusin', (e) => {
             lastStep = step;
             const state = getStepState(step);
             state.mode = 'stepNav';
             state.copyIndex = 0;
+            if (step.hasAttribute('data-auto-focus')) {
+                changeTutorialLink(e)
+
+            }
         });
 
         step.addEventListener('focusout', e => {
