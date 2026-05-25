@@ -14,6 +14,7 @@ import {
 } from "../core/inject-content.js"
 
 import { sideBarBtn } from "../ui/toggle-sidebar.js"
+import { syncTutorialLinkFromElement } from "../ui/change-tutorial-link.js"
 export function sideBarNav({ e, navState }) {
     const handled = handleSideBarKeyDown(e)
 
@@ -217,6 +218,12 @@ async function activateLink(link) {
     await injectFromHref(link)
 
     setLastCLICKEDLink(link)
+    // Update the top tutorial link immediately to match this sidebar item
+    try {
+        syncTutorialLinkFromElement(link)
+    } catch (err) {
+        // ignore errors updating tutorial link
+    }
 
     setLastFocusedLink(link)
 
