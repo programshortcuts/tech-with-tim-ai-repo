@@ -96,6 +96,12 @@ function bindVideoControls(step) {
     step.addEventListener('keydown', e => {
 
         const key = e.key.toLowerCase()
+        const stepVid = vid.closest('.step-vid')
+        const playBtn = stepVid.querySelector('.playBtn')
+        const fwdBtn = stepVid.querySelector('.fwdBtn')
+        const revBtn = stepVid.querySelector('.rwdBtn')
+        
+
         const hasCopyCodes =
             step.querySelectorAll('.copy-code').length > 0
 
@@ -107,7 +113,6 @@ function bindVideoControls(step) {
         /*
 ENTER
 */
-
         if (
             key === 'enter' &&
             !e.shiftKey
@@ -152,13 +157,12 @@ SHIFT + ENTER
         }
 
         /*
-        LEFT
+LEFT
         */
 
         if (e.keyCode === 37) {
-
             e.preventDefault()
-
+            rwdBtn.classList.toggle('active')
             vid.currentTime = Math.max(
                 0,
                 vid.currentTime - 0.5
@@ -174,7 +178,7 @@ SHIFT + ENTER
         if (e.keyCode === 39) {
 
             e.preventDefault()
-
+            fwdBtn.classList.toggle('active')
             vid.currentTime = Math.min(
                 vid.duration,
                 vid.currentTime + 0.5
@@ -224,9 +228,9 @@ function toggleEnlarge(stepVid, vid) {
 }
 
 function togglePlay(vid) {
-
+    
     if (vid.paused) {
-
+        
         vid.play()
 
     } else {
