@@ -7,7 +7,7 @@ export function handleGlobalHeaderKeys(key, e) {
         if (el) {
             e.preventDefault()
             el.focus()
-            // Do NOT auto-click the tutorial link on focus. Open only on explicit Enter or click.
+            el.click?.()
             return true
         }
     }
