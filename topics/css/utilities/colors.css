@@ -34,7 +34,8 @@ main>.side-bar {
 }
 .code-container>.copy-code{
     background-color: var(--code-bg-primary);
-    color: black;
+    /* color: black; */
+    color: rgb(70, 92, 160);
 }
 #sideBarBtn {
     color: black;
