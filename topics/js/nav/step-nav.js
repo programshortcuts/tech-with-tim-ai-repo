@@ -70,17 +70,37 @@ function hasEnlargedMedia(step) {
     return getStepMedia(step).some(el => el.classList.contains('enlarge'));
 }
 
+function playVideoInMedia(mediaEl) {
+    if (!mediaEl) return;
+    const video = mediaEl.querySelector('video');
+    if (!video) return;
+    video.play().catch(() => {});
+}
+
+function pauseVideoInMedia(mediaEl) {
+    if (!mediaEl) return;
+    const video = mediaEl.querySelector('video');
+    if (!video) return;
+    if (!video.paused) {
+        video.pause();
+    }
+}
+
 function cycleStepMedia(step) {
     const state = getStepState(step);
     const media = getStepMedia(step);
     if (!media.length) return false;
 
-    media.forEach(el => el.classList.remove('enlarge'));
+    media.forEach(el => {
+        el.classList.remove('enlarge');
+        pauseVideoInMedia(el);
+    });
 
     if (media.length === 1) {
         if (state.mediaIndex === -1) {
             media[0].classList.add('enlarge');
             state.mediaIndex = 0;
+            playVideoInMedia(media[0]);
         } else {
             state.mediaIndex = -1;
         }
@@ -95,6 +115,7 @@ function cycleStepMedia(step) {
 
     media[nextIndex].classList.add('enlarge');
     state.mediaIndex = nextIndex;
+    playVideoInMedia(media[nextIndex]);
     return true;
 }
 
