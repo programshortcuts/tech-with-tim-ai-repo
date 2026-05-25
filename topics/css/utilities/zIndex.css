@@ -6,7 +6,7 @@
     z-index: 100;
 }
 .step-float {z-index: 1;}
-.copy-code  {z-index: 12;}
+.copy-code  {z-index: 10;}
 .step-txt   {z-index: 1;}
 
 /* Focused step rises above nearby media */
