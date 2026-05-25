@@ -1,8 +1,6 @@
 // change-tutorial-link.js
 export const tutorialLink = document.querySelector('#tutorialLink')
 export function changeTutorialLink(e) {
-    console.log(e.target)
-    return
     const linkEl = e.target.closest('a') || e.target.closest('.step-float')
     if (!linkEl) return
 
