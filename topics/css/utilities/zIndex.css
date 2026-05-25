@@ -1,47 +1,61 @@
 /* zindex.css */
-#mainTargetDiv{
+/* zindex.css */
+
+/* -----------------------------------
+GLOBAL LAYERS
+----------------------------------- */
+
+#mainTargetDiv {
+    position: relative;
     z-index: 200;
 }
+
 .side-bar {
+    position: relative;
     z-index: 100;
 }
+
+/* -----------------------------------
+STEP LAYERS
+----------------------------------- */
+
 .step-float {
+    position: relative;
     z-index: 1;
 }
+
+/* active step temporarily rises */
+.step-float:active,
+.step-float:focus-within {
+    z-index: 20;
+}
+
+/* normal text */
 .step-txt {
     z-index: 1;
 }
-.copy-code {
-    z-index: 2;
-    z-index: 10;
-}
-.step-img,
-.step-vid,
+
+/* normal copy-code */
 .copy-code,
 .code-container {
-    position: relative;
+    z-index: 10;
 }
 
-/* Focused step rises above nearby media */
-.step-float:active,
-.step-float:focus-within {
-    z-index: 100;
-}
-/* when code inside step-txt is focused */
-.step-txt:focus-within {
-    z-index: 500;
-}
-.step-container {
-    /* position: relative; */
-    z-index: 0;
-}
-/* Focused code rises above NON enlarged media */
-.copy-code.is-active-code {
-    z-index: 500;
-}
-/* Normal media */
+/* media ALWAYS clickable above text/code */
 .step-img,
 .step-vid {
     position: relative;
-    z-index: 11
+    z-index: 20;
+}
+
+/* focused copy-code rises above media */
+.copy-code.is-active-code,
+.step-txt:focus-within {
+    z-index: 30;
+}
+
+/* optional */
+.step-container {
+    position: relative;
+    z-index: 0;
 }

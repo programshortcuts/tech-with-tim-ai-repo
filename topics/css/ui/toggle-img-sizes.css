@@ -1,14 +1,20 @@
 /* toggle-img-sizes.css */
+/* toggle-img-sizes.css */
 
-/* Enlarged media ALWAYS wins */
+/* -----------------------------------
+ENLARGED MEDIA
+----------------------------------- */
+
 .step-img.enlarge,
 .step-vid.enlarge {
     position: fixed;
     z-index: 999999 !important;
+
     top: 50%;
     left: 50%;
-    transform: translate(-55%, -50%) 
-                   scale(1.002);
+
+    transform:
+        translate(-55%, -50%) scale(1.002);
 
     min-width: 90vw;
     max-width: 95vw;
@@ -17,17 +23,16 @@
     object-fit: contain;
 }
 
-
-
+/* optional styling */
 .step-vid.enlarge video,
 .step-img.enlarge img {
     /* box-shadow: 0 0 1px 1px white; */
 }
+
 .step-img.enlarge img {
-    min-height: 450px;   
+    min-height: 450px;
 }
 
-.step-float > .step-vid.enlarge {
-    box-shadow: 0 0 1px 1px lime;
+.step-float>.step-vid.enlarge {
     margin-left: 4%;
 }

@@ -1,18 +1,20 @@
-/* step-txt/step-txt.css */
-/* Base layers */
+/* step-txt/position-step-txt.css */
+/* step-txt/position-step-txt.css */
+
+/* -----------------------------------
+BASE POSITIONING
+----------------------------------- */
+
 .step-float {
     position: relative;
+    z-index: 1;
 }
+
 .step-img,
 .step-vid,
 .copy-code,
-.code-container {
-    position: relative;
-}
+.code-container,
 .step-txt {
-    position: relative;
-}
-.copy-code {
     position: relative;
 }
 
