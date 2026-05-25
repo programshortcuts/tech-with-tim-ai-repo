@@ -2,11 +2,19 @@
 /* Enlarged media ALWAYS wins */
 .step-img.enlarge{
     top: 20%;
-    transform: translate(-55%, -50%) scale(1.2);
+    transform: translate(-55%, 0%) scale(1.2);
 }
 .step-vid.enlarge {
     /* top: 30%; */
     transform: translate(-55%, 0%) scale(1.002);
+}
+.step-float:last-of-type .step-img.enlarge {
+    transform: translate(-40%, 50%) ;
+
+}
+.step-float:last-of-type .step-vid.enlarge {
+    transform: translate(-31%, 25%);
+
 }
 .step-img.enlarge,
 .step-vid.enlarge {
