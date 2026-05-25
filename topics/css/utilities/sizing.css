@@ -29,3 +29,6 @@ main.main-container {
 }
 
 
+#mainTargetDiv{
+    height: 100vh;
+}

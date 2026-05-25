@@ -37,3 +37,9 @@ body {
 #mainTargetDiv {
     overflow-x: hidden;
 }
+
+.tutorial-link-img-container{
+    position: fixed;
+    top: 0;
+    
+}

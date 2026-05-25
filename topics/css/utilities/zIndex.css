@@ -33,3 +33,8 @@
 .video-controls {
     z-index: 500
 }
+
+.tutorial-link-img-container{
+    z-index: 10000;
+    pointer-events: auto;
+}
