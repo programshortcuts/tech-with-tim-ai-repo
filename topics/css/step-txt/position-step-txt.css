@@ -19,3 +19,7 @@
 .clear {
     clear: both;
 }
+.step-img,
+.step-vid {
+    position: relative;
+}

@@ -11,7 +11,7 @@
 /* step-txt INJECT HTML PAGES */
 /* @import url('step-txt/step-txt.css'); */
 @import url('step-txt/layout-step-txt.css');
-@import url('step-txt/position-step-txt.css');
+/* @import url('step-txt/position-step-txt.css'); */
 @import url('step-txt/sizing-step-txt.css');
 @import url('step-txt/spacing-step-txt.css');
 /* @import url('step-txt/text-step-txt.css'); */
@@ -38,7 +38,7 @@
 @import url('utilities/text.css');
 @import url('utilities/position.css');
 @import url('utilities/layout.css');
-@import url('utilities/zindex.css');
+/* @import url('utilities/zindex.css'); */
 
 * {
     box-sizing: border-box;
