@@ -37,5 +37,5 @@
     z-index: 500
 }
 .page-wrapper>nav.nav-lesson-title {
-    z-index: 600;
+    /* z-index: 600; */
 }
