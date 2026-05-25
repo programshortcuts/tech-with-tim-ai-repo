@@ -233,6 +233,18 @@ export function initStepNav() {
         step.addEventListener('click', e => {
             if (handleStepMediaTap(e)) return;
 
+            const clickedInsideStep = step.contains(e.target);
+            const isBlockedClick = e.target.closest('p, .step-txt, .code-container, .copy-code');
+            const hasImgsContainer = !!step.querySelector('.imgs-container');
+            const singleStepImg = step.querySelector('.step-img');
+
+            if (clickedInsideStep && !hasImgsContainer && singleStepImg && !isBlockedClick) {
+                lastStep = step;
+                clickToggleImgSize(singleStepImg);
+                e.stopPropagation();
+                return;
+            }
+
             lastStep = step;
             changeTutorialLink(e);
         });
