@@ -1,20 +1,33 @@
 /* responsive.css */
 
 @media screen and (min-width:721px) {
+    #targetDivInjected {
+            padding-top: 0 !important;
+        }
+    .step-txt > p {
+        margin: 0 !important;
+    }
     .page-header-links {
         display: flex;
         flex-basis: 90% !important; 
     }
-    .page-header .page-header-links>a {
-            /* flex-basis: 40% !important; */
-        /* background-color: blue; */
-        /* flex-grow: 1; */
+    .main-container>.side-bar {
+        width: fit-content;
+        
+        flex-basis: 20%;
+        
     }
-        .main-container>.side-bar {
-            width: fit-content;
-            
-            flex-basis: 20%;
-            
+        .step-vid {
+            /* max-height: 200px ; */
+        }
+    
+        .step-img {
+            max-width: 500px !important;
+        }
+        .imgs-container {
+            align-items: center;
+            justify-content: center !important;
+            gap: 10%
         }
 
 }
