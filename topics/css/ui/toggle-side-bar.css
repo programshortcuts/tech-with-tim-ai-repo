@@ -15,11 +15,16 @@
     /* bottom: 0; */
 }
 
+.main-container #sideBarBtn {
+    position: absolute;
+    top: 5%;
+    left:5%;
+}
 .main-container.collapsed #sideBarBtn {
     transform: scale(1.8);
-    left: 20%;
+    left: 10%;
     margin-left: 10%;
     /* top: 80% !important; */
-    bottom: 0 !important;
+    top: 90% !important;
     /* border: 10px solid red !important; */
 }

@@ -124,11 +124,13 @@ function focusStep(index) {
     let normalized = index;
     if (normalized < 0) normalized = steps.length - 1;
     if (normalized >= steps.length) normalized = 0;
-    steps[normalized]?.focus();
     steps[normalized]?.scrollIntoView({
-        behavior: 'smooth', 
-        inline: 'nearest',
-        block: 'center'})
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'nearest'
+    });
+
+    steps[normalized]?.focus({ preventScroll: true });
 }
 
 export function getSteps() {
