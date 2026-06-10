@@ -62,6 +62,12 @@
         /* top: 90%; */
     }
     
+    .step-img.enlarge img,
+    .step-vid.enlarge video {
+        width: 300px;
+        max-width: 600px !important ;
+        /* border: 10px solid firebrick !important; */
+    }
 }
 
 @media screen and (max-width:520px) {
@@ -73,9 +79,9 @@
         /* width: 38% !important; */
         flex-basis:45%;
     }
- .step-img.enlarge,
+ /* .step-img.enlarge,
  .step-vid.enlarge {
     position: absolute;
      transform:  scale(1.5) !important;
- }
+ } */
 }
