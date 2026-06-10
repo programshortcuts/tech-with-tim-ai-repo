@@ -22,7 +22,7 @@
 
     .topic-container>.sub-topics-container,
     .topic-container ul.sub-resources-container {
-        margin-top: 4%;
+        /* margin-top: 4%; */
     }
 
     .code-container {
@@ -61,7 +61,7 @@
     video.enlarge-vid {
         right: 3%;
         top: 0;
-        transform: scale(1.02);
+        /* transform: scale(1.02); */
     }
 
 
