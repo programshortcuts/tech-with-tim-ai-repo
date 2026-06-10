@@ -8,10 +8,7 @@
     /* top: 30%; */
     transform: translate(-55%, 0%) scale(1.002);
 }
-.step-float:last-of-type .step-img.enlarge {
-    transform: translate(-40%,  100%) ;
 
-}
 .step-float:last-of-type .step-vid.enlarge {
     transform: translate(-31%, -100%);
 
