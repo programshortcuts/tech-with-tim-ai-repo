@@ -1,5 +1,4 @@
 // video-controls.js
-// video-controls.js
 
 export function initAllVideos(root = document) {
 

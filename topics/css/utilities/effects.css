@@ -1,4 +1,11 @@
 /* effects.css */
+.step-float:focus,
+.step-float:active {
+    box-shadow: 2px 2px 10px lightblue;
+    background-color: rgb(126, 139, 144);
+    box-shadow: 2px 1px 10px rgb(116, 106, 60);
+    outline: none
+}
 .page-header a:focus,
 .page-header  a:active {
     box-shadow: 0 0 10px 6px rgb(143, 194, 192);
@@ -22,9 +29,7 @@ ul li a:visited {
 }
 /* STEPS  */
 a:active,
-a:focus,
-.step-float:focus,
-.step-float:active {
+a:focus{
     background-color: rgb(175, 191, 196);
     outline: none;
 }

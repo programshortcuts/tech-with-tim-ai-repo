@@ -1,4 +1,10 @@
 /* dark-mode-colorCode.css */
+.dark-mode .step-float:active, .dark-mode .step-float:focus {
+    background-color:  rgb(34, 63, 73);
+    box-shadow: 2px 2px 10px lightblue;
+        border: 2px solid lightcyan;
+        /* box-shadow: 2px 2px 10px rgb(0, 8, 255); */
+}
 :root {
     --bg-primary-db: #201d1d;
     --font-primary-db: whitesmoke;
@@ -11,8 +17,7 @@
     background-color: var(--bg-primary-db);
 }
 .dark-mode .side-bar a:active, .dark-mode .side-bar a:focus,
-.dark-mode .step:active, .dark-mode .step:focus,
-.dark-mode .step-float:active, .dark-mode .step-float:focus {
+.dark-mode .step:active, .dark-mode .step:focus{
     /* font-style: bold; */
     /* background-color: blue; */
     /* font-weight: 800; */
