@@ -127,8 +127,8 @@ function focusStep(index) {
     steps[normalized]?.focus();
     steps[normalized]?.scrollIntoView({
         behavior: 'smooth', 
-        inline: 'center',
-        block: 'nearest'})
+        inline: 'nearest',
+        block: 'center'})
 }
 
 export function getSteps() {
