@@ -14,7 +14,7 @@
 
     z-index: 999999 !important;
     min-width: 425%;
-    max-width: 500px;
+    /* max-width: 500px; */
     object-fit: contain;
 }
 .step-float > .step-vid.enlarge video {
