@@ -39,12 +39,11 @@
     .step-txt {
         font-size: 90%;
     }
-    #targetDiv {
-        #targetDivInjected {
-            .main-container-colorCode {
-                width: 100%;
-                margin-left: 0;
-            }
+    
+    #targetDivInjected {
+        .main-container-colorCode {
+            width: 100%;
+            margin-left: 0;
         }
     }
     #darkModeBtn {
@@ -78,6 +77,5 @@
  .step-vid.enlarge {
     position: absolute;
      transform:  scale(1.5) !important;
-
  }
 }

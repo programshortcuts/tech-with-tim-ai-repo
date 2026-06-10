@@ -298,13 +298,13 @@ export function initStepNav() {
 
             lastStep = step;
             changeTutorialLink(e);
-            steps?.scrollIntoView({
+            step?.scrollIntoView({
                 behavior: 'smooth',
                 block: 'center',
                 inline: 'nearest'
             });
 
-            steps?.focus({ preventScroll: true });
+            step?.focus({ preventScroll: true });
         });
 
         
