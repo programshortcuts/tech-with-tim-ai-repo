@@ -1,4 +1,7 @@
 /* spacing.css */
+#mainTargetDiv{
+    padding-bottom: 10%;
+}
 .page-wrapper>nav.nav-lesson-title {
     margin-top: 0%;
 }

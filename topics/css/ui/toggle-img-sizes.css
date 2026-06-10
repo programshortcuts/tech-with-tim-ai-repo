@@ -9,11 +9,11 @@
     transform: translate(-55%, 0%) scale(1.002);
 }
 .step-float:last-of-type .step-img.enlarge {
-    transform: translate(-40%, 50%) ;
+    transform: translate(-40%,  100%) ;
 
 }
 .step-float:last-of-type .step-vid.enlarge {
-    transform: translate(-31%, -150%);
+    transform: translate(-31%, -100%);
 
 }
 .step-img.enlarge,
