@@ -90,7 +90,6 @@ export function initInjectContentListeners(){
     if(!linkClicked){injectFromHref('home-page.html')        }
     async function handleSidebarActivation(a) {
         if (!a) return;
-
         const isRepeatActivation = a === lastActivatedSidebarLink;
         lastActivatedSidebarLink = a;
         setLastCLICKEDLink(a);
