@@ -1,13 +1,15 @@
 /* colors.css */
-:root{
+:root {
     /* --code-bg-primary: rgb(140, 140, 135); */
     --code-bg-primary: rgb(135, 139, 140);
-    
+
 }
 .nav-mode-colors {
     background: rgb(93, 104, 125);
 }
-
+.nav-mode-colors a {
+    color: whitesmoke !important;
+}
 nav.section-lesson-title {
     box-shadow: 0 0 1px 1px white;
 }
@@ -28,9 +30,7 @@ main>.side-bar {
 
 
 
-.nav-mode-colors a {
-    color: whitesmoke !important;
-}
+
 .code-container{
     background-color: var(--code-bg-primary);
 }
