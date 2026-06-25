@@ -3,10 +3,10 @@
 👉 keyboardNav no longer decides behavior
 It just updates truth.
 */
+import { popupLetterNav } from "../ui/popups.js"
 import { mainContainer } from "../core/main-script.js"
 import { navLessonTitle } from "./nav-lesson-title-nav.js"
 import { getFocusZone } from "./get-focus-zone.js"
-import { popupLetterNav } from "../ui/popups.js"
 import { letterNav } from "./letter-nav.js"
 import { sideBarNav } from "./sidebar-nav.js"
 import { handleNavLessonTitle } from "./nav-lesson-title-nav.js"
@@ -24,18 +24,7 @@ export const navState = {
 export function keyboardNav({e}){
     navState.zone = getFocusZone({ e })
     if (!navState.zone) return
-    // Navigation Mode
-    if (e.key === 'x' && e.shiftKey && e.metaKey) {
-        navState.isLetterNavEnabled = !navState.isLetterNavEnabled
-        popupLetterNav.innerText = `letter navigation : ${navState.isLetterNavEnabled}`
-        popupLetterNav.classList.add('animate')
-        document.querySelector('.page-wrapper').classList.toggle('nav-mode-colors')
-        setTimeout(() => {
-            popupLetterNav.classList.remove('animate')
-        }, 1000);
-
-        return
-    }
+    popupLetterNav({e,navState})
     // 
     //**I put this here for now just to make sure it's working, not sure if it's a good ideal, but it DOES 
     // NEED to remain global */
