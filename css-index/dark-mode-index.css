@@ -19,8 +19,8 @@
 .dark-mode a {
     color: white;
 }
-.dark-mode .drop-topic {
-    border: 1px solid whitesmoke;
+.dark-mode .sub-topics-container .drop-down {
+    color: whitesmoke;
     
 }
 
