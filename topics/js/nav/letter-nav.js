@@ -8,7 +8,7 @@ export function letterNav({ e }) {
     let target
     if (e.metaKey) return
     
-    const allEls = [...document.querySelectorAll('[id],a')].filter(el => {
+    const allEls = [...document.querySelectorAll('[id],a,[data-nav-target]')].filter(el => {
         if (el.id === 'mainTargetDiv') return true
         return isActuallyVisible(el)
     })
