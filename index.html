@@ -7,13 +7,14 @@
     <link rel="stylesheet" href="css-index/main-index.css">
     <!-- <link rel="stylesheet" href="css/css-index/page-header.css">
     <link rel="stylesheet" href="css/css-index/footer-double-link-header.css">
-    <link rel="stylesheet" href="css/css-index/drop-topic-sub-resources.css">
-    <link rel="stylesheet" href="css/css-index/sub-drop-topics-container.css">
+    <link rel="stylesheet" href="css/css-index/drop-down-sub-resources.css">
+    <link rel="stylesheet" href="css/css-index/sub-drop-downs-container.css">
     <link rel="stylesheet" href="css/css-index/dark-mode-index.css"> -->
     
-    <script src="js-index/dropTopics-topic-resource.js" defer></script>
+    
     <script src="js-index/letterFocus-txt-nums.js" defer></script>
     <script src="js-index/dark-mode-index.js" defer></script>
+    <script src="js-index/drop-downs-index.js" defer></script>
     <meta http-equiv="Content-Security-Policy" content="
                 default-src 'self';
                 script-src 'self';
@@ -45,27 +46,27 @@
             <div class="topics-container">
                 <h2 tabindex="0" id="topics" >Topics</h2>
                 <!-- n8n -->
-                <div class="topic-container ">
-                    <header  tabindex="0" id="apis" class="drop-topic">
+                <div class="topic-container drop-parent">
+                    <header  tabindex="0" id="apis" class="drop-down">
                         <h3>n8n</h3>
                     </header>
-                    <ul class="sub-resources-container ">
+                    <ul class="sub-resources-container drop-snips">
                         <li>
-                            <a rel="noopener noreferrer" tabindex="0" id="domApi" class="resource"
-                                href="colorCode/15-domApi/15-domApi.html">15 domApi
+                            <a rel="noopener noreferrer" tabindex="0" id="tbd" class="resource"
+                                href="#">tbd
                                 <img src="images/youtube-animate-img.webp
                                     "alt="">
-                                <sup>Color Code</sup>
+                                <sup>TBD</sup>
                             </a>
                         </li>  
                     </ul>                    
                 </div>
                 <!-- Ollama -->
-                <div class="topic-container ">
-                    <header tabindex="0" id="ollama" class="drop-topic">
+                <div class="topic-container drop-parent">
+                    <header tabindex="0" id="ollama" class="drop-down">
                         <h3>Ollama</h3>
                     </header>
-                    <ul class="sub-resources-container show">
+                    <ul class="sub-resources-container drop-snips show">
                         <li>
                             <a rel="noopener noreferrer" tabindex="0" id="jsInheritance" class="resource "
                                 href="topics/ollama/01-ollama-mcp-26/01-ollama-mcp-26.html">01
@@ -80,7 +81,7 @@
                                 <!-- <img src="images/02-js-proto-logo.avif"> -->
                             </a>
                         </li>
-                        
+
                     </ul>
                 </div>
             </div>
