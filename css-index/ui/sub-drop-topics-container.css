@@ -4,7 +4,21 @@
     text-decoration: none;
 }
 
+.topics-container {
+    display: flex;
+    flex-direction: column;
+}
+.sub-topics-container{
+    display: inline-flex;
+    border: 1px solid white;
+    display: flex;
+    flex-wrap: wrap;
+}
 
+.sub-topics-container > .drop-parent{
+    display: flex;
+    flex-direction: column;
+}
 .topics-container > .drop-down {
     margin-left: 2%;
 }
