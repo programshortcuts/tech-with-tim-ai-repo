@@ -1,0 +1,12 @@
+.sub-topics-container {
+    border: 1px solid white;
+}
+
+.sub-topics-container .drop-down {
+
+    border: none;
+}
+
+.resource {
+    border: 1px solid black;
+}

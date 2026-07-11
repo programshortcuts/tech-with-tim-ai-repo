@@ -2,8 +2,20 @@
 @import url('./dark-mode-index.css');
 @import url('footer-double-link-header.css');
 @import url('page-header.css');
-@import url('ui/drop-topic-sub-resources.css');
-@import url('ui/sub-drop-topics-container.css');
+
+@import url('responsive-index.css');
+
+/* utilies */
+@import url('utitlies/borders-index.css');
+@import url('utitlies/colors-index.css');
+@import url('utitlies/layout-index.css');
+@import url('utitlies/list-index.css');
+@import url('utitlies/sizing-index.css');
+@import url('utitlies/sizing-index.css');
+@import url('utitlies/text-index.css');
+
+
+/* @import url('ui/drop-topic-sub-resources.css'); */
 *{
     margin: 0;
     padding: 0;
@@ -24,4 +36,7 @@
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: 999;
     font-size: 150%;
+}
+.hide {
+    display: none;
 }
