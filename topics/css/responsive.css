@@ -66,7 +66,11 @@
         right: 5%;
         /* top: 90%; */
     }
-
+        .step-img.enlarge img,
+        .step-vid.enlarge video {
+            max-height: 30vh !important;
+        /* border: 2px solid  green */
+        }
 }
 
 @media screen and (max-width:520px) {
@@ -80,11 +84,13 @@
         flex-basis: 45%;
     }
 
+    
+
     .step-vid.enlarge video {
         position: absolute;
         width: 300px;
         max-width: 600px !important;
         /* border: 10px solid firebrick !important; */
-        left;
     }
+
 }
