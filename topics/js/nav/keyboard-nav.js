@@ -18,7 +18,7 @@ import { sideBar, sideBarBtn } from "../ui/toggle-sidebar.js"
 // i think Img and Video handling is in stepNav
 import { stepNav,scrollToCenter } from "./step-nav.js"
 export const navState = {
-    zone: 'sideBar',
+    zone: null,
     isLetterNavEnabled: false
 }
 export function keyboardNav({e}){
