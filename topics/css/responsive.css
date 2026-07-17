@@ -69,7 +69,6 @@
         .step-img.enlarge img,
         .step-vid.enlarge video {
             max-height: 30vh !important;
-        /* border: 2px solid  green */
         }
 }
 
