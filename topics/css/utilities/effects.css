@@ -70,3 +70,6 @@ a:focus{
 #mainTargetDiv {
     /* pointer-events: none; */
 }
+.copy-code:focus,.copy-code:active{
+    /* z-index: 99999 !important; */
+}

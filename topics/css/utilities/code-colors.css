@@ -1,0 +1,23 @@
+.rb{color: royalblue;}
+.lb{color: lightblue;}
+.gr{color: goldenrod;}
+
+.m {
+    color: magenta;
+}
+
+.o {
+    color: orange !important;
+}
+
+.g {
+    color: gold !important;
+}
+
+.ws {
+    color: whitesmoke !important;
+}
+
+.bbad{border:red solid 1px;}
+.bad{color:red}
+.line-thru {text-decoration: line-through red;}

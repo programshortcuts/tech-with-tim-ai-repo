@@ -4,13 +4,16 @@
     /* transform: translate(-25%, 0%) scale(1.002); */
 }
 
+.step-img,
+.step-vid {
+    z-index: 1000;
+}
 .step-img.enlarge,
 .step-vid.enlarge {
     position: fixed;
     top: 50%;
     left: 60%;
     transform: translate(-50%, -50%) scale(1.9);
-
     z-index: 999999 !important;
     /* min-width: 425%; */
     /* max-width: 400px; */

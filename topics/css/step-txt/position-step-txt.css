@@ -14,6 +14,7 @@
 }
 .copy-code {
     position: relative;
+    /* z-index: 0 */
 }
 
 .clear {

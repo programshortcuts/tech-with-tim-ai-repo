@@ -22,15 +22,10 @@ main>.side-bar {
     color: black;
     box-shadow: 0 1px 1px 1px white;
 }
-
 .side-bar ul li a,
 .side-bar ul li a:visited {
     color: black;
 }
-
-
-
-
 .code-container{
     background-color: var(--code-bg-primary);
 }
