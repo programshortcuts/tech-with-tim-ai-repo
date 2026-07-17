@@ -1,10 +1,17 @@
 .rb{color: royalblue;}
 .lb{color: lightblue;}
-.sg{color: lightseagreen;}
-.gr{color: goldenrod;}
-.m {color: magenta;}
-.o {color: orange !important;}
+
+.c{color: cyan ;}
+.copy-code span.c{
+    color: rgb(32, 127, 127) !important
+;}
+.g {color: green !important;}
 .go {color: gold !important;}
+.gr{color: goldenrod !important;}
+.m {color: magenta !important;}
+.pu {color: rgb(182, 91, 182) !important;}
+.o {color: orange !important;}
+.y {color: yellow !important;}
 .ws {color: whitesmoke !important;}
 
 .bbad{border:red solid 1px;}
