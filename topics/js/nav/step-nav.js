@@ -235,8 +235,25 @@ export function initStepNav() {
         step.addEventListener('focusin', (e) => {
             lastStep = step;
             const state = getStepState(step);
-            state.mode = 'stepNav';
-            state.copyIndex = 0;
+
+            // If focus moved into a .copy-code inside this step, sync the state to that index
+            const copyEl = e.target.closest('.copy-code');
+            if (copyEl && step.contains(copyEl)) {
+                const copyCodes = getStepCopyCodes(step);
+                const idx = copyCodes.indexOf(copyEl);
+                if (idx >= 0) {
+                    state.copyIndex = idx;
+                    state.mode = 'stepMode';
+                } else {
+                    state.mode = 'stepNav';
+                    state.copyIndex = 0;
+                }
+            } else {
+                // Focus moved somewhere else inside the step; reset to stepNav
+                state.mode = 'stepNav';
+                state.copyIndex = 0;
+            }
+
             // If focus moved to a non-media element inside the step, close any enlarged media
             const focusedMedia = e.target.closest('.step-img, .step-vid, img, video');
             if (!focusedMedia) denlargeAllImages();
