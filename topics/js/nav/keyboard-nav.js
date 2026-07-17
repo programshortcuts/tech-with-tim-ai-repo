@@ -17,6 +17,7 @@ import { getLastCLICKEDLink, getLastFocusedLink } from "./sidebar-state.js"
 import { sideBar, sideBarBtn } from "../ui/toggle-sidebar.js"
 // i think Img and Video handling is in stepNav
 import { stepNav,scrollToCenter } from "./step-nav.js"
+import { tutorialLink } from "../ui/change-tutorial-link.js"
 export const navState = {
     zone: null,
     isLetterNavEnabled: false
@@ -85,6 +86,7 @@ function handleMainFocus({ e, zone }) {
         mainTargetDiv.focus()
     }
     if(zone === 'mainTargetDiv'){
+        
         if(lastStep){
             if(e.target == lastStep ){
                 mainTargetDiv.focus()

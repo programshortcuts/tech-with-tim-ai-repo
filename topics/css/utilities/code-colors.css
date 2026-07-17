@@ -1,22 +1,11 @@
 .rb{color: royalblue;}
 .lb{color: lightblue;}
+.sg{color: lightseagreen;}
 .gr{color: goldenrod;}
-
-.m {
-    color: magenta;
-}
-
-.o {
-    color: orange !important;
-}
-
-.g {
-    color: gold !important;
-}
-
-.ws {
-    color: whitesmoke !important;
-}
+.m {color: magenta;}
+.o {color: orange !important;}
+.go {color: gold !important;}
+.ws {color: whitesmoke !important;}
 
 .bbad{border:red solid 1px;}
 .bad{color:red}
