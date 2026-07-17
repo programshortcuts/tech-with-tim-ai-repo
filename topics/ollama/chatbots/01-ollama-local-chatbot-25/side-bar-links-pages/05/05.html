@@ -7,46 +7,40 @@
         <div class="steps-container">
             <!-- 01 -->
             <div  tabindex="0" class="step-float" data-video="https://www.youtube.com/watch?v=d0o89z134CQ"
-                data-timestamp="540">
+                data-timestamp="588">
+                 <h4>1. create a <code class="y">handle_conversation()</code> function</h4> 
                 <div class="step-txt">
-                    <h4>01 - create chain for <code class="y">template</code> <code class="lc">prompt</code> to model</h4>
-                    <p>
-                        Send <code class="y">template</code> to promprt through 
-                        <code><span class="c">ChatPromptTemplate</span>.<span class="m">from_template</span>(<span class="y">template</span>)</code>
-                    </p>
                     <div class="code-container">
                         <pre tabindex="0" class="copy-code">
-prompt = <span class="c">ChainPromptTemplate.</span><span class="m">from_template</span>(<span class="y">template</span>)
-chain = prompt | model
+def <span class="y">handle_conversation()</span>:
+    context = ""
+    print("Welcome, local Ai-chatbot")
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() == "exit":
+            break
+        result = chain.invoke({"context": context, "question": user_input})
+        print("ai-botie: ",result)
+        context += f"\nUser: {user_input}\nAI: {result}"
+if __name__ == "__main__":
+   handle_conversation()
 </pre>
+                    </div>       
+                    <h5>full script</h5>
+                    
+                </div>
+                <div class="imgs-container">
+                    <div class="step-img ">
                     </div>
-                    <p>
-                        then the result will be to <code>invoke()</code> chain instead of model AND
-                        pass in an object with <span class="pu">content</span> (which we don't have yet)
-                        and the question for now, "Tu puedes hablar espanol"
-                    </p>
+                </div>
+            </div>
+            <!-- 2. -->
+            <div  tabindex="0" class="step-float" data-video="https://www.youtube.com/watch?v=d0o89z134CQ"
+                data-timestamp="576">
+                <h5>full script</h5>
+                <div class="step-txt">
                     <div class="code-container">
                         <pre tabindex="0" class="copy-code">
-result = chain.invoke({"context":"","question":"Tu puedes hablar espanol?})"</pre>
-                    </div>
-                    <div class="code-container">
-                        <pre tabindex="0" class="copy-code">
-from langchain_ollama import OllamaLLM
-from langchain_core.prompts import ChatPromptTemplate
-template = """
-Answer the question below.
-
-Here is the conversation history: {context}
-
-Question: {question}
-
-Answer
-"""
-model = OllamaLLM(model="llama3")
-prompt = ChatPromptTemplate.from_template(template)
-chain = prompt | model
-result = chain.invoke({"context":"","question":"Tu puedes hablar espanol?"})
-# result = model.invoke(input="hey what up")
 print(result)</pre>
                     </div>       
                 </div>
