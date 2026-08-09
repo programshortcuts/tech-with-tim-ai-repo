@@ -17,7 +17,7 @@ main.main-container.collapsed {
 main.main-container {
     display: flex;
     align-items: stretch;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 #mainTargetDiv {

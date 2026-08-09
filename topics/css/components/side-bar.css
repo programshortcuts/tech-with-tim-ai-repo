@@ -6,7 +6,6 @@ main>.side-bar::-webkit-scrollbar {display: none;}
     list-style: none;
     display: flex;
     flex-direction: column;
-    width: min-content;
     margin-top: 2%;
     margin-left: 5%;
 }

@@ -13,7 +13,8 @@ body {
     position: relative;
 }
 .side-bar {
-    position: sticky
+    position: sticky;
+    top: 0;
 }
 .side-bar-links-container  {
 }

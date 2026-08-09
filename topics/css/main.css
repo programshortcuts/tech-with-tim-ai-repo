@@ -1,8 +1,8 @@
 /* main.css */
-/* @import url('responsive.css'); */
+@import url('responsive.css');
 @import url('dark-mode.css');
 @import url('components/page-header.css');
-/* @import url('components/side-bar.css'); */
+@import url('components/side-bar.css');
 
 /* ui */
 @import url('ui/vid-controls.css');

@@ -5,7 +5,7 @@
     padding: 0 1%
 }
 #targetDivInjected{
-    margin-top: 5%;
+    /* margin-top: 5%; */
     margin-bottom: 20%;
     padding-top: 5%;
     padding-left: 3%;
@@ -22,9 +22,4 @@
 .inject-content-btns-container{
     margin-bottom: 3%;
     /* padding-bottom: 2%; */
-}
-@media screen and (max-width:720px){
-    .auto {
-        margin-left: 2%;
-    }
 }

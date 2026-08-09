@@ -1,45 +1,14 @@
 /* responsive.css */
-@media screen and (min-width:721px) {
-    #targetDivInjected {
-        padding-top: 0 !important;
+
+@media screen and (min-width:751px) {
+    .side-bar {
+        min-width: 15%
     }
-
-    .step-txt>p {
-        margin: 0 !important;
-    }
-
-    .page-header-links {
-        display: flex;
-        flex-basis: 90% !important;
-    }
-
-    .main-container>.side-bar {
-        width: fit-content;
-
-        flex-basis: 20%;
-
-    }
-
-    .imgs-container {
-        align-items: center;
-        justify-content: center !important;
-        gap: 10%
-    }
-
-}
-
-@media screen and (max-width:720px) {
     .code-container {
         min-width: 250px;
     }
     .step-txt {
         font-size: 90%;
-    }
-    #targetDivInjected {
-        .main-container-colorCode {
-            width: 100%;
-            margin-left: 0;
-        }
     }
     #darkModeBtn {
         font-size: 50%;
@@ -58,29 +27,47 @@
         right: 5%;
         /* top: 90%; */
     }
-        .step-img.enlarge img,
-        .step-vid.enlarge video {
-            max-height: 30vh !important;
-        }
+    .step-img.enlarge img,
+    .step-vid.enlarge video {
+        max-height: 30vh !important;
+    }
+}
+@media screen and (min-width:721px) {
+
+    .step-txt>p {
+        margin: 0 !important;
+    }
+
+    .page-header-links {
+        display: flex;
+        flex-basis: 90% !important;
+    }
+
+    .main-container>.side-bar {
+        width: fit-content;
+        flex-basis: 20%;
+    }
+
+    .imgs-container {
+        align-items: center;
+        justify-content: center !important;
+        gap: 10%
+    }
+
+}
+@media screen and (min-width:521px) {
+    .main-container>.side-bar {
+        
+        width: min-content;
+        max-width: 25%;
+    }
 }
 
 @media screen and (max-width:520px) {
-    .main-container>.side-bar {
-        flex-basis: 90%;
-        /* width: 78% !important; */
-    }
-
-    /* .main-container.collapsed .side-bar {
-        flex-basis: 45%;
-    } */
-
-    
-
     .step-vid.enlarge video {
         position: absolute;
         width: 300px;
         max-width: 600px !important;
-        /* border: 10px solid firebrick !important; */
     }
 
 }
