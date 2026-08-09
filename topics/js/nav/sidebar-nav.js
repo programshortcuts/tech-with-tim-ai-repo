@@ -78,7 +78,7 @@ export function initSideBarListeners() {
             setLastFocusedLink(el);
             iSideBarAs = i;
             focusSideBarIndex(i);
-            injectFromHref(el);
+            injectFromHref(el.href);
             return;
         }
 
@@ -117,6 +117,16 @@ export function initSideBarListeners() {
             if (key === 't') {
                 tutorialLink?.focus();
                 document.body.scrollIntoView({ behavior: 'instant', block: 'start' });
+            }
+        });
+        // Also listen for keyup to ensure Enter triggers activation in all environments
+        el.addEventListener('keyup', e => {
+            const key = e.key.toLowerCase();
+            if (key === 'enter') {
+                e.preventDefault();
+                e.stopPropagation();
+                const link = e.target.closest('a');
+                activateLink(link);
             }
         });
     });
