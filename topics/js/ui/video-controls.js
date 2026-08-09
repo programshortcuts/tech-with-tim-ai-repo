@@ -112,6 +112,8 @@ function bindVideoControls(step) {
         /*
 ENTER
 */
+
+        console.log('shift enter')
         if (
             key === 'enter' &&
             !e.shiftKey
