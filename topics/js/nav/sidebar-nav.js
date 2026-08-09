@@ -123,7 +123,10 @@ export function initSideBarListeners() {
 export function sideBarNav({ e, navState }) {
     if (navState.zone !== 'sideBar') return;
     const key = e.key.toLowerCase();
-
+    if(key === 't'){
+        tutorialLink.focus()
+        scrollTo(0,0)
+    }
     if (!isNaN(key)) {
         focusSideBarIndex(parseInt(key) - 1);
         return true;

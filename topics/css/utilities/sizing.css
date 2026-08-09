@@ -5,12 +5,10 @@ main.main-container {
     /* height: 100max; */
 }
 .main-container>.side-bar {
-    width: min-content;
-    padding-right: 2%;
+    /* width: min-content; */
     padding-top: 15%;
     top: 5vh;
     height: 100vh;
-    align-self: stretch;
 }
 .page-wrapper>nav.nav-lesson-title {
     width: fit-content;

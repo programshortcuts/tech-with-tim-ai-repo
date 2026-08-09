@@ -2,7 +2,7 @@
 
 @media screen and (min-width:751px) {
     .side-bar {
-        min-width: 15%
+        /* min-width: 15% */
     }
     .code-container {
         min-width: 250px;
@@ -18,8 +18,6 @@
         border-top: none !important;
         border-top: 2px solid black !important
     }
-
-    
 
     .collapsed #sideBarBtn {
         right: 5%;
@@ -56,8 +54,8 @@
 @media screen and (min-width:521px) {
     .main-container>.side-bar {
         
-        width: min-content;
-        max-width: 25%;
+        /* width: min-content; */
+        /* max-width: 25%; */
     }
 }
 

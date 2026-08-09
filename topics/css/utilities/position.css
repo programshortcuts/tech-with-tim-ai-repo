@@ -14,7 +14,7 @@ body {
 }
 .side-bar {
     position: sticky;
-    top: 0;
+    bottom: 0;
 }
 .side-bar-links-container  {
 }

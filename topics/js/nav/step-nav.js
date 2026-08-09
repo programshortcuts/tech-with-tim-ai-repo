@@ -409,7 +409,10 @@ export function stepNav({ e, navState }) {
     const isCopyCode = !!e.target.closest('.copy-code');
     const isStepFocused = step && e.target === step;
     const isFocusableInnerTarget = !!e.target.closest('a, button, input, textarea, select, summary, [tabindex]:not([tabindex="-1"])');
-
+    if(key === 't'){
+        tutorialLink.focus()
+        scrollTo(0,0)
+    }
     // Always sync tutorial link when Enter is pressed anywhere inside a step
     if (key === 'enter' && activeStep) {
         try { changeTutorialLink({ target: activeStep }); } catch (err) { /* ignore */ }
@@ -417,7 +420,7 @@ export function stepNav({ e, navState }) {
 
     if (key === 'enter' && activeStep && e.target !== activeStep && !isCopyCode && !getStepCopyCodes(activeStep).length && isFocusableInnerTarget) {
         return false;
-    }
+        }
 
     if (key === 'enter' && e.shiftKey && activeStep) {
         e.preventDefault();
