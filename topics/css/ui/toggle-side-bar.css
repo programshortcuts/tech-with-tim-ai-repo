@@ -16,9 +16,14 @@
     /* border: 10px solid red !important; */
 }
 
+@media screen and (max-width:731px){
+    .main-container.collapsed .side-bar {
+            max-width: 10% !important;
+        }
+}
 @media screen and (max-width:431px){
     .main-container .side-bar {
-        max-width: 24%;
+        max-width: 20%;
     }
     .main-container.collapsed .side-bar {
         width: 8% !important;   
