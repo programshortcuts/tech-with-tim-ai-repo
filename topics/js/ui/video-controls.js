@@ -116,14 +116,12 @@ ENTER
             key === 'enter' &&
             !e.shiftKey
         ) {
-
             // IMPORTANT:
             // if no copy-codes,
             // let step-nav handle enlarge
             if (!hasCopyCodes) {
                 return
             }
-
             e.preventDefault()
 
             togglePlay(vid)
@@ -148,6 +146,7 @@ SHIFT + ENTER
                 return
             }
 
+            console.log(e.target)
             e.preventDefault()
 
             toggleEnlarge(stepVid, vid)
@@ -233,7 +232,6 @@ function togglePlay(vid) {
         vid.play()
 
     } else {
-
         vid.pause()
     }
 }

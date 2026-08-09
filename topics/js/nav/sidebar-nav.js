@@ -93,7 +93,6 @@ export function initSideBarListeners() {
         el.addEventListener('keydown', e => {
             const key = e.key.toLowerCase();
             
-            console.log('here')
             if (key === 'enter') {
                 e.preventDefault();
                 e.stopPropagation();
