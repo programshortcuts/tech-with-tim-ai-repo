@@ -11,6 +11,7 @@ import { initSideBarListeners } from "../nav/sidebar-nav.js";
 import { initStepNav } from "../nav/step-nav.js";
 import { initCopyCode } from "../ui/copy-code.js";
 import { refreshImages,handleImgSizes,denlargeAllImages } from "../ui/toggle-img-sizes.js";
+import { initAllVideos } from "../ui/video-controls.js";
 // No feature enters main - script unless it can survive a rewrite. !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 document.addEventListener('DOMContentLoaded', initMain)
 function initMain(){
@@ -21,8 +22,9 @@ function initMain(){
     initDarkMode()
     setupGlobalKeyListener()
     // refreshImages()
-//  Img and Video handling is in HERE StepNav -----------
-    initStepNav() // 
+    // Img and Video handling is in HERE StepNav -----------
+    initStepNav()
+    initAllVideos()
 // ------------
 
 }

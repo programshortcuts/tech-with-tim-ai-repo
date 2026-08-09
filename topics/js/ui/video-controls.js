@@ -83,6 +83,15 @@ function bindVideoControls(step) {
         )
     })
 
+    vid.addEventListener('play', () => {
+        pauseOtherVideos(vid)
+        updateAllPlayButtons()
+    })
+
+    vid.addEventListener('pause', () => {
+        updateAllPlayButtons()
+    })
+
     /*
     -------------------------
     KEYBOARD
@@ -175,6 +184,7 @@ function toggleEnlarge(stepVid, vid) {
 
     if (stepVid.classList.contains('enlarge')) {
 
+        pauseOtherVideos(vid)
         vid.play()
 
     } else {
@@ -184,14 +194,21 @@ function toggleEnlarge(stepVid, vid) {
 }
 
 function togglePlay(vid) {
-    
     if (vid.paused) {
-        
+        pauseOtherVideos(vid)
         vid.play()
-
     } else {
         vid.pause()
     }
+}
+
+function pauseOtherVideos(currentVid) {
+    const allVideos = document.querySelectorAll('video')
+    allVideos.forEach(video => {
+        if (video !== currentVid && !video.paused) {
+            video.pause()
+        }
+    })
 }
 
 function updatePlayBtn(btn, vid) {
