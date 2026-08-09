@@ -2,9 +2,9 @@
 /* toggle-side-bar.css */
 .main-container.collapsed .side-bar {
     /* flex-basis: 18%; */
+    width: 10%;
 }
 .main-container.collapsed .side-bar-links-container {
-    width: 0;
     opacity: 0;
     transition: all 250ms;
 }
