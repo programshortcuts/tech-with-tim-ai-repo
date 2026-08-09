@@ -37,8 +37,14 @@ function focusSideBarIndex(index) {
 // Activate a link: handles tutorial change and mainTargetDiv focus
 function activateLink(link) {
     if (!link) return;
-
     changeTutorialLink({ target: link });
+
+    // Ensure the sidebar activation also injects the linked HTML into mainTargetDiv
+    try {
+        injectFromHref(link.href);
+    } catch (err) {
+        // ignore — injectFromHref handles its own errors
+    }
 
     if (lastUserActivated === link) {
         mainTargetDiv.focus();
@@ -48,7 +54,7 @@ function activateLink(link) {
 
     lastUserActivated = link;
     setLastCLICKEDLink(link);
-    
+
 }
 
 // Initialize all sidebar listeners

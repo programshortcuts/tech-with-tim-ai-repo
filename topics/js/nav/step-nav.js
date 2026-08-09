@@ -127,10 +127,11 @@ function focusStep(index) {
     steps[normalized]?.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
-        inline: 'nearest'
+        inline: 'center'
     });
 
     steps[normalized]?.focus({ preventScroll: true });
+    
 }
 
 export function getSteps() {
@@ -175,6 +176,12 @@ function handleStepNavKey({ e, step, state, key }) {
         const targetIndex = parseInt(key, 10) - 1;
         if (targetIndex >= 0 && targetIndex < steps.length) {
             steps[targetIndex].focus();
+            scrollToCenter(steps[targetIndex])
+            steps[targetIndex].scrollIntoView({behavior:'instant', 
+                                            block: 'center',
+                                            inline: 'center'}
+                                        )
+
             return true;
         }
     }
@@ -352,6 +359,10 @@ export function initStepNav() {
         
         if (step.hasAttribute('data-auto-focus')) {
             step.focus();
+            steps[targetIndex].scrollIntoView({behavior:'instant', 
+                                            block: 'center',
+                                            inline: 'center'}
+                                        )
             lastStep = step;
         }
     });
