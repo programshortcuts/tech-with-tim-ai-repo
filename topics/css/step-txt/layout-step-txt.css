@@ -53,3 +53,12 @@
     display: flex;
     flex-direction: column;
 }
+
+.step-floats-container {
+    width: 100%;
+    display: flex;
+}
+
+.step-floats-container>.step-float {
+    flex-basis: 40%;
+}
