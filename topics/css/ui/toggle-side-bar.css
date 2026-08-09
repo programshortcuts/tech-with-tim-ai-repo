@@ -26,6 +26,9 @@
 }
 
 @media screen and (max-width:431px){
+    .main-container .side-bar {
+        max-width: 25%;
+    }
     .main-container.collapsed .side-bar {
         width: 8% !important;   
     }   
