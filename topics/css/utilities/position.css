@@ -24,7 +24,7 @@ body {
 }
 .page-wrapper>nav.nav-lesson-title {
     position: fixed;
-    top: 7%;
+    top: 0%;
 }
 .page-wrapper > .main-container {
     top: 10%;
