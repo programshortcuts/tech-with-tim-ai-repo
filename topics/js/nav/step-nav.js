@@ -229,12 +229,51 @@ function handleStepModeKey({ e, step, state, key, isCopyCode }) {
 
     return false;
 }
-
+export function getLastStep() {
+    return lastStep;
+}
+export function scrollToCenter({ el, smooth }) {
+    if (!el) return;
+    el.scrollIntoView({ behavior: smooth ? 'smooth' : 'instant', block: 'center' });
+}
+function handleRootStepNavigation({ e, key, isMainTarget }) {
+    if (!steps.length) return false;
+    if (key === 'enter') {
+        steps[0].focus();
+        return true;
+    }
+    // if (key === 'a'  || key === 'arrowup') {
+    if (key === 'a') {
+        if (isMainTarget || !lastStep) {
+            focusStep(steps.length - 1);
+        } else {
+            focusStep(steps.indexOf(lastStep) - 1);
+        }
+        return true;
+    }
+    // if (key === 'f' || key === 'arrowdown') {
+    if (key === 'f') {
+        if (isMainTarget || !lastStep) {
+            focusStep(0);
+        } else {
+            focusStep(steps.indexOf(lastStep) + 1);
+        }
+        return true;
+    }
+    if (!isNaN(key)) {
+        const targetIndex = parseInt(key, 10) - 1;
+        if (targetIndex >= 0 && targetIndex < steps.length) {
+            steps[targetIndex].focus();
+            return true;
+        }
+    }
+    return false;
+}
 export function initStepNav() {
     steps = [...mainTargetDiv.querySelectorAll('.step-float')];
     steps.forEach((step, index) => {
         if (!step.hasAttribute('tabindex')) {
-            step.setAttribute('tabindex', '0');
+            // step.setAttribute('tabindex', '0');
         }
         
         getStepState(step);
@@ -367,50 +406,6 @@ export function initStepNav() {
         }
     });
 }
-
-export function getLastStep() {
-    return lastStep;
-}
-
-export function scrollToCenter({ el, smooth }) {
-    if (!el) return;
-    el.scrollIntoView({ behavior: smooth ? 'smooth' : 'instant', block: 'center' });
-}
-
-function handleRootStepNavigation({ e, key, isMainTarget }) {
-    if (!steps.length) return false;
-    if (key === 'enter') {
-        steps[0].focus();
-        return true;
-    }
-    // if (key === 'a'  || key === 'arrowup') {
-    if (key === 'a') {
-        if (isMainTarget || !lastStep) {
-            focusStep(steps.length - 1);
-        } else {
-            focusStep(steps.indexOf(lastStep) - 1);
-        }
-        return true;
-    }
-    // if (key === 'f' || key === 'arrowdown') {
-    if (key === 'f') {
-        if (isMainTarget || !lastStep) {
-            focusStep(0);
-        } else {
-            focusStep(steps.indexOf(lastStep) + 1);
-        }
-        return true;
-    }
-    if (!isNaN(key)) {
-        const targetIndex = parseInt(key, 10) - 1;
-        if (targetIndex >= 0 && targetIndex < steps.length) {
-            steps[targetIndex].focus();
-            return true;
-        }
-    }
-    return false;
-}
-
 export function stepNav({ e, navState }) {
     if (navState.zone !== 'mainTargetDiv') return false;
     const key = e.key.toLowerCase();

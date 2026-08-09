@@ -109,17 +109,11 @@ function bindVideoControls(step) {
 
         if (!isFocusedInsideThisStep) return
 
-        /*
-ENTER
-*/
-
-        console.log('shift enter')
-        if (
-            key === 'enter' &&
+        /*ENTER*/
+        if (key === 'enter' &&
             !e.shiftKey
         ) {
-            // IMPORTANT:
-            // if no copy-codes,
+            // IMPORTANT:// if no copy-codes,
             // let step-nav handle enlarge
             if (!hasCopyCodes) {
                 return
@@ -132,27 +126,19 @@ ENTER
 
             return
         }
-        /*
-SHIFT + ENTER
-*/
-
-        if (
-            key === 'enter' &&
+        /* SHIFT + ENTER*/
+        if (key === 'enter' &&
             e.shiftKey
         ) {
-
             // IMPORTANT:
             // if no copy-codes,
             // let step-nav handle enlarge
             if (!hasCopyCodes) {
                 return
             }
-
-            console.log(e.target)
             e.preventDefault()
-
+            console.log(vid)
             toggleEnlarge(stepVid, vid)
-
             return
         }
 
