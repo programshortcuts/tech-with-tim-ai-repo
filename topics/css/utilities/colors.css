@@ -12,6 +12,7 @@
 }
 nav.section-lesson-title {
     box-shadow: 0 0 1px 1px white;
+    background-color: inherit;
 }
 body>nav.section-lesson-title>h1#title {
     color: black;
