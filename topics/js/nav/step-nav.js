@@ -86,6 +86,18 @@ function pauseVideoInMedia(mediaEl) {
     }
 }
 
+function resetStepVideos(step) {
+    if (!step) return;
+    const videos = step.querySelectorAll('video');
+    videos.forEach(video => {
+        try {
+            video.currentTime = 0;
+        } catch (err) {
+            // ignore if video not ready
+        }
+    });
+}
+
 function cycleStepMedia(step) {
     const state = getStepState(step);
     const media = getStepMedia(step);
@@ -432,6 +444,7 @@ export function stepNav({ e, navState }) {
 
     if (key === 'enter' && e.shiftKey && activeStep) {
         e.preventDefault();
+        resetStepVideos(activeStep);
         if (e.target !== activeStep) {
             resetStepState(activeStep);
             activeStep.focus();
