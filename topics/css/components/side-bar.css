@@ -13,15 +13,18 @@ main>.side-bar::-webkit-scrollbar {display: none;}
 .side-bar-links-container>ul li {
     margin-top: 5%;
     margin-bottom: 10%;
+    max-width: 100%;
 }
 
-.side-bar-links-container>ul code {
-    display: inline;
-}
+
 
 .side-bar ul li a {
     display: block;
     box-sizing: border-box;
-    min-width: 150px;
+    min-width: 100px;
     width: 100%;
+    max-width: 90%;
+}
+.side-bar-links-container>ul code {
+    display: inline;
 }

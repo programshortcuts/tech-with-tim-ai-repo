@@ -19,9 +19,7 @@
         border-top: 2px solid black !important
     }
 
-    .side-bar ul li a {
-        min-width: 100px !important;
-    }
+    
 
     .collapsed #sideBarBtn {
         right: 5%;
