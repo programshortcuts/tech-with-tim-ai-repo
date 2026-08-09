@@ -109,38 +109,8 @@ function bindVideoControls(step) {
 
         if (!isFocusedInsideThisStep) return
 
-        /*ENTER*/
-        if (key === 'enter' &&
-            !e.shiftKey
-        ) {
-            // IMPORTANT:// if no copy-codes,
-            // let step-nav handle enlarge
-            if (!hasCopyCodes) {
-                return
-            }
-            e.preventDefault()
-
-            togglePlay(vid)
-
-            updatePlayBtn(playBtn, vid)
-
-            return
-        }
-        /* SHIFT + ENTER*/
-        if (key === 'enter' &&
-            e.shiftKey
-        ) {
-            // IMPORTANT:
-            // if no copy-codes,
-            // let step-nav handle enlarge
-            if (!hasCopyCodes) {
-                return
-            }
-            e.preventDefault()
-            console.log(vid)
-            toggleEnlarge(stepVid, vid)
-            return
-        }
+        // Let step-level navigation handlers manage Enter/Shift+Enter behavior
+        if (key === 'enter') return
 
         /*
 LEFT

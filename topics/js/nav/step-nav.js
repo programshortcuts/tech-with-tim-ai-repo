@@ -309,6 +309,8 @@ export function initStepNav() {
             }
         });
 
+        // Ensure Enter toggles media even when focus is on non-interactive children
+        // Enter and Shift+Enter keyboard handling is managed globally by stepNav().
         step.addEventListener('focusout', e => {
             if (!e.relatedTarget || !step.contains(e.relatedTarget)) {
                 resetStepState(step);
