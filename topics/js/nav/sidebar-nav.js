@@ -89,6 +89,8 @@ export function initSideBarListeners() {
             
             console.log('here')
             if (key === 'enter') {
+                e.preventDefault();
+                e.stopPropagation();
                 const link = e.target.closest('a');
                 // navTitleH1.innerText = [...sideBarAs].indexOf(link) + 1
                 activateLink(link);

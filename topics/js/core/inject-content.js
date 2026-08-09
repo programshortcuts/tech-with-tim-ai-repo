@@ -10,6 +10,7 @@ import { initCopyCode } from "../ui/copy-code.js";
 import { sideBarAsARRAY } from "../nav/sidebar-nav.js";
 import { getSteps, initStepNav,updateSteps } from "../nav/step-nav.js";
 import { refreshImages } from "../ui/toggle-img-sizes.js";
+import { changeTutorialLink } from "../ui/change-tutorial-link.js";
 const navTitleH1 = document.querySelector('#navTitle h1')
 export const endNxtBtn = document.querySelector('#endNxtBtn')
 export const prevBtn = document.querySelector('#prevBtn')
@@ -95,6 +96,7 @@ export function initInjectContentListeners(){
         setLastCLICKEDLink(a);
         lastClickedSideBarLink = a;
 
+        changeTutorialLink({ target: a });
         await injectFromHref(a.href);
 
         requestAnimationFrame(() => {
