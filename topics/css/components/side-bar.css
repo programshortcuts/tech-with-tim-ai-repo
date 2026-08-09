@@ -2,12 +2,11 @@
 /* main>.side-bar {z-index: 100} */
 main>.side-bar::-webkit-scrollbar {display: none;}
 
-
 .side-bar-links-container ul {
     list-style: none;
     display: flex;
     flex-direction: column;
-    width: fit-content;
+    width: min-content;
     margin-top: 2%;
     margin-left: 5%;
 }

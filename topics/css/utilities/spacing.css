@@ -1,12 +1,9 @@
 /* spacing.css */
 .page-wrapper>nav.nav-lesson-title {
-    margin-top: 0%;
 }
 .main-landing-page>nav#nxtPrevLessonsBtns button {
     padding: 0 1%
 }
-
-
 #targetDivInjected{
     margin-top: 5%;
     margin-bottom: 20%;

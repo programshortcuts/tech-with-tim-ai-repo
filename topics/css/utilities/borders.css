@@ -4,7 +4,9 @@
     border-bottom: none;
     border-top: none;
 }
-
+.side-bar {
+    border-right: 1px solid black;
+}
 .page-wrapper >nav.nav-lesson-title {
     border: 1px solid black;
     border-bottom: none;

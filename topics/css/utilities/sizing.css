@@ -6,10 +6,10 @@ main.main-container {
 }
 .main-container>.side-bar {
     width: fit-content;
+    max-width: 10% !important;
     padding-right: 2%;
     padding-top: 15%;
     top: 5vh;
-
     align-self: stretch;
 }
 .page-wrapper>nav.nav-lesson-title {

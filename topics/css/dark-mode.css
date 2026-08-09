@@ -1,4 +1,8 @@
 /* dark-mode-colorCode.css */
+.dark-mode .page-header-links a:active,
+.page-header-links a:focus {
+    color: whitesmoke !important;
+}
 .dark-mode .step-float:active, .dark-mode .step-float:focus {
     background-color:  rgb(34, 63, 73);
     box-shadow: 2px 2px 10px lightblue;

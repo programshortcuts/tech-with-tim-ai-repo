@@ -2,7 +2,7 @@
 /* toggle-side-bar.css */
 .main-container.collapsed .side-bar {
     /* flex-basis: 18%; */
-    width: 10%;
+    width: 4%;
 }
 .main-container.collapsed .side-bar-links-container {
     opacity: 0;
@@ -23,4 +23,11 @@
     /* top: 80% !important; */
     top: 90% !important;
     /* border: 10px solid red !important; */
+}
+
+@media screen and (max-width:431px){
+    .main-container.collapsed .side-bar {
+        /* flex-basis: 18%; */
+        width: 8% !important;   
+    }   
 }
