@@ -40,6 +40,7 @@
     .main-container>.side-bar {
         width: fit-content;
         flex-basis: 10%;
+        max-width: 10%;
     }
 
     .imgs-container {
@@ -53,6 +54,7 @@
     .main-container>.side-bar {
         
         flex-basis: 50% ;
+        max-width: 50% ;
     }
 }
 
