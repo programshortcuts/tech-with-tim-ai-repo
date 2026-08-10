@@ -1,7 +1,7 @@
 
 /* toggle-side-bar.css */
 .main-container.collapsed .side-bar {
-    flex-basis: 10%;
+    flex-basis: 15%;
 }
 .main-container.collapsed .side-bar-links-container {
     opacity: 0;
@@ -22,9 +22,7 @@
         }
 }
 @media screen and (max-width:431px){
-    .main-container .side-bar {
-        max-width: 20%;
-    }
+    
     .main-container.collapsed .side-bar {
         width: 8% !important;   
     }   
