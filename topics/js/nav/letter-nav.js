@@ -8,26 +8,53 @@ export function letterNav({ e }) {
     let target
     if (e.metaKey) return
     
-    const allEls = [...document.querySelectorAll('[id],a,[data-nav-target]')].filter(el => {
-        if (el.id === 'mainTargetDiv') return true
-        return isActuallyVisible(el)
-    })
+    const allEls = [
+        ...document.querySelectorAll('[id], a, [data-nav-target], .step-float h4')
+    ]
+        .map(el => {
+            if (el.matches('.step-float h4')) {
+                return el.closest('.step-float') || el
+            }
+    
+            return el
+        })
+        .filter(el => {
+            if (el.id === 'mainTargetDiv') return true
+            return isActuallyVisible(el)
+        })
+    
     const firstAlpha = el => {
-        // If element is NOT an anchor, use its ID  
-        // If anchor has ID, go to ID[0]
-        
-        if(el.id){
-            return el.id[0].toLowerCase()
-        } else {
-            const s = (el.innerText || '').trim().toLowerCase()
+    
+        // .step-float containing an h4
+        const h4 = el.matches('.step-float')
+            ? el.querySelector('.step-float h4')
+            : null
+    
+        if (h4) {
+            const s = (h4.innerText || '').trim().toLowerCase()
+    
             for (let i = 0; i < s.length; i++) {
                 if (/[a-z]/.test(s[i])) {
                     return s[i]
                 }
             }
+    
             return ''
         }
-        // Regular <a> text logic
+    
+        if (el.id) {
+            return el.id[0].toLowerCase()
+        }
+    
+        const s = (el.innerText || '').trim().toLowerCase()
+    
+        for (let i = 0; i < s.length; i++) {
+            if (/[a-z]/.test(s[i])) {
+                return s[i]
+            }
+        }
+    
+        return ''
     }
     const matching = allEls.filter(el => {
         return firstAlpha(el) == key
