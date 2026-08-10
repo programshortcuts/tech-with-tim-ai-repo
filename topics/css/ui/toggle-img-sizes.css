@@ -3,11 +3,9 @@
 .step-vid.enlarge {
     /* transform: translate(-25%, 0%) scale(1.002); */
 }
-
 .step-img,
 .step-vid {
     z-index: 1000;
-    
 }
 .step-img.enlarge,
 .step-vid.enlarge {
@@ -20,11 +18,9 @@
     max-width: 400px;
     object-fit: contain;
 }
-
 .step-float>.step-vid.enlarge video {
     /* box-shadow: 0 0 1px 1px blue !important; */
 }
-
 .step-vid.enlarge video,
 .step-img.enlarge img {
     width: 100%;

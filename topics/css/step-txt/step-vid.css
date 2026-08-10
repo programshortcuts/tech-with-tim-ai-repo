@@ -2,6 +2,7 @@
 .step-vid {
     float: right;
     height: fit-content;
+    height: inherit;
     width: 45%;
 }
 .step-vid>video {

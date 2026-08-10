@@ -126,25 +126,17 @@ function bindVideoControls(step) {
 
             return
         }
-        /*
-        RIGHT
-        */
-
+        /*RIGHT*/
         if (e.keyCode === 39) {
-
             e.preventDefault()
             fwdBtn.classList.toggle('active')
             vid.currentTime = Math.min(
                 vid.duration,
                 vid.currentTime + 0.5
             )
-
             return
         }
-        /*
-SPACE
-*/
-
+        /*SPACE*/
         if (
             key === ' ' ||
             key === 'spacebar'
