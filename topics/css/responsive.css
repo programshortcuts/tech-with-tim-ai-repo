@@ -39,7 +39,7 @@
 
     .main-container>.side-bar {
         width: fit-content;
-        flex-basis: 20%;
+        flex-basis: 10%;
     }
 
     .imgs-container {
@@ -49,11 +49,10 @@
     }
 
 }
-@media screen and (min-width:521px) {
+@media screen and (max-width:721px) {
     .main-container>.side-bar {
         
-        width: min-content;
-        flex-basis: 20% ;
+        flex-basis: 50% ;
     }
 }
 
