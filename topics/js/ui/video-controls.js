@@ -85,11 +85,11 @@ function bindVideoControls(step) {
 
     vid.addEventListener('play', () => {
         pauseOtherVideos(vid)
-        updateAllPlayButtons()
+        // updateAllPlayButtons()
     })
 
     vid.addEventListener('pause', () => {
-        updateAllPlayButtons()
+        // updateAllPlayButtons()
     })
 
     /*

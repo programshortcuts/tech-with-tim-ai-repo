@@ -107,6 +107,7 @@ function handleMainFocus({ e, zone }) {
         }
         return
     } else {
+        console.log(navState)
         mainTargetDiv.focus()
         document.querySelector('body').scrollIntoView({ behavior: 'instant', block: 'start' })
     }
