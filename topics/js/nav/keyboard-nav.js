@@ -64,7 +64,6 @@ function routeKey({ e }) {
         letterNav({ e })
         return
     }
-    console.log(zone)
     
     if (zone === 'navLessonTitle') {
         const isHandled = handleNavLessonTitle({e,navState})
@@ -78,8 +77,6 @@ function routeKey({ e }) {
         const isHandled = sideBarNav({ e,navState })
         if (isHandled )return
     }
-    
-    
 }
 function handleMainFocus({ e, zone }) {
     const key = e.key.toLowerCase()
