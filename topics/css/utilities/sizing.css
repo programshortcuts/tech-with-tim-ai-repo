@@ -7,8 +7,10 @@ main.main-container {
 .main-container>.side-bar {
     /* width: min-content; */
     padding-top: 15%;
-    top: 5vh;
-    height: 100vh;
+    top: 10vh;
+    height: calc(100vh - 10vh);
+    align-self: flex-start;
+    overflow-y: auto;
 }
 .page-wrapper>nav.nav-lesson-title {
     width: fit-content;

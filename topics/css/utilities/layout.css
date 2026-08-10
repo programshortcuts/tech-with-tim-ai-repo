@@ -17,7 +17,8 @@ main.main-container.collapsed {
 main.main-container {
     display: flex;
     align-items: stretch;
-    /* overflow: hidden; */
+    overflow: hidden;
+    min-height: calc(100vh - 10vh);
 }
 
 #mainTargetDiv {
@@ -25,6 +26,7 @@ main.main-container {
     overflow-y: auto;
     overflow-x: hidden;
     min-height: 0;
+    height: calc(100vh - 10vh);
 }
 .inject-content-btns-container {
     display: flex;}

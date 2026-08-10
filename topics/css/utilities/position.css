@@ -14,7 +14,8 @@ body {
 }
 .side-bar {
     position: sticky;
-    bottom: 0;
+    top: 10vh;
+    align-self: flex-start;
 }
 .side-bar-links-container  {
 }
