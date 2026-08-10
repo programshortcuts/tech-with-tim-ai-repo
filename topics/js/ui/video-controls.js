@@ -126,7 +126,6 @@ function bindVideoControls(step) {
 
             return
         }
-
         /*
         RIGHT
         */
