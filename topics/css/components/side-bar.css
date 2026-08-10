@@ -25,6 +25,10 @@ main>.side-bar::-webkit-scrollbar {display: none;}
     width: 100%;
     max-width: 90%;
 }
+.side-bar ul li ul li {
+    margin: 0;
+    padding-left: 4%;
+}
 .side-bar-links-container>ul code {
     display: inline;
 }
