@@ -100,16 +100,12 @@ function bindVideoControls(step) {
     not VIDEO
     -------------------------
     */
-
     step.addEventListener('keydown', e => {
-
         const key = e.key.toLowerCase()
         const stepVid = vid.closest('.step-vid')
         const playBtn = stepVid.querySelector('.playBtn')
         const fwdBtn = stepVid.querySelector('.fwdBtn')
         const revBtn = stepVid.querySelector('.rwdBtn')
-        
-
         const hasCopyCodes =
             step.querySelectorAll('.copy-code').length > 0
 
@@ -117,14 +113,9 @@ function bindVideoControls(step) {
             step.contains(document.activeElement)
 
         if (!isFocusedInsideThisStep) return
-
         // Let step-level navigation handlers manage Enter/Shift+Enter behavior
         if (key === 'enter') return
-
-        /*
-LEFT
-        */
-
+        /*LEFT*/
         if (e.keyCode === 37) {
             e.preventDefault()
             rwdBtn.classList.toggle('active')
