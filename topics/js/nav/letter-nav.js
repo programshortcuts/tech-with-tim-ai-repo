@@ -1,126 +1,69 @@
 // letter-nav.js
-let lastLetterPressed = null
-import { mainTargetDiv } from "../core/inject-content.js"
-import { getLastStep } from "./step-nav.js"
-import { pageWrapper } from "../core/main-script.js"
-export function letterNav({ e }) {
-    const key = e.key.toLowerCase()
-    let target
-    if (e.metaKey) return
-    
-    const allEls = [
-        ...document.querySelectorAll('[id], a, [data-nav-target], .step-float h4')
-    ]
-        .map(el => {
-            if (el.matches('.step-float h4')) {
-                return el.closest('.step-float') || el
-            }
-    
-            return el
-        })
-        .filter(el => {
-            if (el.id === 'mainTargetDiv') return true
-            return isActuallyVisible(el)
-        })
-    
-    const firstAlpha = el => {
-    
-        // .step-float containing an h4
-        const h4 = el.matches('.step-float')
-            ? el.querySelector('.step-float h4')
-            : null
-    
-        if (h4) {
-            const s = (h4.innerText || '').trim().toLowerCase()
-    
-            for (let i = 0; i < s.length; i++) {
-                if (/[a-z]/.test(s[i])) {
-                    return s[i]
-                }
-            }
-    
-            return ''
-        }
-    
-        if (el.id) {
-            return el.id[0].toLowerCase()
-        }
-    
-        const s = (el.innerText || '').trim().toLowerCase()
-    
-        for (let i = 0; i < s.length; i++) {
-            if (/[a-z]/.test(s[i])) {
-                return s[i]
-            }
-        }
-    
-        return ''
-    }
-    const matching = allEls.filter(el => {
-        return firstAlpha(el) == key
-    })
-    const activeEl = document.activeElement
-    let iAllEls = allEls.indexOf(activeEl)
-    let iMatching = matching.indexOf(activeEl)
-    let newIndex
+import { mainTargetDiv } from "../core/inject-content.js";
 
-    if (key !== lastLetterPressed) {
-        if (iAllEls === -1) {
-            // nothing focused: pick first/last
-            newIndex = e.shiftKey ? matching.length - 1 : 0
-        } else {
-            const prevEl = allEls[iAllEls - 1]  // the element directly before
-            const nextEl = allEls[iAllEls + 1]  // the element directly after
-            // if the previous element matches the letter, go up one
-            if (prevEl && matching.includes(prevEl)) {
-                newIndex = matching.indexOf(prevEl)
-            } else {
-                // otherwise go to the next matching element after current focus
-                let foundNext = false
-                for (let i = iAllEls + 1; i < allEls.length; i++) {
-                    if (matching.includes(allEls[i])) {
-                        newIndex = matching.indexOf(allEls[i])
-                        foundNext = true
-                        break
-                    }
-                }
-                if (!foundNext) {
-                    // fallback to first matching if nothing found below
-                    newIndex = 0
-                }
-            }
-        }
-    } else {
-        if (iMatching === -1) {
-            // currently focused element is not one of the matching elements
-            newIndex = e.shiftKey ? matching.length - 1 : 0
-        } else {
-            newIndex = e.shiftKey
-                ? (iMatching - 1 + matching.length) % matching.length
-                : (iMatching + 1) % matching.length
-        }
-    }
-    target = matching[newIndex]
-    
-    target?.focus()
-    if (target === mainTargetDiv) {
-        scrollTo(0, 0)
-    }
-    lastLetterPressed = key
-    
+let lastLetterPressed = null;
+
+function navigationLabel(element) {
+    const navTarget = element.dataset.navTarget?.trim().toLowerCase();
+    if (navTarget) return navTarget;
+
+    const id = element.id?.trim().toLowerCase();
+    if (id) return id;
+
+    const textSource = element.matches('.step-float')
+        ? element.querySelector('h1, h2, h3, h4, h5, h6')
+        : element;
+
+    return textSource?.textContent?.trim().toLowerCase() || '';
 }
-export function isActuallyVisible(el) {
-    if (!el) return false;
-    // 1. Sidebar collapsed → block ALL sidebar descendants
+
+export function letterNav({ e }) {
+    if (!e?.key || e.metaKey || e.ctrlKey || e.altKey) return false;
+
+    const key = e.key.toLowerCase();
+    if (!/^[a-z0-9]$/.test(key)) return false;
+
+    const candidates = [...new Set([
+        ...document.querySelectorAll('a, [id], [data-nav-target], .step-float')
+    ])].filter(element => {
+        if (element === mainTargetDiv) return true;
+        return isActuallyVisible(element);
+    });
+
+    const matching = candidates.filter(element => navigationLabel(element).startsWith(key));
+    if (!matching.length) return false;
+
+    const activeIndex = matching.indexOf(document.activeElement);
+    let targetIndex;
+
+    if (key !== lastLetterPressed || activeIndex === -1) {
+        targetIndex = e.shiftKey ? matching.length - 1 : 0;
+    } else {
+        targetIndex = e.shiftKey
+            ? (activeIndex - 1 + matching.length) % matching.length
+            : (activeIndex + 1) % matching.length;
+    }
+
+    const target = matching[targetIndex];
+    target?.focus();
+    if (target === mainTargetDiv) window.scrollTo(0, 0);
+
+    lastLetterPressed = key;
+    return true;
+}
+
+export function isActuallyVisible(element) {
+    if (!element) return false;
+
     if (
-        pageWrapper?.classList.contains('collapsed') &&
-        el.closest('.side-bar')
+        document.querySelector('.main-container')?.classList.contains('collapsed') &&
+        element.closest('.side-bar') &&
+        element.id !== 'sideBarBtn'
     ) {
         return false;
     }
 
-    // 2. CSS visibility checks
-    const style = getComputedStyle(el);
+    const style = getComputedStyle(element);
     if (
         style.display === 'none' ||
         style.visibility === 'hidden' ||
@@ -129,21 +72,6 @@ export function isActuallyVisible(el) {
         return false;
     }
 
-    // 3. Zero-size or clipped
-    const rect = el.getBoundingClientRect();
-    if (rect.width === 0 || rect.height === 0) {
-        return false;
-    }
-
-    // 4. Any hidden ancestor (dropdowns, containers, etc.)
-    let parent = el.parentElement;
-    while (parent) {
-        const ps = getComputedStyle(parent);
-        if (ps.display === 'none' || ps.visibility === 'hidden') {
-            return false;
-        }
-        parent = parent.parentElement;
-    }
-
-    return true;
+    const rect = element.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0;
 }

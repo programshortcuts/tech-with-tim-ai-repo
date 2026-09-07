@@ -1,101 +1,287 @@
+// js-index/letterFocus-txt-nums.js
+
 addEventListener('keydown', e => {
-    // Normalize key
-    let letter = '';
+
+    /* =========================================================
+       GET LETTER / NUMBER
+       ========================================================= */
+
+    let key = '';
+
     if (/^Key[A-Z]$/.test(e.code)) {
-        letter = e.code.replace('Key', '').toLowerCase();
+        key = e.code.replace('Key', '').toLowerCase();
     } else if (/^Digit[0-9]$/.test(e.code)) {
-        letter = e.code.replace('Digit', '');
+        key = e.code.replace('Digit', '');
     } else {
         return;
     }
 
-    const allEls = [...document.querySelectorAll('a, [id],button')].filter(el => {
+
+    /* =========================================================
+       GET NAVIGABLE ELEMENTS
+
+       If an element has an ID:
+           use the ID for letter navigation.
+
+       Otherwise:
+           use the visible text like before.
+       ========================================================= */
+
+    const allEls = [
+        ...document.querySelectorAll(
+            'a, button, [tabindex], [data-nav-target]'
+        )
+    ].filter(el => {
+
         const rect = el.getBoundingClientRect();
-        return el.offsetParent != null && rect.width > 0 && rect.height > 0;
+
+        return (
+            el.offsetParent !== null &&
+            rect.width > 0 &&
+            rect.height > 0
+        );
     });
 
-    if(letter == 'm' || letter == 't'){
-        scrollTo(0,0)
+    /* =========================================================
+       OLD PAGE SCROLL BEHAVIOR
+       ========================================================= */
+
+    if (key === 'm' || key === 't') {
+        scrollTo(0, 0);
     }
-    // ????????????????????????????????????????????????????????????????????
-    // Old version
-    // const text = el.textContent.trim().toLowerCase();
-    // const letteredEls = allEls.filter(el => {
-    //     // Special rule for #mainContainer
-    //     if (el.id === 'mainContainer') {
-    //         return letter === 'm';
-    //     }
 
-    //     const text = el.textContent.trim().toLowerCase();
-    //     console.log(text)
-    //     const words = text.split(/\s+/);
 
-    //     return words.some(word => {
-    //         const cleaned = word.replace(/^[^a-z0-9]+/i, '');
-    //         if (!cleaned) return false;
+    /* =========================================================
+       CLEAN TEXT
 
-    //         if (/^\d+$/.test(cleaned) && /^[0]+[1-9]/.test(cleaned)) {
-    //             return cleaned[0] === letter || cleaned.match(/[1-9]/)?.[0] === letter;
-    //         }
+       Keep the old behavior where <sup> content does not
+       participate in letter navigation.
+       ========================================================= */
 
-    //         return cleaned[0] === letter;
-    //     });
-    // });
-    // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    //  I have no idea how cloneNode is working but this did the job
     function getCleanText(el) {
-        // Clone the element without <sup> tags
+
         const clone = el.cloneNode(true);
-        clone.querySelectorAll('sup').forEach(node => node.remove());
-        return clone.textContent.trim().toLowerCase();
+
+        clone
+            .querySelectorAll('sup')
+            .forEach(node => node.remove());
+
+        return clone.textContent
+            .trim()
+            .toLowerCase();
     }
 
-    const letteredEls = allEls.filter(el => {
-        if (el.id === 'mainContainer') {
-            return letter === 'm';
+
+    /* =========================================================
+       GET NAVIGATION TEXT
+
+       IDs take priority.
+
+       Examples:
+
+           #agents              -> "agents"
+           #aiAgents-26         -> "ai agents 26"
+           #codexFull01         -> "codex full 01"
+           #ollamaLocalChatbot  -> "ollama local chatbot"
+
+       Elements without IDs continue using their visible text.
+       ========================================================= */
+
+    function getNavText(el) {
+
+        if (el.id) {
+
+            return el.id
+
+                // camelCase:
+                // aiAgents -> ai Agents
+                .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+
+                // Separate letters and numbers:
+                // codex01 -> codex 01
+                .replace(/([a-zA-Z])([0-9])/g, '$1 $2')
+                .replace(/([0-9])([a-zA-Z])/g, '$1 $2')
+
+                // Treat -, _, etc. as separators
+                .replace(/[^a-zA-Z0-9]+/g, ' ')
+
+                .trim()
+                .toLowerCase();
         }
-        const text = getCleanText(el);
-        const words = text.split(/\s+/);
+
+        return getCleanText(el);
+    }
+
+
+    /* =========================================================
+       DOES THIS ELEMENT MATCH THE KEY?
+       ========================================================= */
+
+    function matchesKey(el) {
+
+        /*
+        mainContainer already has special meaning:
+        M explicitly navigates to it.
+        */
+
+        if (el.id === 'mainContainer') {
+            return key === 'm';
+        }
+
+
+        const navText = getNavText(el);
+
+        if (!navText) return false;
+
+        const words = navText.split(/\s+/);
+
 
         return words.some(word => {
-            const cleaned = word.replace(/^[^a-z0-9]+/i, '');
+
+            const cleaned = word.replace(
+                /^[^a-z0-9]+/i,
+                ''
+            );
+
             if (!cleaned) return false;
 
-            if (/^\d+$/.test(cleaned) && /^[0]+[1-9]/.test(cleaned)) {
-                return cleaned[0] === letter
-                    || cleaned.match(/[1-9]/)?.[0] === letter;
+
+            /*
+            Preserve your existing number behavior.
+
+            Example:
+
+                01
+
+            can participate correctly when pressing
+            number keys.
+            */
+
+            if (
+                /^\d+$/.test(cleaned) &&
+                /^[0]+[1-9]/.test(cleaned)
+            ) {
+
+                return (
+                    cleaned[0] === key ||
+                    cleaned.match(/[1-9]/)?.[0] === key
+                );
             }
-            return cleaned[0] === letter;
+
+
+            return cleaned[0] === key;
         });
-    });
-    // ///////
-    // ????????????????????????????????????????????????????????????????????
-
-    if (letteredEls.length === 0) return;
-
-    const activeEl = document.activeElement;
-    const iActive = allEls.indexOf(activeEl);
-    const iCurrent = letteredEls.indexOf(activeEl);
-
-    const keySignature = `${e.shiftKey ? 'shift+' : ''}${letter}`;
-    let iNext;
-
-    if (keySignature !== window.lastKeySignature) {
-        if (e.shiftKey) {
-            const prev = [...letteredEls].reverse().find(el => allEls.indexOf(el) < iActive);
-            iNext = letteredEls.indexOf(prev);
-            if (iNext === -1) iNext = letteredEls.length - 1;
-        } else {
-            const next = letteredEls.find(el => allEls.indexOf(el) > iActive);
-            iNext = letteredEls.indexOf(next);
-            if (iNext === -1) iNext = 0;
-        }
-    } else {
-        iNext = e.shiftKey
-            ? (iCurrent - 1 + letteredEls.length) % letteredEls.length
-            : (iCurrent + 1) % letteredEls.length;
     }
 
-    letteredEls[iNext]?.focus();
+
+    /* =========================================================
+       ELEMENTS MATCHING CURRENT LETTER / NUMBER
+       ========================================================= */
+
+    const matchingEls = allEls.filter(matchesKey);
+
+    if (matchingEls.length === 0) return;
+
+
+    /* =========================================================
+       CURRENT POSITION
+       ========================================================= */
+
+    const activeEl = document.activeElement;
+
+    const activeIndex = allEls.indexOf(activeEl);
+
+    const currentMatchIndex =
+        matchingEls.indexOf(activeEl);
+
+
+    const keySignature =
+        `${e.shiftKey ? 'shift+' : ''}${key}`;
+
+    let nextIndex;
+
+
+    /* =========================================================
+       NEW LETTER / NUMBER
+
+       Find the next matching element after current DOM position.
+       Shift reverses direction.
+       ========================================================= */
+
+    if (keySignature !== window.lastKeySignature) {
+
+        if (e.shiftKey) {
+
+            const previous = [...matchingEls]
+                .reverse()
+                .find(
+                    el =>
+                        allEls.indexOf(el) <
+                        activeIndex
+                );
+
+            nextIndex =
+                matchingEls.indexOf(previous);
+
+            if (nextIndex === -1) {
+                nextIndex = matchingEls.length - 1;
+            }
+
+        } else {
+
+            const next = matchingEls.find(
+                el =>
+                    allEls.indexOf(el) >
+                    activeIndex
+            );
+
+            nextIndex =
+                matchingEls.indexOf(next);
+
+            if (nextIndex === -1) {
+                nextIndex = 0;
+            }
+        }
+
+    }
+
+
+    /* =========================================================
+       SAME KEY AGAIN
+
+       Cycle through all matches.
+       ========================================================= */
+
+    else {
+
+        nextIndex = e.shiftKey
+
+            ? (
+                currentMatchIndex -
+                1 +
+                matchingEls.length
+            ) % matchingEls.length
+
+            : (
+                currentMatchIndex +
+                1
+            ) % matchingEls.length;
+    }
+
+
+    /* =========================================================
+       FOCUS
+       ========================================================= */
+
+    matchingEls[nextIndex]?.focus();
+
+    console.log(
+        'LETTER NAV:',
+        key,
+        matchingEls[nextIndex]
+    );
+
     window.lastKeySignature = keySignature;
+    console.log('hellow');
+
 });

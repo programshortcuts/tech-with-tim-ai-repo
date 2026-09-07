@@ -1,494 +1,825 @@
 // step-nav.js
+
 import { mainTargetDiv } from "../core/inject-content.js";
-import { changeTutorialLink } from "../ui/change-tutorial-link.js";
-import { denlargeAllImages, clickToggleImgSize } from "../ui/toggle-img-sizes.js";
+import {
+    changeTutorialLink,
+    tutorialLink
+} from "../ui/change-tutorial-link.js";
+
+import {
+    clickToggleImgSize,
+    denlargeAllImages
+} from "../ui/toggle-img-sizes.js";
+
+import {
+    resetVideoToPoster
+} from "../ui/video-controls.js";
+
 
 let steps = [];
 let lastStep = null;
-const stepStates = new WeakMap();
 
-function createStepState(step) {
-    const state = {
-        mode: 'stepNav',
-        copyIndex: 0,
-        mediaIndex: -1,
-    };
-    stepStates.set(step, state);
-    return state;
+
+/* =========================================================
+   STEP MEDIA
+   ========================================================= */
+
+function stepMedia(step) {
+    return step
+        ? [
+            ...step.querySelectorAll(
+                '.step-img, .step-vid'
+            )
+        ]
+        : [];
 }
 
-function getStepState(step) {
-    if (!step) return null;
-    return stepStates.get(step) || createStepState(step);
+
+/* =========================================================
+   STEP FOCUSABLE ITEMS
+   ========================================================= */
+
+function stepFocusableItems(step) {
+    return step
+        ? [
+            ...step.querySelectorAll(
+                '.copy-code, a[href]'
+            )
+        ]
+        : [];
 }
 
-function getStepCopyCodes(step) {
-    return step ? [...step.querySelectorAll('.copy-code')] : [];
+
+/* =========================================================
+   STEP COPY CODES
+   ========================================================= */
+
+function stepCopyCodes(step) {
+    return step
+        ? [
+            ...step.querySelectorAll(
+                '.copy-code'
+            )
+        ]
+        : [];
 }
 
-function getStepMedia(step) {
-    return step ? [...step.querySelectorAll('.step-img, .step-vid')] : [];
+
+/* =========================================================
+   PAUSE ALL OTHER VIDEOS
+   ========================================================= */
+
+function pauseAllExcept(videoToKeep) {
+    document
+        .querySelectorAll('video')
+        .forEach(video => {
+
+            if (
+                video !== videoToKeep &&
+                !video.paused
+            ) {
+                video.pause();
+            }
+
+        });
 }
 
-function focusCopyCode(step, state, index = 0) {
-    const copyCodes = getStepCopyCodes(step);
-    if (!copyCodes.length) return false;
-    const newIndex = Math.max(0, Math.min(index, copyCodes.length - 1));
-    state.copyIndex = newIndex;
-    copyCodes[newIndex].focus();
-    return true;
-}
 
-function enterStepMode(step) {
-    const state = getStepState(step);
-    const selected = focusCopyCode(step, state, 0);
-    if (selected) {
-        state.mode = 'stepMode';
-        return true;
-    }
-    state.mode = 'stepNav';
-    return false;
-}
-
-function resetStepState(step) {
-    if (!step) return;
-    const state = getStepState(step);
-    state.mode = 'stepNav';
-    state.copyIndex = 0;
-    state.mediaIndex = -1;
-    getStepMedia(step).forEach(el => el.classList.remove('enlarge'));
-}
-
-function clearStepMedia(step) {
-    if (!step) return;
-    const state = getStepState(step);
-    state.mediaIndex = -1;
-    getStepMedia(step).forEach(el => el.classList.remove('enlarge'));
-}
-
-function hasEnlargedMedia(step) {
-    return getStepMedia(step).some(el => el.classList.contains('enlarge'));
-}
-
-function playVideoInMedia(mediaEl) {
-    if (!mediaEl) return;
-    const video = mediaEl.querySelector('video');
-    if (!video) return;
-    video.play().catch(() => {});
-}
-
-function pauseVideoInMedia(mediaEl) {
-    if (!mediaEl) return;
-    const video = mediaEl.querySelector('video');
-    if (!video) return;
-    if (!video.paused) {
-        video.pause();
-    }
-}
+/* =========================================================
+   RESET VIDEOS IN STEP
+   ========================================================= */
 
 function resetStepVideos(step) {
-    if (!step) return;
-    const videos = step.querySelectorAll('video');
-    videos.forEach(video => {
-        try {
-            video.currentTime = 0;
-        } catch (err) {
-            // ignore if video not ready
-        }
-    });
+    step
+        ?.querySelectorAll('video')
+        .forEach(resetVideoToPoster);
 }
+
+
+/* =========================================================
+   CYCLE STEP MEDIA
+
+   Example with one media item:
+
+       Enter 1 -> enlarge
+       Enter 2 -> normal
+
+   Example with multiple:
+
+       Enter 1 -> media 1
+       Enter 2 -> media 2
+       Enter 3 -> media 3
+       Enter 4 -> normal
+   ========================================================= */
 
 function cycleStepMedia(step) {
-    const state = getStepState(step);
-    const media = getStepMedia(step);
-    if (!media.length) return false;
+    const media = stepMedia(step);
 
-    media.forEach(el => {
-        el.classList.remove('enlarge');
-        pauseVideoInMedia(el);
-    });
+    if (!media.length) return null;
 
-    if (media.length === 1) {
-        if (state.mediaIndex === -1) {
-            media[0].classList.add('enlarge');
-            state.mediaIndex = 0;
-            playVideoInMedia(media[0]);
-        } else {
-            state.mediaIndex = -1;
-        }
-        return true;
-    }
 
-    const nextIndex = state.mediaIndex + 1;
+    /*
+    Read current index BEFORE denlarging.
+
+    denlargeAllImages() resets media state, so we need
+    this value first.
+    */
+    const currentIndex =
+        Number(
+            step.dataset.mediaIndex ?? -1
+        );
+
+    const nextIndex =
+        currentIndex + 1;
+
+
+    /* =====================================================
+       CLOSE CURRENT MEDIA
+       ===================================================== */
+
+    denlargeAllImages();
+
+
+    /* =====================================================
+       END OF LIST -> NORMAL STATE
+       ===================================================== */
+
     if (nextIndex >= media.length) {
-        state.mediaIndex = -1;
-        return true;
+        step.dataset.mediaIndex = -1;
+
+        return null;
     }
 
-    media[nextIndex].classList.add('enlarge');
-    state.mediaIndex = nextIndex;
-    playVideoInMedia(media[nextIndex]);
-    return true;
+
+    /* =====================================================
+       ENLARGE NEXT MEDIA
+       ===================================================== */
+
+    const selected =
+        media[nextIndex];
+
+    selected.classList.add('enlarge');
+
+    step.dataset.mediaIndex =
+        nextIndex;
+
+
+    /* =====================================================
+       VIDEO
+
+       Enlarging via Enter starts video.
+       ===================================================== */
+
+    const video =
+        selected.matches('.step-vid')
+            ? selected.querySelector('video')
+            : null;
+
+
+    if (video) {
+
+        pauseAllExcept(video);
+
+        try {
+            video.currentTime = 0;
+        } catch {
+            /*
+            Metadata may not be available yet.
+            */
+        }
+
+        video
+            .play()
+            .catch(() => { });
+    }
+
+
+    return selected;
 }
 
+
+/* =========================================================
+   FOCUS STEP
+   ========================================================= */
+
 function focusStep(index) {
-    if (!steps.length) return;
-    let normalized = index;
-    if (normalized < 0) normalized = steps.length - 1;
-    if (normalized >= steps.length) normalized = 0;
-    steps[normalized]?.scrollIntoView({
+    if (!steps.length) return false;
+
+    const normalized =
+        (
+            index +
+            steps.length
+        ) %
+        steps.length;
+
+    const step =
+        steps[normalized];
+
+    lastStep = step;
+
+    step.focus({
+        preventScroll: true
+    });
+
+    step.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
         inline: 'center'
     });
 
-    steps[normalized]?.focus({ preventScroll: true });
-    
+    return true;
 }
+
+
+/* =========================================================
+   FOCUS WITHIN STEP
+   ========================================================= */
+
+function focusWithinStep(
+    step,
+    direction
+) {
+
+    const items =
+        stepFocusableItems(step);
+
+    if (!items.length) {
+        return false;
+    }
+
+
+    const currentIndex =
+        items.indexOf(
+            document.activeElement
+        );
+
+
+    const startIndex =
+        currentIndex === -1
+
+            ? (
+                direction > 0
+                    ? -1
+                    : 0
+            )
+
+            : currentIndex;
+
+
+    const nextIndex =
+        (
+            startIndex +
+            direction +
+            items.length
+        ) %
+        items.length;
+
+
+    items[nextIndex].focus();
+
+    return true;
+}
+
+
+/* =========================================================
+   NUMBER NAVIGATION
+   ========================================================= */
+
+function focusNumberTarget(
+    step,
+    target,
+    number
+) {
+
+    /*
+    Inside step:
+    number keys navigate copy-code.
+    */
+    if (
+        step &&
+        target !== step
+    ) {
+
+        const copyCode =
+            stepCopyCodes(step)[
+            number - 1
+            ];
+
+        if (!copyCode) {
+            return false;
+        }
+
+        copyCode.focus();
+
+        return true;
+    }
+
+
+    /*
+    Outside/at step level:
+    number keys navigate steps.
+    */
+    return number <= steps.length
+        ? focusStep(number - 1)
+        : false;
+}
+
+
+/* =========================================================
+   EXPORTS
+   ========================================================= */
 
 export function getSteps() {
     return steps;
 }
 
-export function updateSteps() {
-    initStepNav();
-    return steps;
-}
 
-export function removeALLSideLinkChange() {
-    document.querySelectorAll('.sideLinkChange').forEach(el => el.classList.remove('sideLinkChange'));
-}
-function handleStepNavKey({ e, step, state, key }) {
-    if (key === 'enter') {
-        const copyCodes = getStepCopyCodes(step);
-        if (!copyCodes.length) {
-            cycleStepMedia(step);
-            changeTutorialLink({ target: step });
-            return true;
-        }
-        enterStepMode(step);
-        return true;
-    }
-
-    // if (key === 'a'  || key === 'arrowup') {
-    if (key === 'a'  ) {
-        const currentIndex = steps.indexOf(step);
-        focusStep(currentIndex - 1);
-        return true;
-    }
-
-    // if (key === 'f'  || key === 'arrowdown') {
-    if (key === 'f'  ) {
-        const currentIndex = steps.indexOf(step);
-        focusStep(currentIndex + 1);
-        return true;
-    }
-
-    if (!isNaN(key)) {
-        const targetIndex = parseInt(key, 10) - 1;
-        if (targetIndex >= 0 && targetIndex < steps.length) {
-            steps[targetIndex].focus();
-            scrollToCenter(steps[targetIndex])
-            steps[targetIndex].scrollIntoView({behavior:'instant', 
-                                            block: 'center',
-                                            inline: 'center'}
-                                        )
-
-            return true;
-        }
-    }
-
-    return false;
-}
-
-function handleStepModeKey({ e, step, state, key, isCopyCode }) {
-    if (key === 'enter') {
-        if (isCopyCode) {
-            cycleStepMedia(step);
-            return true;
-        }
-        enterStepMode(step);
-        return true;
-    }
-
-    if (key === 'a') {
-        const copyCodes = getStepCopyCodes(step);
-        if (!copyCodes.length) return false;
-        const nextIndex = (state.copyIndex - 1 + copyCodes.length) % copyCodes.length;
-        state.mode = 'stepMode';
-        focusCopyCode(step, state, nextIndex);
-        return true;
-    }
-
-    if (key === 'f') {
-        const copyCodes = getStepCopyCodes(step);
-        if (!copyCodes.length) return false;
-        const nextIndex = (state.copyIndex + 1) % copyCodes.length;
-        state.mode = 'stepMode';
-        focusCopyCode(step, state, nextIndex);
-        return true;
-    }
-
-    if (!isNaN(key)) {
-        const copyCodes = getStepCopyCodes(step);
-        const targetIndex = parseInt(key, 10) - 1;
-        if (targetIndex >= 0 && targetIndex < copyCodes.length) {
-            state.mode = 'stepMode';
-            focusCopyCode(step, state, targetIndex);
-            return true;
-        }
-    }
-
-    return false;
-}
 export function getLastStep() {
     return lastStep;
 }
-export function scrollToCenter({ el, smooth }) {
-    if (!el) return;
-    el.scrollIntoView({ behavior: smooth ? 'smooth' : 'instant', block: 'center' });
+
+
+export function updateSteps() {
+    initStepNav();
+
+    return steps;
 }
-function handleRootStepNavigation({ e, key, isMainTarget }) {
-    if (!steps.length) return false;
-    if (key === 'enter') {
-        steps[0].focus();
-        return true;
-    }
-    // if (key === 'a'  || key === 'arrowup') {
-    if (key === 'a') {
-        if (isMainTarget || !lastStep) {
-            focusStep(steps.length - 1);
-        } else {
-            focusStep(steps.indexOf(lastStep) - 1);
-        }
-        return true;
-    }
-    // if (key === 'f' || key === 'arrowdown') {
-    if (key === 'f') {
-        if (isMainTarget || !lastStep) {
-            focusStep(0);
-        } else {
-            focusStep(steps.indexOf(lastStep) + 1);
-        }
-        return true;
-    }
-    if (!isNaN(key)) {
-        const targetIndex = parseInt(key, 10) - 1;
-        if (targetIndex >= 0 && targetIndex < steps.length) {
-            steps[targetIndex].focus();
-            return true;
-        }
-    }
-    return false;
+
+
+/* =========================================================
+   REMOVE SIDEBAR HIGHLIGHTS
+   ========================================================= */
+
+export function removeALLSideLinkChange() {
+
+    document
+        .querySelectorAll(
+            '.sideLinkChange, .highlight'
+        )
+        .forEach(element => {
+
+            element.classList.remove(
+                'sideLinkChange',
+                'highlight'
+            );
+
+            element.removeAttribute(
+                'aria-current'
+            );
+        });
 }
+
+
+/* =========================================================
+   SCROLL TO CENTER
+   ========================================================= */
+
+export function scrollToCenter({
+    el,
+    smooth
+} = {}) {
+
+    el?.scrollIntoView({
+        behavior:
+            smooth
+                ? 'smooth'
+                : 'instant',
+
+        block: 'center',
+        inline: 'center'
+    });
+}
+
+
+/* =========================================================
+   INITIALIZE STEP NAVIGATION
+   ========================================================= */
+
 export function initStepNav() {
-    steps = [...mainTargetDiv.querySelectorAll('.step-float')];
-    steps.forEach((step, index) => {
-        if (!step.hasAttribute('tabindex')) {
-            // step.setAttribute('tabindex', '0');
+
+    if (!mainTargetDiv) return;
+
+
+    steps = [
+        ...mainTargetDiv.querySelectorAll(
+            '.step-float'
+        )
+    ];
+
+
+    if (!steps.includes(lastStep)) {
+        lastStep = null;
+    }
+
+
+    steps.forEach(step => {
+
+        step.setAttribute(
+            'tabindex',
+            '0'
+        );
+
+
+        if (
+            step.dataset
+                .stepNavigationBound ===
+            'true'
+        ) {
+            return;
         }
-        
-        getStepState(step);
 
-        step.addEventListener('focusin', (e) => {
-            lastStep = step;
-            const state = getStepState(step);
 
-            // If focus moved into a .copy-code inside this step, sync the state to that index
-            const copyEl = e.target.closest('.copy-code');
-            if (copyEl && step.contains(copyEl)) {
-                const copyCodes = getStepCopyCodes(step);
-                const idx = copyCodes.indexOf(copyEl);
-                if (idx >= 0) {
-                    state.copyIndex = idx;
-                    state.mode = 'stepMode';
-                } else {
-                    state.mode = 'stepNav';
-                    state.copyIndex = 0;
-                }
-            } else {
-                // Focus moved somewhere else inside the step; reset to stepNav
-                state.mode = 'stepNav';
-                state.copyIndex = 0;
-            }
+        step.dataset
+            .stepNavigationBound =
+            'true';
 
-            // If focus moved to a non-media element inside the step, close any enlarged media
-            const focusedMedia = e.target.closest('.step-img, .step-vid, img, video');
-            if (!focusedMedia) denlargeAllImages();
-            if (step.hasAttribute('data-auto-focus')) {
-                changeTutorialLink(e)
 
-            }
-        });
+        /* =================================================
+           STEP FOCUS
+           ================================================= */
 
-        // Ensure Enter toggles media even when focus is on non-interactive children
-        // Enter and Shift+Enter keyboard handling is managed globally by stepNav().
-        step.addEventListener('focusout', e => {
-            if (!e.relatedTarget || !step.contains(e.relatedTarget)) {
-                resetStepState(step);
-                denlargeAllImages();
-            }
-        });
+        step.addEventListener(
+            'focus',
+            () => {
 
-        const updateTutorialLinkForStep = () => {
-            changeTutorialLink({ target: step });
-        };
-
-        const handleStepMediaTap = e => {
-            const mediaTarget = e.target.closest('.step-img, img');
-            if (!mediaTarget) return false;
-            e.stopPropagation();
-            lastStep = step;
-            clickToggleImgSize(mediaTarget);
-            updateTutorialLinkForStep();
-            return true;
-        };
-
-        step.addEventListener('touchend', e => {
-            if (handleStepMediaTap(e)) {
-                e.preventDefault();
-            }
-        });
-        let startX = 0
-        let startY = 0
-        let isScrolling = false
-        step.addEventListener('click', e => {
-            if (handleStepMediaTap(e)) return;
-            if (isScrolling) return
-
-            // Any non-media click should close enlarged media first
-            denlargeAllImages();
-
-            // toggleEnlarge(stepFloat)
-            const clickedInsideStep = step.contains(e.target);
-            const isBlockedClick = e.target.closest('p, .step-txt, .code-container, .copy-code');
-            const hasImgsContainer = !!step.querySelector('.imgs-container');
-            const singleStepImg = step.querySelector('.step-img');
-
-            if (clickedInsideStep && !hasImgsContainer && singleStepImg && !isBlockedClick) {
                 lastStep = step;
-                clickToggleImgSize(singleStepImg);
-                updateTutorialLinkForStep();
-                e.stopPropagation();
-                return;
+
+                denlargeAllImages();
+
+                step.dataset.mediaIndex =
+                    -1;
+
+                step.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
             }
+        );
+
+
+        /* =================================================
+           FOCUS ENTERED STEP
+           ================================================= */
+
+        step.addEventListener(
+            'focusin',
+            () => {
+                lastStep = step;
+            }
+        );
+
+
+        /* =================================================
+           FOCUS LEFT STEP
+           ================================================= */
+
+        step.addEventListener(
+            'focusout',
+            e => {
+
+                if (
+                    step.contains(
+                        e.relatedTarget
+                    )
+                ) {
+                    return;
+                }
+
+
+                resetStepVideos(step);
+
+                denlargeAllImages();
+
+                step.dataset.mediaIndex =
+                    -1;
+            }
+        );
+
+
+        /* =================================================
+           CLICK
+           ================================================= */
+
+        step.addEventListener(
+            'click',
+            e => {
+
+                const image =
+                    e.target.closest(
+                        '.step-img, .step-img img'
+                    );
+
+
+                /* =========================================
+                   IMAGE CLICK
+                   ========================================= */
+
+                if (image) {
+
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    lastStep = step;
+
+                    clickToggleImgSize(
+                        image
+                    );
+
+                    changeTutorialLink({
+                        target: step
+                    });
+
+                    return;
+                }
+
+
+                /*
+                Videos own their click behavior through
+                video-controls.js.
+                */
+                if (
+                    e.target.closest(
+                        'a[href], ' +
+                        'button, ' +
+                        '.copy-code, ' +
+                        '.step-vid'
+                    )
+                ) {
+                    return;
+                }
+
+
+                lastStep = step;
+
+                changeTutorialLink({
+                    target: step
+                });
+
+
+                step.focus({
+                    preventScroll: true
+                });
+
+
+                step.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center',
+                    inline: 'nearest'
+                });
+            }
+        );
+
+
+        /* =================================================
+           AUTO FOCUS
+           ================================================= */
+
+        if (
+            step.hasAttribute(
+                'data-auto-focus'
+            )
+        ) {
 
             lastStep = step;
-            changeTutorialLink(e);
-            step?.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center',
-                inline: 'nearest'
-            });
 
-            step?.focus({ preventScroll: true });
-        });
-
-        
-
-        step.addEventListener('touchstart', e => {
-
-            const touch = e.touches[0]
-
-            startX = touch.clientX
-            startY = touch.clientY
-
-            isScrolling = false
-        })
-
-        step.addEventListener('touchmove', e => {
-
-            const touch = e.touches[0]
-
-            const deltaX = Math.abs(touch.clientX - startX)
-            const deltaY = Math.abs(touch.clientY - startY)
-
-            // threshold before considering it a scroll/drag
-            if (deltaX > 10 || deltaY > 10) {
-                isScrolling = true
-            }
-        })
-
-        
-        if (step.hasAttribute('data-auto-focus')) {
-            step.focus();
-            steps[targetIndex].scrollIntoView({behavior:'instant', 
-                                            block: 'center',
-                                            inline: 'center'}
-                                        )
-            lastStep = step;
+            requestAnimationFrame(
+                () =>
+                    focusStep(
+                        steps.indexOf(step)
+                    )
+            );
         }
     });
 }
-export function stepNav({ e, navState }) {
-    if (navState.zone !== 'mainTargetDiv') return false;
-    const key = e.key.toLowerCase();
-    const step = e.target.closest('.step-float');
-    const isMainTarget = e.target === mainTargetDiv || e.target.closest('#mainTargetDiv') === mainTargetDiv;
-    const activeStep = step || (isMainTarget ? null : lastStep);
-    const isCopyCode = !!e.target.closest('.copy-code');
-    const isStepFocused = step && e.target === step;
-    const isFocusableInnerTarget = !!e.target.closest('a, button, input, textarea, select, summary, [tabindex]:not([tabindex="-1"])');
-    if(key === 't'){
-        tutorialLink.focus()
-        scrollTo(0,0)
-    }
-    // Always sync tutorial link when Enter is pressed anywhere inside a step
-    if (key === 'enter' && activeStep) {
-        try { changeTutorialLink({ target: activeStep }); } catch (err) { /* ignore */ }
-    }
 
-    if (key === 'enter' && activeStep && e.target !== activeStep && !isCopyCode && !getStepCopyCodes(activeStep).length && isFocusableInnerTarget) {
+
+/* =========================================================
+   STEP KEYBOARD NAVIGATION
+   ========================================================= */
+
+export function stepNav({
+    e,
+    navState
+}) {
+
+    if (
+        navState.zone !==
+        'mainTargetDiv' ||
+        !e?.key
+    ) {
         return false;
-        }
+    }
 
-    if (key === 'enter' && e.shiftKey && activeStep) {
+
+    const key =
+        e.key.toLowerCase();
+
+
+    const step =
+        e.target.closest(
+            '.step-float'
+        );
+
+
+    /* =====================================================
+       T
+       ===================================================== */
+
+    if (key === 't') {
+
         e.preventDefault();
-        resetStepVideos(activeStep);
-        if (e.target !== activeStep) {
-            resetStepState(activeStep);
-            activeStep.focus();
-            return true;
-        }
-        cycleStepMedia(activeStep);
+
+        tutorialLink?.focus();
+
+        window.scrollTo(0, 0);
+
         return true;
     }
 
-    if (key === 'enter' && isStepFocused && !getStepCopyCodes(step).length) {
+
+    /* =====================================================
+       SHIFT + ENTER
+
+       Intentional video reset / media cycle behavior.
+       ===================================================== */
+
+    if (
+        key === 'enter' &&
+        e.shiftKey &&
+        step
+    ) {
+
         e.preventDefault();
+        e.stopPropagation();
+
+
+        resetStepVideos(step);
+
         cycleStepMedia(step);
-        changeTutorialLink({ target: step });
+
+
+        changeTutorialLink({
+            target: step
+        });
+
+
+        lastStep = step;
+
         return true;
     }
 
-    if (key === 'enter' && !e.shiftKey && isStepFocused && hasEnlargedMedia(step) && getStepCopyCodes(step).length) {
-        e.preventDefault();
-        clearStepMedia(step);
-        return true;
-    }
 
-    if (!activeStep) {
-        const handled = handleRootStepNavigation({ e, key, isMainTarget });
+    /* =====================================================
+       NUMBER KEYS
+       ===================================================== */
+
+    if (/^[1-9]$/.test(key)) {
+
+        const handled =
+            focusNumberTarget(
+                step,
+                e.target,
+                Number(key)
+            );
+
+
         if (handled) {
             e.preventDefault();
         }
+
+
         return handled;
     }
 
-    const state = getStepState(activeStep);
-    if (state.mode === 'stepMode' || isCopyCode) {
-        if (handleStepModeKey({ e, step: activeStep, state, key, isCopyCode })) {
+
+    /* =====================================================
+       NOT CURRENTLY INSIDE STEP
+       ===================================================== */
+
+    if (!step) {
+
+        if (
+            key === 'enter' ||
+            key === 'f'
+        ) {
+
             e.preventDefault();
-            return true;
+
+            return focusStep(0);
         }
+
+
+        if (key === 'a') {
+
+            e.preventDefault();
+
+            return focusStep(
+                steps.length - 1
+            );
+        }
+
+
+        return false;
     }
 
-    if (step) {
-        if (handleStepNavKey({ e, step: activeStep, state, key })) {
-            e.preventDefault();
-            return true;
+
+    /* =====================================================
+       ENTER
+
+       IMPORTANT FIX:
+
+       Plain Enter works from:
+       - .step-float
+       - .copy-code
+       - links
+       - buttons
+       - any other descendant
+
+       It always cycles/toggles the step media.
+
+       If focus started on .step-float itself, we preserve
+       the existing behavior of entering the first child.
+
+       If focus is already on a child, DO NOT move focus.
+       ===================================================== */
+
+    if (
+        key === 'enter' &&
+        !e.shiftKey
+    ) {
+
+        e.preventDefault();
+        e.stopPropagation();
+
+
+        changeTutorialLink({
+            target: step
+        });
+
+
+        cycleStepMedia(step);
+
+
+        /*
+        Only enter child-navigation mode when the
+        .step-float itself had focus.
+        */
+        if (e.target === step) {
+
+            const firstFocusable =
+                stepFocusableItems(step)[0];
+
+            firstFocusable?.focus();
         }
+
+
+        lastStep = step;
+
+        return true;
     }
+
+
+    /* =====================================================
+       F / A
+       ===================================================== */
+
+    if (
+        key === 'f' ||
+        key === 'a'
+    ) {
+
+        e.preventDefault();
+
+
+        const direction =
+            key === 'f'
+                ? 1
+                : -1;
+
+
+        /*
+        Already inside step:
+        cycle children.
+        */
+        if (e.target !== step) {
+
+            return focusWithinStep(
+                step,
+                direction
+            );
+        }
+
+
+        /*
+        On step:
+        move between steps.
+        */
+        return focusStep(
+            steps.indexOf(step) +
+            direction
+        );
+    }
+
 
     return false;
 }

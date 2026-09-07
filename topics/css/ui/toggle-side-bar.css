@@ -16,7 +16,7 @@
 
 @media screen and (min-width:732px){
     .main-container.collapsed .side-bar {
-        flex-basis: 15%;
+        /* flex-basis: 15%; */
     }
     .main-container.collapsed .side-bar {
         max-width: 10% !important;

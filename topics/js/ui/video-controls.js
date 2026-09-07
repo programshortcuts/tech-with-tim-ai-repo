@@ -1,203 +1,579 @@
 // video-controls.js
 
-export function initAllVideos(root = document) {
+import {
+    toggleMediaSize
+} from "./toggle-img-sizes.js";
 
-    const stepFloats = root.querySelectorAll('.step-float')
 
-    stepFloats.forEach(bindVideoControls)
+const CONTROL_FLASH_TIME = 180;
+
+
+/* =========================================================
+   GET CONTROL BUTTONS
+   ========================================================= */
+
+function getButtons(video) {
+    const container =
+        video?.closest('.step-vid');
+
+    const buttons = [
+        ...(
+            container?.querySelectorAll(
+                '.vid-cntrl-btns button'
+            ) || []
+        )
+    ];
+
+    return {
+        play:
+            container?.querySelector(
+                '.playbtn'
+            ) || null,
+
+        rewind:
+            buttons.find(button =>
+                button.textContent
+                    .replace(/\s/g, '')
+                    .includes('<<')
+            ) || null,
+
+        forward:
+            buttons.find(button =>
+                button.textContent
+                    .replace(/\s/g, '')
+                    .includes('>>')
+            ) || null
+    };
 }
 
-function bindVideoControls(step) {
 
-    const stepVid = step.querySelector('.step-vid')
-    const vid = step.querySelector('video')
+/* =========================================================
+   FLASH CONTROL
+   ========================================================= */
 
-    if (!stepVid || !vid) return
+function flash(button) {
+    if (!button) return;
 
-    // prevent duplicate listeners
-    if (step.dataset.videoBound === 'true') return
+    button.classList.add('active');
 
-    step.dataset.videoBound = 'true'
+    setTimeout(
+        () =>
+            button.classList.remove(
+                'active'
+            ),
+        CONTROL_FLASH_TIME
+    );
+}
 
-    // make sure video itself is focusable
-    if (!vid.hasAttribute('tabindex')) {
-        vid.setAttribute('tabindex', '0')
+
+/* =========================================================
+   UPDATE PLAY BUTTON
+   ========================================================= */
+
+function updatePlayButton(video) {
+    const playButton =
+        getButtons(video).play;
+
+    if (!playButton) return;
+
+    if (!playButton.dataset.playText) {
+        playButton.dataset.playText =
+            playButton.textContent.trim() ||
+            '>';
     }
 
-    /*
-    -------------------------
-    CLICK VIDEO
-    -------------------------
-    */
+    playButton.textContent =
+        video.paused
+            ? playButton.dataset.playText
+            : '❚❚';
 
-    stepVid.addEventListener('click', e => {
+    playButton.setAttribute(
+        'aria-label',
+        video.paused
+            ? 'Play video'
+            : 'Pause video'
+    );
+}
 
-        const clickedControls = e.target.closest(
-            '.playbtn, .fwdBtn, .rwdBtn'
-        )
 
-        // don't toggle enlarge when clicking controls
-        if (clickedControls) return
+/* =========================================================
+   PAUSE OTHER VIDEOS
+   ========================================================= */
 
-        e.stopPropagation()
+function pauseOtherVideos(currentVideo) {
+    document
+        .querySelectorAll('video')
+        .forEach(video => {
 
-        toggleEnlarge(stepVid, vid)
-    })
+            if (
+                video !== currentVideo &&
+                !video.paused
+            ) {
+                video.pause();
+            }
 
-    /*
-    -------------------------
-    BUTTON CONTROLS
-    -------------------------
-    */
+        });
+}
 
-    const playBtn = step.querySelector('.playbtn')
-    const fwdBtn = step.querySelector('.fwdBtn')
-    const rwdBtn = step.querySelector('.rwdBtn')
 
-    playBtn?.addEventListener('click', e => {
+/* =========================================================
+   PLAY
+   ========================================================= */
 
-        e.stopPropagation()
+function playVideo(video) {
+    if (!video) return;
 
-        togglePlay(vid)
+    pauseOtherVideos(video);
 
-        updatePlayBtn(playBtn, vid)
-    })
+    const playPromise = video.play();
 
-    fwdBtn?.addEventListener('click', e => {
+    if (playPromise?.catch) {
+        playPromise.catch(() =>
+            updatePlayButton(video)
+        );
+    }
+}
 
-        e.stopPropagation()
 
-        vid.currentTime = Math.min(
-            vid.duration,
-            vid.currentTime + 5
-        )
-    })
+/* =========================================================
+   PLAY / PAUSE
+   ========================================================= */
 
-    rwdBtn?.addEventListener('click', e => {
+function togglePlay(video) {
+    if (video.paused) {
+        playVideo(video);
+    } else {
+        video.pause();
+    }
+}
 
-        e.stopPropagation()
 
-        vid.currentTime = Math.max(
+/* =========================================================
+   RESET VIDEO TO BEGINNING / POSTER
+
+   Used by:
+   - end of video
+   - rewind to 0
+   - forward past end
+   - intentional reset behavior
+   ========================================================= */
+
+export function resetVideoToPoster(video) {
+    if (!video) return;
+
+    video.pause();
+
+    try {
+        video.currentTime = 0;
+    } catch {
+        /*
+        Metadata may not be available yet.
+        */
+    }
+
+    updatePlayButton(video);
+}
+
+
+/* =========================================================
+   SEEK
+   ========================================================= */
+
+function seek(video, amount) {
+    if (!video) return;
+
+    const duration =
+        Number.isFinite(video.duration)
+            ? video.duration
+            : Infinity;
+
+    const nextTime =
+        Math.max(
             0,
-            vid.currentTime - 5
-        )
-    })
+            Math.min(
+                duration,
+                video.currentTime + amount
+            )
+        );
 
-    vid.addEventListener('play', () => {
-        pauseOtherVideos(vid)
-        // updateAllPlayButtons()
-    })
 
-    vid.addEventListener('pause', () => {
-        // updateAllPlayButtons()
-    })
+    /* =====================================================
+       REACHED BEGINNING OR END
+
+       Pause + timestamp 0 + poster.
+       ===================================================== */
+
+    if (
+        nextTime <= 0 ||
+        nextTime >= duration
+    ) {
+        resetVideoToPoster(video);
+
+        return;
+    }
+
+    video.currentTime = nextTime;
+}
+
+
+/* =========================================================
+   TOGGLE VIDEO SIZE
+
+   IMPORTANT:
+
+   Enlargement itself is controlled ONLY by
+   toggle-img-sizes.js now.
+   ========================================================= */
+
+function toggleVideoSize(wrapper, video) {
+    const wasEnlarged =
+        wrapper.classList.contains(
+            'enlarge'
+        ) ||
+        wrapper.classList.contains(
+            'first-vid-enlarge'
+        );
+
 
     /*
-    -------------------------
-    KEYBOARD
-    IMPORTANT:
-    bind to STEP
-    not VIDEO
-    -------------------------
+    toggleMediaSize() handles:
+    - enlarge
+    - shrink
+    - mediaIndex
+    - competing media
+    - z-index classes
     */
-    step.addEventListener('keydown', e => {
-        const key = e.key.toLowerCase()
-        const stepVid = vid.closest('.step-vid')
-        const playBtn = stepVid.querySelector('.playBtn')
-        const fwdBtn = stepVid.querySelector('.fwdBtn')
-        const revBtn = stepVid.querySelector('.rwdBtn')
-        const hasCopyCodes =
-            step.querySelectorAll('.copy-code').length > 0
+    toggleMediaSize(wrapper);
 
-        const isFocusedInsideThisStep =
-            step.contains(document.activeElement)
 
-        if (!isFocusedInsideThisStep) return
-        // Let step-level navigation handlers manage Enter/Shift+Enter behavior
-        if (key === 'enter') return
-        /*LEFT*/
-        if (e.keyCode === 37) {
-            e.preventDefault()
-            rwdBtn.classList.toggle('active')
-            vid.currentTime = Math.max(
-                0,
-                vid.currentTime - 0.5
-            )
+    /* =====================================================
+       ENLARGE -> PLAY
 
-            return
-        }
-        /*RIGHT*/
-        if (e.keyCode === 39) {
-            e.preventDefault()
-            fwdBtn.classList.toggle('active')
-            vid.currentTime = Math.min(
-                vid.duration,
-                vid.currentTime + 0.5
-            )
-            return
-        }
-        /*SPACE*/
-        if (
-            key === ' ' ||
-            key === 'spacebar'
-        ) {
+       SHRINK -> PAUSE
+       ===================================================== */
 
-            e.preventDefault()
-            e.stopPropagation()
-
-            togglePlay(vid)
-
-            updatePlayBtn(playBtn, vid)
-
-            return
-        }
-    })
-}
-
-/*
------------------------------------
-HELPERS
------------------------------------
-*/
-
-function toggleEnlarge(stepVid, vid) {
-
-    stepVid.classList.toggle('enlarge')
-
-    if (stepVid.classList.contains('enlarge')) {
-
-        pauseOtherVideos(vid)
-        vid.play()
-
+    if (wasEnlarged) {
+        video.pause();
     } else {
-
-        vid.pause()
+        playVideo(video);
     }
 }
 
-function togglePlay(vid) {
-    if (vid.paused) {
-        pauseOtherVideos(vid)
-        vid.play()
-    } else {
-        vid.pause()
+
+/* =========================================================
+   CONTROL BUTTON
+   ========================================================= */
+
+function handleControlButton(
+    button,
+    video
+) {
+
+    if (
+        button.classList.contains(
+            'playbtn'
+        )
+    ) {
+        flash(button);
+
+        togglePlay(video);
+
+        return;
+    }
+
+
+    const label =
+        button.textContent.replace(
+            /\s/g,
+            ''
+        );
+
+
+    if (label.includes('<<')) {
+        flash(
+            getButtons(video).rewind
+        );
+
+        seek(video, -0.5);
+
+        return;
+    }
+
+
+    if (label.includes('>>')) {
+        flash(
+            getButtons(video).forward
+        );
+
+        seek(video, 0.5);
     }
 }
 
-function pauseOtherVideos(currentVid) {
-    const allVideos = document.querySelectorAll('video')
-    allVideos.forEach(video => {
-        if (video !== currentVid && !video.paused) {
-            video.pause()
+
+/* =========================================================
+   BIND VIDEO WRAPPER
+   ========================================================= */
+
+function bindVideoWrapper(wrapper) {
+    if (
+        wrapper.dataset
+            .videoControlsBound ===
+        'true'
+    ) {
+        return;
+    }
+
+
+    const video =
+        wrapper.querySelector('video');
+
+    if (!video) return;
+
+
+    wrapper.dataset.videoControlsBound =
+        'true';
+
+
+    if (
+        !video.hasAttribute(
+            'tabindex'
+        )
+    ) {
+        video.setAttribute(
+            'tabindex',
+            '0'
+        );
+    }
+
+
+    /* =====================================================
+       CLICK
+
+       Control button:
+           perform control action
+
+       Video:
+           enlarge/play or shrink/pause
+       ===================================================== */
+
+    wrapper.addEventListener(
+        'click',
+        e => {
+
+            const button =
+                e.target.closest(
+                    '.vid-cntrl-btns button'
+                );
+
+            e.preventDefault();
+            e.stopPropagation();
+
+
+            if (button) {
+                handleControlButton(
+                    button,
+                    video
+                );
+
+                return;
+            }
+
+
+            toggleVideoSize(
+                wrapper,
+                video
+            );
         }
-    })
+    );
+
+
+    /* =====================================================
+       PLAY
+       ===================================================== */
+
+    video.addEventListener(
+        'play',
+        () => {
+
+            pauseOtherVideos(video);
+
+            wrapper.classList.add(
+                'is-playing'
+            );
+
+            updatePlayButton(video);
+        }
+    );
+
+
+    /* =====================================================
+       PAUSE
+
+       Immediately return normal-playing z-index.
+       ===================================================== */
+
+    video.addEventListener(
+        'pause',
+        () => {
+
+            wrapper.classList.remove(
+                'is-playing'
+            );
+
+            updatePlayButton(video);
+        }
+    );
+
+
+    /* =====================================================
+       NATURAL END
+       ===================================================== */
+
+    video.addEventListener(
+        'ended',
+        () => {
+
+            wrapper.classList.remove(
+                'is-playing'
+            );
+
+            resetVideoToPoster(video);
+        }
+    );
+
+
+    updatePlayButton(video);
 }
 
-function updatePlayBtn(btn, vid) {
 
-    if (!btn) return
+/* =========================================================
+   STEP KEYBOARD VIDEO CONTROLS
+   ========================================================= */
 
-    btn.innerText = vid.paused
-        ? '>'
-        : '||'
+function bindStepKeyboard(step) {
+    if (
+        step.dataset
+            .videoKeyboardBound ===
+        'true'
+    ) {
+        return;
+    }
+
+    step.dataset.videoKeyboardBound =
+        'true';
+
+
+    step.addEventListener(
+        'keydown',
+        e => {
+
+            /*
+            Enter enlargement/cycling remains owned
+            by step-nav / toggle-img-sizes.
+            */
+            if (e.key === 'Enter') {
+                return;
+            }
+
+
+            const wrapper =
+                step.querySelector(
+                    '.step-vid.enlarge'
+                ) ||
+                step.querySelector(
+                    '.step-vid.first-vid-enlarge'
+                ) ||
+                step.querySelector(
+                    '.step-vid'
+                );
+
+
+            const video =
+                wrapper?.querySelector(
+                    'video'
+                );
+
+            if (!video) return;
+
+
+            /* =================================================
+               SPACE
+               ================================================= */
+
+            if (
+                e.key === ' ' ||
+                e.key === 'Spacebar'
+            ) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                flash(
+                    getButtons(video).play
+                );
+
+                togglePlay(video);
+
+                return;
+            }
+
+
+            /* =================================================
+               LEFT
+               ================================================= */
+
+            if (
+                e.key === 'ArrowLeft'
+            ) {
+                e.preventDefault();
+
+                flash(
+                    getButtons(video).rewind
+                );
+
+                seek(video, -0.5);
+
+                return;
+            }
+
+
+            /* =================================================
+               RIGHT
+               ================================================= */
+
+            if (
+                e.key === 'ArrowRight'
+            ) {
+                e.preventDefault();
+
+                flash(
+                    getButtons(video).forward
+                );
+
+                seek(video, 0.5);
+            }
+        }
+    );
+}
+
+
+/* =========================================================
+   INITIALIZE VIDEOS
+   ========================================================= */
+
+export function initAllVideos(
+    root = document
+) {
+
+    root
+        .querySelectorAll(
+            '.step-vid'
+        )
+        .forEach(bindVideoWrapper);
+
+
+    root
+        .querySelectorAll(
+            '.step-float'
+        )
+        .forEach(bindStepKeyboard);
 }

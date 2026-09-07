@@ -1,172 +1,132 @@
 // sidebar-nav.js
-import { mainContainer } from "../core/main-script.js";
 import {
-    setLastFocusedLink,
-    getLastFocusedLink,
-    clearLastFocusedLink,
-    setLastCLICKEDLink,
     getLastCLICKEDLink,
-    clearLastCLICKEDLink
+    getLastFocusedLink,
+    setLastFocusedLink
 } from "./sidebar-state.js";
-import { sideBarBtn } from "../ui/toggle-sidebar.js";
-import { injectFromHref, mainTargetDiv } from "../core/inject-content.js";
-import { getSteps, getLastStep } from "./step-nav.js";
-import { changeTutorialLink, tutorialLink } from "../ui/change-tutorial-link.js";
+import { sideBar, sideBarBtn } from "../ui/toggle-sidebar.js";
+import { mainTargetDiv } from "../core/inject-content.js";
+import { getLastStep, getSteps } from "./step-nav.js";
+import { tutorialLink } from "../ui/change-tutorial-link.js";
 
 export const sideBarAs = document.querySelectorAll('.side-bar-links-container ul a');
-export const sideBarAsARRAY = Array.from(sideBarAs);
+export const sideBarAsARRAY = [...sideBarAs];
 
 let iSideBarAs = 0;
-export function setIndexSideBarAs(i) { iSideBarAs = i; }
-export function getIndexSideBarAs() { return iSideBarAs; }
+let initialized = false;
 
-
-
-// Keep track of last link activated by user (click or enter)
-let lastUserActivated = null;
-
-// Focus a sidebar link by index
-function focusSideBarIndex(index) {
-    if (index < 0 || index >= sideBarAsARRAY.length) return;
-    const el = sideBarAsARRAY[index];
+export function setIndexSideBarAs(index) {
     iSideBarAs = index;
-    el.focus();
-    setLastFocusedLink(el);
 }
 
-// Activate a link: handles tutorial change and mainTargetDiv focus
-function activateLink(link) {
-    if (!link) return;
-    changeTutorialLink({ target: link });
-
-    // Ensure the sidebar activation also injects the linked HTML into mainTargetDiv
-    try {
-        injectFromHref(link.href);
-    } catch (err) {
-        // ignore — injectFromHref handles its own errors
-    }
-
-    if (lastUserActivated === link) {
-        mainTargetDiv.focus();
-        mainTargetDiv.scrollTo(0, 0);
-        window.scrollTo(0, 0);
-    }
-
-    lastUserActivated = link;
-    setLastCLICKEDLink(link);
-
+export function getIndexSideBarAs() {
+    return iSideBarAs;
 }
 
-// Initialize all sidebar listeners
+function isVisible(element) {
+    return !!element && element.offsetParent !== null;
+}
+
+function visibleSidebarLinks() {
+    return sideBarAsARRAY.filter(isVisible);
+}
+
+function focusSidebarLink(link) {
+    if (!link) return false;
+    iSideBarAs = sideBarAsARRAY.indexOf(link);
+    setLastFocusedLink(link);
+    link.focus();
+    return true;
+}
+
 export function initSideBarListeners() {
-    const sideBarContainer = document.querySelector('.side-bar-links-container');
+    if (initialized) return;
+    initialized = true;
 
-    // Delegated click handling
-    sideBarContainer.addEventListener('click', e => {
-        const link = e.target.closest('a');
-        
-        // navTitleH1.innerText = [...sideBarAs].indexOf(link) + 1
-        if (!link) return;
-        activateLink(link);
-    });
-
-    // Keyboard handling for each sidebar link
-    sideBarAsARRAY.forEach((el, i) => {
-        // Autofocus on initial load
-        if (el.hasAttribute('autofocus')) {
-            setLastCLICKEDLink(el);
-            setLastFocusedLink(el);
-            iSideBarAs = i;
-            focusSideBarIndex(i);
-            injectFromHref(el.href);
-            return;
-        }
-
-        if (el.hasAttribute('focus')) {
-            clearLastCLICKEDLink();
-            clearLastFocusedLink();
-            setLastFocusedLink(el);
-            iSideBarAs = i;
-            focusSideBarIndex(i);
-        }
-
-        el.addEventListener('keydown', e => {
-            const key = e.key.toLowerCase();
-            
-            if (key === 'enter') {
-                e.preventDefault();
-                e.stopPropagation();
-                const link = e.target.closest('a');
-                // navTitleH1.innerText = [...sideBarAs].indexOf(link) + 1
-                activateLink(link);
-            }
-
-            if (key === 'f') {
-                // Move index to this element for 'f' navigation
-                const link = e.target.closest('a');
-                if (!link) return;
-                iSideBarAs = sideBarAsARRAY.indexOf(link);
-            }
-
-            if (key === 's') sideBarBtn?.focus();
-            if (key === 'm') {
-                mainTargetDiv?.focus();
-                document.body.scrollIntoView({ behavior: 'instant', block: 'start' });
-            }
-            if (key === 't') {
-                tutorialLink?.focus();
-                document.body.scrollIntoView({ behavior: 'instant', block: 'start' });
-            }
-        });
-        // Also listen for keyup to ensure Enter triggers activation in all environments
-        el.addEventListener('keyup', e => {
-            const key = e.key.toLowerCase();
-            if (key === 'enter') {
-                e.preventDefault();
-                e.stopPropagation();
-                const link = e.target.closest('a');
-                activateLink(link);
-            }
+    sideBarAsARRAY.forEach((link, index) => {
+        link.addEventListener('focus', () => {
+            iSideBarAs = index;
+            setLastFocusedLink(link);
         });
     });
 
-    // Optional: keydown for sidebar button
-    sideBarBtn.addEventListener('keydown', e => {
-        // Currently no behavior; kept for future expansion
-    });
+    sideBarBtn?.addEventListener('focus', () => window.scrollTo(0, 0));
+    sideBarBtn?.addEventListener('keydown', handleSidebarButtonKeydown);
 }
 
-// External navigation handling (f/a keys)
-export function sideBarNav({ e, navState }) {
-    if (navState.zone !== 'sideBar') return;
+function handleSidebarButtonKeydown(e) {
     const key = e.key.toLowerCase();
-    if(key === 't'){
-        tutorialLink.focus()
-        scrollTo(0,0)
-    }
-    if (!isNaN(key)) {
-        focusSideBarIndex(parseInt(key) - 1);
-        return true;
-    }
 
     if (key === 'f') {
-        if (!mainContainer.classList.contains('collapsed')) {
-            if (e.target === sideBarBtn) iSideBarAs = -1;
-            focusSideBarIndex((iSideBarAs + 1) % sideBarAsARRAY.length);
-        } else {
-            const steps = getSteps();
-            const lastStep = getLastStep();
-            (lastStep || steps[0])?.focus();
+        e.preventDefault();
+        focusSidebarLink(visibleSidebarLinks()[0]);
+    }
+
+    if (/^[1-9]$/.test(key)) {
+        e.preventDefault();
+        focusSidebarLink(visibleSidebarLinks()[Number(key) - 1]);
+    }
+
+    if (key === 'm') {
+        e.preventDefault();
+        const lastStep = getLastStep();
+        const steps = getSteps();
+        (lastStep || steps[0] || mainTargetDiv)?.focus();
+    }
+
+    if (key === 's') {
+        e.preventDefault();
+        const mainContainer = document.querySelector('.main-container');
+        if (mainContainer?.classList.contains('collapsed')) {
+            mainContainer.classList.remove('collapsed');
+            sideBarBtn?.setAttribute('aria-expanded', 'true');
         }
+        const remembered = getLastCLICKEDLink() || getLastFocusedLink();
+        remembered?.focus();
+    }
+}
+
+export function sideBarNav({ e, navState }) {
+    if (navState.zone !== 'sideBar' || !e?.key) return false;
+
+    const key = e.key.toLowerCase();
+    const visibleLinks = visibleSidebarLinks();
+
+    if (/^[1-9]$/.test(key)) {
+        e.preventDefault();
+        return focusSidebarLink(visibleLinks[Number(key) - 1]);
+    }
+
+    if (key === 'f' || key === 'a') {
+        if (!visibleLinks.length) return false;
+        e.preventDefault();
+
+        const activeIndex = visibleLinks.indexOf(document.activeElement);
+        const startIndex = activeIndex === -1
+            ? (key === 'f' ? -1 : 0)
+            : activeIndex;
+        const direction = key === 'f' ? 1 : -1;
+        const nextIndex = (startIndex + direction + visibleLinks.length) % visibleLinks.length;
+        return focusSidebarLink(visibleLinks[nextIndex]);
+    }
+
+    if (key === 's') {
+        e.preventDefault();
+        sideBarBtn?.focus();
         return true;
     }
 
-    if (key === 'a') {
-        if (e.target.id === 'homePageSideBar') {
-            focusSideBarIndex(sideBarAsARRAY.length - 2);
-        } else {
-            focusSideBarIndex((iSideBarAs - 1 + sideBarAsARRAY.length) % sideBarAsARRAY.length);
-        }
+    if (key === 'm') {
+        e.preventDefault();
+        const lastStep = getLastStep();
+        (lastStep || mainTargetDiv)?.focus();
+        return true;
+    }
+
+    if (key === 't') {
+        e.preventDefault();
+        tutorialLink?.focus();
+        window.scrollTo(0, 0);
         return true;
     }
 

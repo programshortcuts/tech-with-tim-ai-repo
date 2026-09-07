@@ -1,64 +1,44 @@
-export function initCopyCode() {
-    const copyCodes = document.querySelectorAll('.copy-code')
-    copyCodes.forEach(el => {
-        el.addEventListener('keydown', e => {
-            const key = e.key.toLowerCase()
-            if (e.metaKey &&  key == 'c' ) {
-                
-                animate(el)
-                if (e.target.value) {
-                    copyTextToClipboard(e.target.value)
-                }
-                if (e.target.innerText) {
-                    copyTextToClipboard(e.target.innerText)
+// copy-code.js
+export function initCopyCode(root = document) {
+    root.querySelectorAll('.copy-code').forEach(element => {
+        if (element.dataset.copyCodeBound === 'true') return;
+        element.dataset.copyCodeBound = 'true';
 
-                }
-            }
-        })
-        el.addEventListener('click', e => {
-            e.preventDefault()
-            e.stopPropagation()
-            
-            handleCopy(e)
-            animate(el)
-            const step = e.target.closest('.step-float')
-            step.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
-        })
-    })
-    // Setup for mainScript and both buttons
-}
-function handleCopy(e) {
-    // Always copy the text from mainScript regardless of source
-    const textToCopy = e.target.innerText
-    copyTextToClipboard(textToCopy);
-}
+        element.addEventListener('keydown', e => {
+            if (!(e.metaKey || e.ctrlKey) || e.key.toLowerCase() !== 'c') return;
+            e.preventDefault();
+            copyElementText(element);
+            animate(element);
+        });
 
-function setupCopyShortcut(element) {
-    element.addEventListener('keydown', e => {
-        // Check Command (metaKey) + C (case-insensitive)
-        if (e.metaKey && (e.key === 'c' || e.key === 'C')) {
-            e.preventDefault(); // prevent default copy just to be safe
-            handleCopy(e.target);
-        }
-    });
+        element.addEventListener('click', e => {
+            if (e.target.closest('a[href]')) return;
 
-    // Optional: animate on click for code elements as you had
-    element.addEventListener('click', e => {
-        e.preventDefault()
-        const stepFloat = e.target.closest('.step-float')
-        stepFloat.scrollIntoView({ behavior: 'instant', inline: 'nearest', block: 'center' })
-        // handleCopy(e.taget, true);
-
+            e.preventDefault();
+            e.stopPropagation();
+            copyElementText(element);
+            animate(element);
+            element.closest('.step-float')?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+                inline: 'center'
+            });
+        });
     });
 }
-function copyTextToClipboard(text) {
-    return navigator.clipboard.writeText(text).catch(err => {
-        console.error("Unable to copy text to clipboard:", err);
+
+function copyElementText(element) {
+    const text = 'value' in element ? element.value : element.innerText;
+    if (!text) return;
+
+    navigator.clipboard.writeText(text).catch(error => {
+        console.error('Unable to copy text to clipboard:', error);
     });
 }
+
 function animate(element) {
+    element.classList.remove('copied');
+    void element.offsetWidth;
     element.classList.add('copied');
-    setTimeout(() => {
-        element.classList.remove('copied');
-    }, 250);
+    setTimeout(() => element.classList.remove('copied'), 250);
 }

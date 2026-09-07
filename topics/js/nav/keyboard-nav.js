@@ -1,137 +1,127 @@
 // keyboard-nav.js
-/**  Notice what changed:
-👉 keyboardNav no longer decides behavior
-It just updates truth.
-*/
-import { popupLetterNav } from "../ui/popups.js"
-import { mainContainer } from "../core/main-script.js"
-import { navLessonTitle } from "./nav-lesson-title-nav.js"
-import { getFocusZone } from "./get-focus-zone.js"
-import { letterNav } from "./letter-nav.js"
-import { sideBarNav } from "./sidebar-nav.js"
-import { handleNavLessonTitle } from "./nav-lesson-title-nav.js"
+import { popupLetterNav } from "../ui/popups.js";
+import { mainContainer } from "../core/main-script.js";
+import { getFocusZone } from "./get-focus-zone.js";
+import { letterNav } from "./letter-nav.js";
+import { sideBarNav } from "./sidebar-nav.js";
+import { handleNavLessonTitle } from "./nav-lesson-title-nav.js";
+import { getLastStep, stepNav } from "./step-nav.js";
+import { mainTargetDiv } from "../core/inject-content.js";
+import { getLastCLICKEDLink, getLastFocusedLink } from "./sidebar-state.js";
+import { sideBarBtn } from "../ui/toggle-sidebar.js";
 
-import { getLastStep } from "./step-nav.js"
-import { mainTargetDiv } from "../core/inject-content.js"
-import { getLastCLICKEDLink, getLastFocusedLink } from "./sidebar-state.js"
-import { sideBar, sideBarBtn } from "../ui/toggle-sidebar.js"
-// i think Img and Video handling is in stepNav
-import { stepNav,scrollToCenter } from "./step-nav.js"
-import { tutorialLink } from "../ui/change-tutorial-link.js"
 export const navState = {
     zone: null,
     isLetterNavEnabled: false
-}
-export function keyboardNav({e}){
-    navState.zone = getFocusZone({ e })
-    if (!navState.zone) return
-    popupLetterNav({e,navState})
-    // 
-    //**I put this here for now just to make sure it's working, not sure if it's a good ideal, but it DOES 
-    // NEED to remain global */
-    const key = e.key.toLowerCase()
-    if (key === 's') {
+};
 
-        sideBarBtn?.focus()
+export function keyboardNav({ e }) {
+    navState.zone = getFocusZone({ e });
+    if (!navState.zone) return false;
+
+    if (e.metaKey && e.shiftKey && e.key.toLowerCase() === 'x') {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        popupLetterNav({ e, navState });
+        return true;
     }
-    if (key === 'f' && e.target === mainTargetDiv) {
-        // // I'mm sick of this not working so i added it here to always ensure that 'f' goes to first step
-        // const steps = document.querySelectorAll('.step-float')
-        // const el = steps[0]
-        // if (steps[0]) {
-        //     el.focus()
-        //     el.scrollIntoView({behavior:'smooth', inline:'start'})
-        //     return
-        // }
 
-
+    if (
+        navState.isLetterNavEnabled &&
+        !e.metaKey &&
+        !e.ctrlKey &&
+        !e.altKey &&
+        /^[a-z0-9]$/i.test(e.key)
+    ) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        letterNav({ e });
+        return true;
     }
-    routeKey({ e })
+
+    if (e.metaKey || e.ctrlKey || e.altKey) return false;
+
+    return routeKey({ e });
 }
+
 function routeKey({ e }) {
-    const { zone, isLetterNavEnabled } = navState
-    const key = e.key.toLowerCase()
-    
-    if (key === 'm') {        
-        handleMainFocus({ e, zone })
-        return
+    const { zone } = navState;
+    const key = e.key.toLowerCase();
+
+    const fixedHeaderTargets = {
+        b: '#backlink, #backLink',
+        c: '#codeComandShortcuts, #codeComShortcutsLink',
+        d: '#darkModeBtn',
+        h: '#homelink, #homePageLink'
+    };
+    const fixedHeaderTarget = fixedHeaderTargets[key];
+    if (fixedHeaderTarget) {
+        e.preventDefault();
+        document.querySelector(fixedHeaderTarget)?.focus();
+        return true;
     }
-    if (key === 's' ) {        
-        handleSidebarFocus({ e, zone })
-        return
-    }
-    if (isLetterNavEnabled) {
-        letterNav({ e })
-        return
-    }
-    
+
+    if (key === 'm') return handleMainFocus({ e, zone });
+    if (key === 's') return handleSidebarFocus({ e, zone });
+
     if (zone === 'navLessonTitle') {
-        const isHandled = handleNavLessonTitle({e,navState})
-        if (isHandled )return
+        return !!handleNavLessonTitle({ e, navState });
     }
     if (zone === 'mainTargetDiv') {
-        const isHandled = stepNav({e,navState})
-        if (isHandled )return
+        return !!stepNav({ e, navState });
     }
     if (zone === 'sideBar') {
-        const isHandled = sideBarNav({ e,navState })
-        if (isHandled )return
+        return !!sideBarNav({ e, navState });
     }
+
+    return false;
 }
+
 function handleMainFocus({ e, zone }) {
-    const key = e.key.toLowerCase()
-    const lastStep = getLastStep()
-    if (zone != sideBar) {
-        mainTargetDiv.focus()
+    e.preventDefault();
+
+    const currentStep = e.target.closest?.('.step-float');
+    const lastStep = getLastStep();
+
+    if (currentStep && e.target !== currentStep) {
+        currentStep.focus();
+        return true;
     }
-    if(zone === 'mainTargetDiv'){
-        
-        if(lastStep){
-            if(e.target == lastStep ){
-                mainTargetDiv.focus()
-                document.querySelector('body').scrollIntoView({ behavior: 'instant', block: 'start' })
-            } else {
-                lastStep.focus()
-                lastStep.scrollIntoView({behavior:'smooth', block: 'center'})
-            }
-        }
-        return
+
+    if (currentStep && e.target === currentStep) {
+        mainTargetDiv?.focus();
+        mainTargetDiv?.scrollIntoView({ behavior: 'instant', block: 'start' });
+        return true;
     }
-    if (e.target != mainTargetDiv && key === 'm') {
-        if(lastStep){
-            lastStep?.focus()
-        } else {
-            mainTargetDiv.focus()
-            document.querySelector('body').scrollIntoView({ behavior: 'instant', block: 'start' })       
-        }
-        return
-    } else {
-        console.log(navState)
-        mainTargetDiv.focus()
-        document.querySelector('body').scrollIntoView({ behavior: 'instant', block: 'start' })
+
+    if (e.target === mainTargetDiv && lastStep) {
+        lastStep.focus();
+        return true;
     }
+
+    if (zone !== 'mainTargetDiv' && lastStep) {
+        lastStep.focus();
+        return true;
+    }
+
+    mainTargetDiv?.focus();
+    window.scrollTo(0, 0);
+    return true;
 }
+
 function handleSidebarFocus({ e, zone }) {
-    const lastLink = getLastFocusedLink()
-    const lastClicked = getLastCLICKEDLink()
-    if(zone === 'sideBar'){
-        if(e.target === sideBarBtn){
-            if(lastClicked ){
-                lastClicked.focus()
-            } else if (lastLink) {
-                lastLink.focus()
-            } 
+    e.preventDefault();
+
+    const rememberedLink = getLastCLICKEDLink() || getLastFocusedLink();
+
+    if (zone === 'sideBar' && e.target === sideBarBtn) {
+        if (!mainContainer.classList.contains('collapsed')) {
+            rememberedLink?.focus();
         }
-    } else {
-        if(lastLink || lastClicked){
-            sideBarBtn.focus() 
-            return
-        }
-        if(mainContainer.classList.contains('collapsed')){
-            sideBarBtn?.focus()
-        } else {
-            lastClicked?.focus()
-        }
-        return
+        return true;
     }
+
+    sideBarBtn?.focus();
+    window.scrollTo(0, 0);
+    return true;
 }
