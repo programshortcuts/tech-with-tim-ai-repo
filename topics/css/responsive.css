@@ -25,13 +25,18 @@
         /* top: 90%; */
     }
 
-    .step-img.enlarge img,
-    .step-vid.enlarge video {
-        max-height: 30vh !important;
-    }
+
 }
 
 @media screen and (min-width:721px) {
+
+    .step-img.enlarge,
+    .step-vid.enlarge,
+    .step-img.first-vid-enlarge,
+    .step-vid.first-vid-enlarge {
+        transform:
+            translate(-50%, -50%) scale(2.18) !important;
+    }
 
     .step-txt>p {
         margin: 0 !important;
@@ -61,6 +66,8 @@
         width: 100px !important;
         min-width: 100px !important;
     }
+
+
 }
 
 @media screen and (max-width:431px) {

@@ -19,7 +19,30 @@ import {
 let steps = [];
 let lastStep = null;
 
+/* =========================================================
+   SHRINK STEP MEDIA BUT KEEP VIDEO PLAYING
 
+   Used when navigating between children with F / A.
+
+   IMPORTANT:
+   - removes enlarged size
+   - does NOT pause video
+   - does NOT reset timestamp
+   - does NOT remove is-playing
+   ========================================================= */
+
+function shrinkStepMediaKeepPlaying(step) {
+    if (!step) return;
+
+    stepMedia(step).forEach(media => {
+        media.classList.remove(
+            'enlarge',
+            'first-vid-enlarge'
+        );
+    });
+
+    step.dataset.mediaIndex = -1;
+}
 /* =========================================================
    STEP MEDIA
    ========================================================= */
@@ -721,7 +744,13 @@ export function stepNav({
 
         return false;
     }
-
+    if (
+        key === 'enter' &&
+        !e.shiftKey &&
+        e.target.closest?.('a[href]')
+    ) {
+        return false;
+    }
 
     /* =====================================================
        ENTER
@@ -751,34 +780,50 @@ export function stepNav({
         e.preventDefault();
         e.stopPropagation();
 
-
         changeTutorialLink({
             target: step
         });
 
 
-        cycleStepMedia(step);
+        /* =====================================================
+           ENTER ON .STEP-FLOAT
+    
+           First Enter only enters the step.
+    
+           DO NOT:
+           - enlarge image
+           - enlarge video
+           - play video
+           - cycle media
+    
+           Just focus the first focusable child.
+           ===================================================== */
 
-
-        /*
-        Only enter child-navigation mode when the
-        .step-float itself had focus.
-        */
         if (e.target === step) {
 
             const firstFocusable =
                 stepFocusableItems(step)[0];
 
             firstFocusable?.focus();
+
+            lastStep = step;
+
+            return true;
         }
 
+
+        /* =====================================================
+           ENTER FROM INSIDE STEP
+    
+           Keep existing behavior exactly the same.
+           ===================================================== */
+
+        cycleStepMedia(step);
 
         lastStep = step;
 
         return true;
     }
-
-
     /* =====================================================
        F / A
        ===================================================== */
@@ -803,12 +848,19 @@ export function stepNav({
         */
         if (e.target !== step) {
 
+            /*
+            Once we're navigating through children,
+            media should return to normal size.
+        
+            Playing videos keep playing.
+            */
+            shrinkStepMediaKeepPlaying(step);
+
             return focusWithinStep(
                 step,
                 direction
             );
         }
-
 
         /*
         On step:

@@ -1,5 +1,18 @@
 /* colors.css */
-.m{color: magenta;}
-.o{color: orange !important;}
-.g{color: gold !important;}
-.ws{color: whitesmoke !important;}
+.o {
+    color: orange !important;
+}
+
+.g {
+    color: gold !important;
+}
+
+.m {
+    color: magenta;
+}
+
+
+
+.ws {
+    color: whitesmoke !important;
+}

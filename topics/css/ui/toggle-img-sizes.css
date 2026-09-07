@@ -51,14 +51,17 @@ pre.copy-code {
     left: 50%;
 
     transform:
-        translate(-50%, -50%) scale(1.9);
+        translate(-50%, -80%) scale(1.5);
 
     z-index: 999999 !important;
 
     max-width: 400px;
 
     object-fit: contain;
+
+
 }
+
 
 
 
