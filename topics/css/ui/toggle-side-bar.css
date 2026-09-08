@@ -1,36 +1,46 @@
-
 /* toggle-side-bar.css */
 
 .main-container.collapsed .side-bar-links-container {
     opacity: 0;
     transition: all 250ms;
 }
+
+
 .main-container.collapsed #sideBarBtn {
     transform: scale(1.8);
     left: 10%;
     margin-left: 10%;
-    /* top: 80% !important; */
     top: 90% !important;
-    /* border: 10px solid red !important; */
 }
 
-@media screen and (min-width:732px){
+
+/* =========================
+   COLLAPSED DESKTOP
+   ========================= */
+
+@media screen and (min-width: 732px) {
+
     .main-container.collapsed .side-bar {
-        /* flex-basis: 15%; */
-    }
-    .main-container.collapsed .side-bar {
-        max-width: 10% !important;
-        flex-basis: 15%;
+        width: 5% !important;
+        min-width: 0 !important;
+        max-width: 5% !important;
+        flex-basis: 5% !important;
+        flex-shrink: 0;
     }
 }
-@media screen and (max-width:731px){
+
+
+/* =========================
+   COLLAPSED MOBILE
+   ========================= */
+
+@media screen and (max-width: 731px) {
+
     .main-container.collapsed .side-bar {
-            max-width: 10% !important;
-        }
-}
-@media screen and (max-width:431px){
-    
-    .main-container.collapsed .side-bar {
-        width: 8% !important;   
-    }   
+        width: 50px !important;
+        min-width: 50px !important;
+        max-width: 50px !important;
+        flex-basis: 50px !important;
+        flex-shrink: 0;
+    }
 }

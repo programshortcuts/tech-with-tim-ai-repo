@@ -5,6 +5,8 @@
 
 }
 
+
+
 .nav-mode-colors {
     background: rgb(93, 104, 125);
 }
@@ -47,4 +49,8 @@ main>.side-bar {
 
 #sideBarBtn {
     color: black;
+}
+
+.side-bar-links .side-topic-title {
+    color: rgb(112, 107, 107) !important;
 }

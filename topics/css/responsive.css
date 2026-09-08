@@ -1,6 +1,6 @@
 /* responsive.css */
 
-@media screen and (min-width:751px) {
+@media screen and (min-width: 751px) {
 
     .code-container {
         min-width: 250px;
@@ -17,18 +17,16 @@
 
     .dark-mode .side-bar {
         border-top: none !important;
-        border-top: 2px solid black !important
+        border-top: 2px solid black !important;
     }
 
     .collapsed #sideBarBtn {
         right: 5%;
-        /* top: 90%; */
     }
-
-
 }
 
-@media screen and (min-width:721px) {
+
+@media screen and (min-width: 721px) {
 
     .step-img.enlarge,
     .step-vid.enlarge,
@@ -56,32 +54,33 @@
     .imgs-container {
         align-items: center;
         justify-content: center !important;
-        gap: 10%
+        gap: 10%;
     }
-
 }
 
-@media screen and (max-width:721px) {
+
+@media screen and (max-width: 721px) {
+
     .main-container>.side-bar {
         width: 100px !important;
         min-width: 100px !important;
     }
-
-
 }
 
-@media screen and (max-width:431px) {
-    .main-container .side-bar {
+
+@media screen and (max-width: 431px) {
+
+    .main-container>.side-bar {
         max-width: 20%;
     }
-
 }
 
-@media screen and (max-width:520px) {
+
+@media screen and (max-width: 520px) {
+
     .step-vid.enlarge video {
         position: absolute;
         width: 300px;
         max-width: 600px !important;
     }
-
 }
