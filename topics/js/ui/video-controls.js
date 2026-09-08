@@ -163,12 +163,14 @@ export function resetVideoToPoster(video) {
 
     video.pause();
 
-    try {
-        video.currentTime = 0;
-    } catch {
-        /*
-        Metadata may not be available yet.
-        */
+    if (video.poster) {
+        video.load(); // Restores the actual poster image.
+    } else {
+        try {
+            video.currentTime = 0;
+        } catch {
+            /* Metadata may not be available yet. */
+        }
     }
 
     updatePlayButton(video);
