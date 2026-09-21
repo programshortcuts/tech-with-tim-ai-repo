@@ -1,9 +1,9 @@
 @import url('page-header.css');
 @import url('./dark-mode-index.css');
 @import url('footer-double-link-header.css');
-@import url('page-header.css');
+@import url('page-header-index.css');
 
-@import url('responsive-index.css');
+/* @import url('responsive-index.css'); */
 
 /* utilies */
 @import url('utitlies/borders-index.css');
@@ -16,10 +16,11 @@
 
 
 /* @import url('ui/drop-topic-sub-resources.css'); */
-*{
+* {
     margin: 0;
     padding: 0;
 }
+
 #aiLogo {
     display: block;
     box-shadow: var(--x) 0 var(--xB) var(--yB) orangered !important;
@@ -37,6 +38,7 @@
     font-weight: 999;
     font-size: 150%;
 }
+
 .hide {
     display: none;
 }

@@ -7,7 +7,6 @@ main.main-container {
 .main-container>.side-bar {
     min-width: 200px;
 
-    padding-top: 15%;
     top: 10vh;
     height: calc(100vh - 10vh);
     align-self: flex-start;

@@ -4,6 +4,10 @@ main>.side-bar::-webkit-scrollbar {
     display: none;
 }
 
+main>.side-bar {
+    padding-top: 5%;
+}
+
 .side-bar-links-container ul {
     list-style: none;
     display: flex;
@@ -13,7 +17,7 @@ main>.side-bar::-webkit-scrollbar {
 }
 
 .side-bar-links-container>ul li {
-    margin-top: 5%;
+    /* margin-top: 5%; */
     margin-bottom: 10%;
     max-width: 100%;
 

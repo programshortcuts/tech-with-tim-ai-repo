@@ -3,23 +3,19 @@
     padding: 0;
     box-sizing: border-box;
 }
-.page-wrapper main#mainContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: 70vh;
-    margin: 0 2.5%;
-    padding: 0 2.5%;
-    padding-left: 0;
-    scrollbar-width: none;
-    overflow: hidden;
-    overflow-y: scroll;
-}
+
+
+
 .page-wrapper>footer.footer-header {
+    bottom: 0;
     display: flex;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
     justify-content: space-between;
+    position: fixed;
+    background-color: black;
+    width: 100%;
+    z-index: 9999;
     padding: 0 2.5%;
 }
 
@@ -102,7 +98,6 @@
     }
 
     .page-wrapper main#mainContainer {
-        margin: 0;
         margin-left: 4%;
         padding-bottom: 5%;
     }

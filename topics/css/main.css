@@ -28,7 +28,7 @@
 
 /* utilities */
 @import url('utilities/borders.css');
-@import url('utilities/colors.css');
+
 @import url('utilities/code-colors.css');
 @import url('utilities/display.css');
 @import url('utilities/effects.css');
@@ -37,10 +37,10 @@
 @import url('utilities/text.css');
 @import url('utilities/position.css?v=2');
 @import url('utilities/layout.css');
+@import url('utilities/colors.css');
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
-
