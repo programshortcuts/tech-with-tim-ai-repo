@@ -1,30 +1,28 @@
 const dropDowns = document.querySelectorAll('.drop-down')
-const allDropSnips = document.querySelectorAll('.drop-snips')
+// const allDropSnips = document.querySelectorAll('.drop-snips')
 dropDowns.forEach(el => {
     el.addEventListener('keydown', (e) => {
-
         const key = e.key.toLowerCase()
-        if(key === 'enter'){
+        if (key === 'enter') {
+            console.log(e.target)
             const dropParent = e.target.closest('.drop-parent')
             const dropSnips = dropParent.querySelector('.drop-snips')
-            
+
+
             toggleDrop(dropSnips)
         }
     });
 })
-function toggleDrop(dropSnips){
-    dropSnips.classList.toggle('hide')
-
-}
-function collapseAll(els){
+function toggleDrop(dropSnips) { dropSnips.classList.toggle('hide') }
+function collapseAll(els) {
     els.forEach(el => {
-        if(el.classList.contains('show')){
+        if (el.classList.contains('show')) {
             // el.classList.add('hide')
             el.classList.remove('show')
         } else {
             el.classList.add('hide')
-            
+
         }
     })
 }
-collapseAll(allDropSnips)
+// collapseAll(allDropSnips)

@@ -1,7 +1,6 @@
 // js-index/letterFocus-txt-nums.js
 
 addEventListener('keydown', e => {
-
     /* =========================================================
        GET LETTER / NUMBER
        ========================================================= */
@@ -275,13 +274,12 @@ addEventListener('keydown', e => {
 
     matchingEls[nextIndex]?.focus();
 
-    console.log(
-        'LETTER NAV:',
-        key,
-        matchingEls[nextIndex]
-    );
+    // console.log(
+    //     'LETTER NAV:',
+    //     key,
+    //     matchingEls[nextIndex]
+    // );
 
     window.lastKeySignature = keySignature;
-    console.log('hellow');
 
 });
