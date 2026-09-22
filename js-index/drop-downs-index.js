@@ -12,7 +12,7 @@ dropDowns.forEach(el => {
                 toggleDrops(topics)
                 return
             } else {
-
+                console.log(dropSnips)
                 toggleDrops(dropSnips)
             }
             return

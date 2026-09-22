@@ -6,6 +6,7 @@
 /* @import url('responsive-index.css'); */
 
 /* utilies */
+@import url('utitlies/background-imgs-index.css');
 @import url('utitlies/borders-index.css');
 @import url('utitlies/colors-index.css');
 @import url('utitlies/layout-index.css');
