@@ -4,16 +4,22 @@ dropDowns.forEach(el => {
     el.addEventListener('keydown', (e) => {
         const key = e.key.toLowerCase()
         if (key === 'enter') {
-            console.log(e.target)
             const dropParent = e.target.closest('.drop-parent')
             const dropSnips = dropParent.querySelector('.drop-snips')
 
+            if (e.target.id == 'topics') {
+                const topics = dropParent.querySelector('.topics')
+                toggleDrops(topics)
+                return
+            } else {
 
-            toggleDrop(dropSnips)
+                toggleDrops(dropSnips)
+            }
+            return
         }
     });
 })
-function toggleDrop(dropSnips) { dropSnips.classList.toggle('hide') }
+function toggleDrops(dropSnips) { dropSnips.classList.toggle('hide') }
 function collapseAll(els) {
     els.forEach(el => {
         if (el.classList.contains('show')) {
