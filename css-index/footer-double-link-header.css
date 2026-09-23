@@ -13,7 +13,7 @@
     border-bottom: 1px solid black;
     justify-content: space-between;
     position: fixed;
-    background-color: black;
+    background-color: inherit;
     width: 100%;
     z-index: 9999;
     padding: 0 2.5%;
