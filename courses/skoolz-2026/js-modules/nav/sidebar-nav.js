@@ -4,6 +4,7 @@ import { getLastCLICKEDLink, getLastFocusedLink, setLastFocusedLink } from './si
 import { getLastStep, getSteps } from './step-nav.js';
 import { isTypingTarget } from './get-focus-zone.js';
 import { isActuallyVisible } from './letter-nav.js';
+import { getSidebarParentLink, initSidebarDropdowns } from '../ui/sidebar-dropdowns.js';
 
 export const sideBarAs = sideBar?.querySelectorAll('.side-bar-links-container ul a') || [];
 export const sideBarAsARRAY = [...sideBarAs];
@@ -16,6 +17,9 @@ export function getSidebarLinks() {
     return [...(sideBar?.querySelectorAll('.side-bar-links-container ul a') || [])];
 }
 export function visibleSidebarLinks() { return getSidebarLinks().filter(isActuallyVisible); }
+export function getSidebarFocusTarget() {
+    return [getLastCLICKEDLink(), getLastFocusedLink(), ...getSidebarLinks()].find(isActuallyVisible);
+}
 
 export function focusSidebarLink(link) {
     if (!link) return false;
@@ -26,6 +30,7 @@ export function focusSidebarLink(link) {
 export function initSideBarListeners() {
     if (initialized || !sideBar) return;
     initialized = true;
+    initSidebarDropdowns();
     sideBar.addEventListener('focusin', e => {
         const link = e.target.closest('.side-bar-links-container a');
         if (!link) return;
@@ -43,9 +48,13 @@ export function sideBarNav({ e, navState }) {
     const links = visibleSidebarLinks();
     let target = null;
 
-    if (/^[1-9]$/.test(key)) target = links[Number(key) - 1];
+    if (/^[1-9]$/.test(key)) {
+        const scope = e.target.closest('.drop-snips:not(.side-bar-links)') || sideBar.querySelector('.side-bar-links');
+        const numberedLinks = [...(scope?.querySelectorAll(':scope > li > a[href]') || [])].filter(isActuallyVisible);
+        target = numberedLinks[Number(key) - 1];
+    }
     if (key === 'f' || key === 'a') {
-        const direction = key === 'f' ? 1 : -1;
+        const direction = key === 'f' && !e.shiftKey ? 1 : -1;
         const activeIndex = links.indexOf(document.activeElement);
         const start = activeIndex < 0 ? (direction > 0 ? -1 : 0) : activeIndex;
         target = links[(start + direction + links.length) % links.length];
@@ -53,8 +62,8 @@ export function sideBarNav({ e, navState }) {
     if (key === 's') {
         if (e.target === sideBarBtn) {
             setSidebarExpanded(true);
-            target = getLastCLICKEDLink() || getLastFocusedLink() || getSidebarLinks()[0];
-        } else target = sideBarBtn;
+            target = getSidebarFocusTarget();
+        } else target = getSidebarParentLink(e.target) || sideBarBtn;
     }
     if (key === 'm') target = getLastStep() || getSteps()[0] || mainTargetDiv;
     if (key === 't') target = tutorialLink;

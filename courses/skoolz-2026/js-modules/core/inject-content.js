@@ -7,6 +7,7 @@ import { initCopyCode } from '../ui/copy-code.js';
 import { initAllVideos } from '../ui/video-controls.js';
 import { changeTutorialLink } from '../ui/change-tutorial-link.js';
 import { setSidebarExpanded } from '../ui/toggle-sidebar.js';
+import { getSidebarSubmenu, revealSidebarLink, setDropdownExpanded } from '../ui/sidebar-dropdowns.js';
 export { mainTargetDiv, endNxtBtn, prevBtn };
 
 let initialized = false;
@@ -14,7 +15,7 @@ let request = null;
 const sidebarLinks = () => [...sideBar.querySelectorAll('.side-bar-links a[href]')];
 const homeHref = () => mainTargetDiv.dataset.href || 'homepage.html';
 
-export async function injectFromHref(href) {
+export async function injectFromHref(href, sourceLink = null) {
     if (!href || !mainTargetDiv) return null;
     request?.abort();
     const current = new AbortController();
@@ -55,7 +56,7 @@ export async function injectFromHref(href) {
         updateSteps();
         initCopyCode(mainTargetDiv);
         initAllVideos(mainTargetDiv);
-        const loadedLink = sidebarLinks().find(link => link.href === url);
+        const loadedLink = sourceLink?.href === url ? sourceLink : sidebarLinks().find(link => link.href === url);
         setLastCLICKEDLink(loadedLink || null);
         changeTutorialLink({ target: loadedLink || mainTargetDiv });
         return { url, failed };
@@ -74,17 +75,20 @@ export async function injectFromHref(href) {
     }
 }
 
-async function activateSidebarLink(link) {
-    const repeated = mainTargetDiv.dataset.loadedHref === link.href;
+async function activateSidebarLink(link, { toggleDropdown = true } = {}) {
+    const repeated = getLastCLICKEDLink() === link;
+    revealSidebarLink(link);
+    const submenu = getSidebarSubmenu(link);
+    if (toggleDropdown && submenu) setDropdownExpanded(link, submenu.classList.contains('hide'));
     // Focus, not fetch completion, owns the visible sidebar selection.
     link.focus({ preventScroll: true });
     link.scrollIntoView({ block: 'nearest' });
-    const result = await injectFromHref(link.href);
+    const result = await injectFromHref(link.href, link);
     if (!result || document.activeElement !== link) return;
     if (result.failed) {
         sidebarLinks().find(item => item.href === result.url)?.focus();
     } else if (repeated) {
-        mainTargetDiv.focus({ preventScroll: true });
+        (mainTargetDiv.querySelector('.step-float') || mainTargetDiv).focus({ preventScroll: true });
     } else {
         mainTargetDiv.querySelector('[data-auto-focus]')?.focus();
     }
@@ -122,7 +126,7 @@ export function initInjectContentListeners() {
         }
     });
     const autoLink = sidebarLinks().find(link => link.hasAttribute('autofocus'));
-    if (autoLink) activateSidebarLink(autoLink);
+    if (autoLink) activateSidebarLink(autoLink, { toggleDropdown: false });
     else injectFromHref(homeHref()).then(result => {
         if (result && document.activeElement === document.body) {
             sidebarLinks().find(link => link.href === result.url)?.focus();

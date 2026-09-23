@@ -23,11 +23,18 @@ export function initToggleSideBar() {
     [sideBarBtn, navLessonTitle].filter(Boolean).forEach(el => {
         el.setAttribute('role', 'button');
         el.setAttribute('aria-controls', 'module-sidebar-links');
-        el.addEventListener('click', toggle);
+        el.addEventListener('click', e => {
+            if (el === sideBarBtn) e.stopPropagation();
+            toggle(e);
+        });
         el.addEventListener('keydown', toggle);
     });
     sideBar?.addEventListener('click', e => {
-        if (e.target !== sideBar) return;
+        const interactive = e.target.closest(
+            'a, area, button, input, select, textarea, label, summary, iframe, object, embed, ' +
+            'audio[controls], video[controls], [contenteditable], [tabindex], [role]'
+        );
+        if (interactive && interactive !== sideBar) return;
         sideBarBtn.focus();
         toggle(e);
     });

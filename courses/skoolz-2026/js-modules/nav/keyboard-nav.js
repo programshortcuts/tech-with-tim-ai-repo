@@ -2,10 +2,9 @@ import { setSidebarExpanded } from '../ui/toggle-sidebar.js';
 import { mainTargetDiv, mainContainer, sideBarBtn, tutorialLink, navLessonTitle, endNxtBtn, prevBtn } from '../core/elements.js';
 import { getFocusZone, isTypingTarget } from './get-focus-zone.js';
 import { letterNav } from './letter-nav.js';
-import { sideBarNav } from './sidebar-nav.js';
+import { getSidebarFocusTarget, sideBarNav } from './sidebar-nav.js';
 import { handleNavLessonTitle } from './nav-lesson-title-nav.js';
 import { getLastStep, getSteps, stepNav } from './step-nav.js';
-import { getLastCLICKEDLink, getLastFocusedLink } from './sidebar-state.js';
 import { popupLetterNav } from '../ui/popups.js';
 
 export const navState = { zone: null, isLetterNavEnabled: false };
@@ -41,9 +40,10 @@ export function keyboardNav({ e }) {
     if (headerTargets[key]) return focusTarget(e, document.querySelector(headerTargets[key]));
     if (key === 'm') return handleMainFocus(e);
     if (key === 's') {
+        if (navState.zone === 'sideBar' && e.target !== sideBarBtn) return sideBarNav({ e, navState });
         if (e.target !== sideBarBtn) return focusTarget(e, sideBarBtn, true);
         setSidebarExpanded(true);
-        return focusTarget(e, getLastCLICKEDLink() || getLastFocusedLink() || document.querySelector('.side-bar-links-container a'));
+        return focusTarget(e, getSidebarFocusTarget());
     }
     if (key === 't') return focusTarget(e, tutorialLink, true);
     if (key === 'e') return focusTarget(e, endNxtBtn);
