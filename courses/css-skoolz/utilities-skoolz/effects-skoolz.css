@@ -1,0 +1,8 @@
+.modules>li>a:active,
+.modules>li>a:focus {
+    border-left: 2px solid whitesmoke !important;
+    border-top: 2px solid whitesmoke !important;
+    box-shadow: 0 0 1px 1px whitesmoke;
+    transform: scale(1.3);
+    transform: translateX(1%);
+}
