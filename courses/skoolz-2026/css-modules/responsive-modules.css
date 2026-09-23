@@ -1,0 +1,70 @@
+/* Keep the established step layout, while constraining wide media and code. */
+#mainTargetDiv img,
+#mainTargetDiv video,
+.tutorial-link-img-container img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.step-float > .imgs-container {
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.step-float > .imgs-container > * {
+    flex: 1 1 12rem;
+    min-width: 0;
+    max-width: 100%;
+}
+
+@media (max-width: 720px) {
+    main.main-container {
+        --sidebar-width: clamp(6rem, 28vw, 10rem);
+    }
+
+    .main-container.collapsed {
+        --sidebar-width: 3rem;
+    }
+
+    .main-container > .side-bar,
+    #mainTargetDiv {
+        padding: 0.5rem;
+    }
+
+    #mainTargetDiv {
+        padding-top: calc(var(--module-header-height, 0px) + 0.5rem);
+    }
+
+    .page-header,
+    .nav-lesson-title {
+        padding: 0.5rem;
+    }
+
+    .page-header-links {
+        gap: 0.4rem 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    .tutorial-link-img-container {
+        flex-basis: 4rem;
+    }
+
+    .side-bar-links {
+        font-size: 0.85rem;
+    }
+
+    .no-float {
+        flex-direction: column !important;
+    }
+
+    .step-float > .step-img:not(.enlarge):not(.first-vid-enlarge),
+    .step-float > .step-vid:not(.enlarge):not(.first-vid-enlarge) {
+        width: 100%;
+        float: none;
+    }
+
+    .step-floats-container {
+        flex-direction: column;
+    }
+}

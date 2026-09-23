@@ -1,0 +1,94 @@
+/* Media and copy feedback follow the same hooks as the Topics scripts. */
+.step-img,
+.step-vid {
+    position: relative;
+    z-index: 1;
+}
+
+pre.copy-code {
+    position: relative;
+    z-index: 2;
+}
+
+.step-vid.is-playing {
+    z-index: 3;
+}
+
+.step-img.enlarge,
+.step-vid.enlarge,
+.step-img.first-vid-enlarge,
+.step-vid.first-vid-enlarge {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    width: min(90vw, 64rem);
+    max-width: 90vw;
+    height: auto;
+    max-height: 85vh;
+    margin: 0;
+    float: none;
+    padding: 0.25rem;
+    background: #201d1d;
+    box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.7);
+}
+
+.step-img.enlarge > img,
+.step-img.first-vid-enlarge > img,
+.step-vid.enlarge > video,
+.step-vid.first-vid-enlarge > video {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 72vh !important;
+    object-fit: contain;
+}
+
+.vid-cntrl-btns {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    background-color: black;
+    border-radius: 6px;
+}
+
+.vid-cntrl-btns > button {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0.5rem;
+    color: white;
+    background-color: black;
+    border: none;
+    border-radius: 6px;
+}
+
+.vid-cntrl-btns > button:hover {
+    background-color: #333;
+}
+
+.copied {
+    position: relative;
+    box-shadow: 0 0 3px 2px whitesmoke;
+    background-color: whitesmoke !important;
+    color: black !important;
+}
+
+#popElLetterNav,
+#popupLetterNav {
+    position: fixed;
+    bottom: 4rem;
+    left: 1rem;
+    z-index: 11;
+    opacity: 0;
+    pointer-events: none;
+    font: bold 1.5rem monospace;
+    color: limegreen;
+    text-shadow: 0 0 2px black;
+}
+
+#popElLetterNav.animate,
+#popupLetterNav.animate {
+    opacity: 1;
+}
