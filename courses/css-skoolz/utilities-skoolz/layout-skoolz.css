@@ -2,20 +2,14 @@
 .modules {
     list-style-type: none;
     display: flex;
-    gap: 1rem;
+    flex-wrap: wrap;
+    /* gap: 1rem; */
 }
 
 .modules li {
     display: inline-flex;
     flex-direction: column;
     justify-content: space-between;
-    border: 1px solid white;
     flex-basis: 5%;
-    flex-shrink: 1;
-}
-
-.modules a {
-    /* align-items: flex-end; */
-    /* display: inline-flex; */
-    /* flex-grow: 1; */
+    /* flex-shrink: 1; */
 }
