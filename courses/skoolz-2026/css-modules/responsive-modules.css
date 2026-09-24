@@ -18,6 +18,12 @@
     max-width: 100%;
 }
 
+@media (min-width: 721px) {
+    #mainTargetDiv {
+        /* padding-top: calc(var(--module-header-height, 0px) + 0.5rem); */
+    }
+}
+
 @media (max-width: 720px) {
 
 
@@ -25,7 +31,9 @@
 
     #mainTargetDiv {
         /* padding-top: calc(var(--module-header-height, 0px) + 0.5rem); */
+        padding-top: 0%
     }
+
 
     .page-header,
     .nav-lesson-title {
