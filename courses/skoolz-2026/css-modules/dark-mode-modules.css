@@ -5,10 +5,7 @@
     --module-code-bg: rgb(135, 139, 140);
 }
 
-body {
-    background: white;
-    color: #201d1d;
-}
+
 
 body.dark-mode {
     color-scheme: dark;
@@ -25,14 +22,7 @@ body.dark-mode {
     background-color: #201d1d;
 }
 
-.code-container > .copy-code {
-    background-color: var(--module-code-bg);
-    color: black;
-}
 
-.t {
-    color: rgb(167, 61, 42);
-}
 
 .dark-mode .t {
     color: tomato;

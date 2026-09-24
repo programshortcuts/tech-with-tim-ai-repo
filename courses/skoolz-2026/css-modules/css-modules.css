@@ -1,4 +1,5 @@
 /* css-modules.css */
+@import url('utilities-modules/colors-modules.css');
 @import url('utilities-modules/borders-modules.css');
 @import url('utilities-modules/sizing-modules.css');
 @import url('step-txt-modules/step-txt-modules.css');

@@ -2,3 +2,7 @@
 .page-header {
     border: 1px solid white
 }
+
+.code-container {
+    border: none !important;
+}

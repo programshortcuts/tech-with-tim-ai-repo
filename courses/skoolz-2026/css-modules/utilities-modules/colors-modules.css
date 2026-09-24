@@ -1,0 +1,15 @@
+/* Sidebar classes represent focus; they must match the actual focus style. */
+body {
+    background-color: grey;
+}
+
+.code-container>.copy-code {}
+
+.code-container>.copy-code {
+    background-color: var(--module-code-bg);
+    color: black;
+}
+
+.t {
+    color: rgb(167, 61, 42);
+}
