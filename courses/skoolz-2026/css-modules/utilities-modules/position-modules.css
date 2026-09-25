@@ -1,11 +1,14 @@
-#targetDivInjected .page-header,
-.nav-lesson-title {
+/* The header injected with each lesson */
+#targetDivInjected>header {
     position: sticky;
-    z-index: 4;
+    top: 10%;
+    z-index: 10;
+    border: 1px solid blue;
+    background: var(--your-page-background-color, #fff);
 }
 
-.nav-lesson-title {
-    position: fixed;
-    top: 5%;
-    z-index: 4;
+/* Keep the title tidy inside its sticky header */
+#lessonTitle {
+    margin: 0;
+    padding: 0.75rem 1rem;
 }

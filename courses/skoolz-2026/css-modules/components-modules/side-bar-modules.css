@@ -65,7 +65,6 @@
     --sidebar-width: 3rem;
 }
 
-.main-container.collapsed h3#lessonTitle,
 .main-container.collapsed .side-bar-links-container {
     display: none;
 }
