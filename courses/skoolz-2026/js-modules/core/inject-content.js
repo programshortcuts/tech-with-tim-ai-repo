@@ -1,6 +1,11 @@
 import { mainTargetDiv, navLessonTitle, sideBar, endNxtBtn, prevBtn } from './elements.js';
 import { lessonURL, prepareContent } from './content-paths.js';
-import { getLastCLICKEDLink, setLastCLICKEDLink } from '../nav/sidebar-state.js';
+import {
+    clearActiveSidebarLink,
+    getLastCLICKEDLink,
+    setLastCLICKEDLink,
+    setActiveSidebarLink
+} from '../nav/sidebar-state.js';
 import { updateSteps } from '../nav/step-nav.js';
 import { refreshImages } from '../ui/toggle-img-sizes.js';
 import { initCopyCode } from '../ui/copy-code.js';
@@ -8,6 +13,7 @@ import { initAllVideos } from '../ui/video-controls.js';
 import { changeTutorialLink } from '../ui/change-tutorial-link.js';
 import { setSidebarExpanded } from '../ui/toggle-sidebar.js';
 import { getSidebarSubmenu, revealSidebarLink, setDropdownExpanded } from '../ui/sidebar-dropdowns.js';
+
 export { mainTargetDiv, endNxtBtn, prevBtn };
 
 let initialized = false;
@@ -22,67 +28,292 @@ function setLessonButtonInjectionLink(link) {
     link?.classList.add('lesson-button-injecting');
 }
 
-export async function injectFromHref(href, sourceLink = null, { fromLessonButton = false } = {}) {
-    if (!href || !mainTargetDiv) return null;
+export async function injectFromHref(
+    href,
+    sourceLink = null,
+    {
+        fromLessonButton = false
+    } = {}
+) {
+    if (
+        !href ||
+        !mainTargetDiv
+    ) {
+        return null;
+    }
+
     request?.abort();
-    const current = new AbortController();
+
+    const current =
+        new AbortController();
+
     request = current;
-    setLessonButtonInjectionLink(fromLessonButton ? sourceLink : null);
-    mainTargetDiv.setAttribute('aria-busy', 'true');
+
+    setLessonButtonInjectionLink(
+        fromLessonButton
+            ? sourceLink
+            : null
+    );
+
+    mainTargetDiv.setAttribute(
+        'aria-busy',
+        'true'
+    );
+
     let url;
     let failed = false;
+
+
     async function load(path) {
-        const target = lessonURL(path);
-        const response = await fetch(target, { signal: current.signal });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        return { url: target, nodes: prepareContent(await response.text(), target) };
+        const target =
+            lessonURL(path);
+
+        const response =
+            await fetch(
+                target,
+                {
+                    signal:
+                        current.signal
+                }
+            );
+
+        if (!response.ok) {
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+        }
+
+        return {
+            url: target,
+            nodes:
+                prepareContent(
+                    await response.text(),
+                    target
+                )
+        };
     }
+
+
     try {
         let result;
+
+
         try {
-            result = await load(href);
+            result =
+                await load(href);
+
         } catch (error) {
-            if (current.signal.aborted) return null;
+
+            if (
+                current.signal.aborted
+            ) {
+                return null;
+            }
+
             failed = true;
-            setLessonButtonInjectionLink(null);
-            result = await load(homeHref());
+
+            setLessonButtonInjectionLink(
+                null
+            );
+
+            result =
+                await load(
+                    homeHref()
+                );
         }
-        if (current.signal.aborted) return null;
-        url = result.url.href;
-        mainTargetDiv.querySelectorAll('video').forEach(video => video.pause());
-        mainTargetDiv.replaceChildren(...result.nodes);
-        mainTargetDiv.dataset.loadedHref = url;
+
+
+        if (
+            current.signal.aborted
+        ) {
+            return null;
+        }
+
+
+        url =
+            result.url.href;
+
+
+        mainTargetDiv
+            .querySelectorAll('video')
+            .forEach(video =>
+                video.pause()
+            );
+
+
+        mainTargetDiv.replaceChildren(
+            ...result.nodes
+        );
+
+
+        mainTargetDiv.dataset.loadedHref =
+            url;
+
+
         if (failed) {
-            const notice = document.createElement('p');
-            notice.setAttribute('role', 'status');
-            notice.textContent = 'This lesson is unavailable. Showing the module homepage.';
-            mainTargetDiv.prepend(notice);
+            const notice =
+                document.createElement(
+                    'p'
+                );
+
+            notice.setAttribute(
+                'role',
+                'status'
+            );
+
+            notice.textContent =
+                'This lesson is unavailable. Showing the module homepage.';
+
+            mainTargetDiv.prepend(
+                notice
+            );
         }
-        const title = mainTargetDiv.querySelector('#lessonTitle');
-        if (title && navLessonTitle) navLessonTitle.querySelector('h1').textContent = title.textContent.trim();
-        mainTargetDiv.scrollTo(0, 0);
-        refreshImages(mainTargetDiv);
+
+
+        const title =
+            mainTargetDiv.querySelector(
+                '#lessonTitle'
+            );
+
+
+        if (
+            title &&
+            navLessonTitle
+        ) {
+            navLessonTitle
+                .querySelector('h1')
+                .textContent =
+                title.textContent.trim();
+        }
+
+
+        mainTargetDiv.scrollTo(
+            0,
+            0
+        );
+
+
+        refreshImages(
+            mainTargetDiv
+        );
+
         updateSteps();
-        initCopyCode(mainTargetDiv);
-        initAllVideos(mainTargetDiv);
-        const loadedLink = sourceLink?.href === url ? sourceLink : sidebarLinks().find(link => link.href === url);
-        setLastCLICKEDLink(loadedLink || null);
-        changeTutorialLink({ target: loadedLink || mainTargetDiv });
-        return { url, failed };
+
+        initCopyCode(
+            mainTargetDiv
+        );
+
+        initAllVideos(
+            mainTargetDiv
+        );
+
+
+        const loadedLink =
+            sourceLink?.href === url
+                ? sourceLink
+                : sidebarLinks()
+                    .find(
+                        link =>
+                            link.href === url
+                    );
+
+
+        /*
+        Track lesson for navigation.
+        */
+
+        setLastCLICKEDLink(
+            loadedLink || null
+        );
+
+
+        /*
+        Track lesson visually.
+
+        This is independent from keyboard focus.
+        */
+
+        setActiveSidebarLink(
+            loadedLink || null
+        );
+
+
+        changeTutorialLink({
+            target:
+                loadedLink ||
+                mainTargetDiv
+        });
+
+
+        return {
+            url,
+            failed
+        };
+
+
     } catch (error) {
-        if (current.signal.aborted) return null;
-        const notice = document.createElement('p');
-        notice.setAttribute('role', 'alert');
-        notice.textContent = 'Unable to load this module. Choose a lesson to try again.';
-        mainTargetDiv.replaceChildren(notice);
-        delete mainTargetDiv.dataset.loadedHref;
+
+        if (
+            current.signal.aborted
+        ) {
+            return null;
+        }
+
+
+        const notice =
+            document.createElement(
+                'p'
+            );
+
+
+        notice.setAttribute(
+            'role',
+            'alert'
+        );
+
+
+        notice.textContent =
+            'Unable to load this module. Choose a lesson to try again.';
+
+
+        mainTargetDiv.replaceChildren(
+            notice
+        );
+
+
+        delete mainTargetDiv
+            .dataset
+            .loadedHref;
+
+
         updateSteps();
-        setLastCLICKEDLink(null);
+
+
+        setLastCLICKEDLink(
+            null
+        );
+
+
+        setActiveSidebarLink(
+            null
+        );
+
+
         return null;
+
+
     } finally {
-        if (request === current) {
-            mainTargetDiv.removeAttribute('aria-busy');
-            setLessonButtonInjectionLink(null);
+
+        if (
+            request === current
+        ) {
+            mainTargetDiv.removeAttribute(
+                'aria-busy'
+            );
+
+            setLessonButtonInjectionLink(
+                null
+            );
         }
     }
 }
@@ -279,7 +510,10 @@ export function initInjectContentListeners() {
         }
     );
 
-
+    endNxtBtn?.addEventListener(
+        'blur',
+        clearActiveSidebarLink
+    );
     prevBtn?.addEventListener(
         'click',
         () => {

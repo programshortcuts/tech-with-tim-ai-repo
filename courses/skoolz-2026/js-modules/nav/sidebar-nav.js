@@ -1,7 +1,7 @@
-// sidebar-nav
+// sidebar-nav.js
 import { setSidebarExpanded } from '../ui/toggle-sidebar.js';
 import { sideBar, sideBarBtn, mainContainer, mainTargetDiv, tutorialLink } from '../core/elements.js';
-import { clearLastCLICKEDLink, clearLastFocusedLink, getLastCLICKEDLink, getLastFocusedLink, setLastFocusedLink } from './sidebar-state.js';
+import { clearLastCLICKEDLink, getLastCLICKEDLink, getLastFocusedLink, setLastFocusedLink } from './sidebar-state.js';
 import { getLastStep, getSteps } from './step-nav.js';
 import { isTypingTarget } from './get-focus-zone.js';
 import { isActuallyVisible } from './letter-nav.js';
@@ -33,10 +33,16 @@ export function initSideBarListeners() {
     initialized = true;
     initSidebarDropdowns();
     sideBar.addEventListener('focusin', e => {
-        const link = e.target.closest('.side-bar-links-container a');
+        const link =
+            e.target.closest(
+                '.side-bar-links-container a'
+            );
+
         if (!link) return;
-        index = getSidebarLinks().indexOf(link);
-        clearLastCLICKEDLink()
+
+        index =
+            getSidebarLinks().indexOf(link);
+
         setLastFocusedLink(link);
     });
     sideBarBtn?.addEventListener('focus', () => window.scrollTo(0, 0));
