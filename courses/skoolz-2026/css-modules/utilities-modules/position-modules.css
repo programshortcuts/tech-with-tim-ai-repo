@@ -1,14 +1,12 @@
-/* The header injected with each lesson */
+/* Sticky lesson heading inside the injected lesson */
 #targetDivInjected>header {
     position: sticky;
-    top: 10%;
+    top: 0;
     z-index: 10;
-    border: 1px solid blue;
-    background: var(--your-page-background-color, #fff);
+    background-color: var(--lesson-header-bg, #fff);
 }
 
-/* Keep the title tidy inside its sticky header */
 #lessonTitle {
     margin: 0;
-    padding: 0.75rem 1rem;
+    padding: 0.75rem 0;
 }
