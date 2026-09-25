@@ -1,6 +1,6 @@
 import { setSidebarExpanded } from '../ui/toggle-sidebar.js';
 import { sideBar, sideBarBtn, mainContainer, mainTargetDiv, tutorialLink } from '../core/elements.js';
-import { getLastCLICKEDLink, getLastFocusedLink, setLastFocusedLink } from './sidebar-state.js';
+import { clearLastCLICKEDLink, clearLastFocusedLink, getLastCLICKEDLink, getLastFocusedLink, setLastFocusedLink } from './sidebar-state.js';
 import { getLastStep, getSteps } from './step-nav.js';
 import { isTypingTarget } from './get-focus-zone.js';
 import { isActuallyVisible } from './letter-nav.js';
@@ -35,6 +35,7 @@ export function initSideBarListeners() {
         const link = e.target.closest('.side-bar-links-container a');
         if (!link) return;
         index = getSidebarLinks().indexOf(link);
+        clearLastCLICKEDLink()
         setLastFocusedLink(link);
     });
     sideBarBtn?.addEventListener('focus', () => window.scrollTo(0, 0));
