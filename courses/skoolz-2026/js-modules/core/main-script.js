@@ -5,13 +5,13 @@ import { initInjectContentListeners } from './inject-content.js';
 import { initToggleSideBar } from '../ui/toggle-sidebar.js';
 import { initDarkMode } from '../ui/dark-mode.js';
 import { initHeaderScroll } from '../ui/header-scroll.js';
-// import { initStepListeners } from '../steps/steps.js';
+import { initStepsDropdowns } from '../ui/steps-dropdowns.js';
 let initialized = false;
 function initMain() {
     const pageWrapper = document.querySelector('.page-wrapper')
     if (initialized) return;
     // Trying something different gonna consolidate step js script into the js-modules/steps/ directory
-    // initStepListeners(pageWrapper)
+    initStepsDropdowns()
     // 
     initialized = true;
     initSideBarListeners();

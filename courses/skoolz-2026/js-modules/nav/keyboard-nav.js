@@ -1,3 +1,4 @@
+// keyboard-nav.js
 import { setSidebarExpanded } from '../ui/toggle-sidebar.js';
 import { mainTargetDiv, mainContainer, sideBarBtn, tutorialLink, navLessonTitle, endNxtBtn, prevBtn } from '../core/elements.js';
 import { getFocusZone, isTypingTarget } from './get-focus-zone.js';

@@ -1,3 +1,4 @@
+// sidebar-dropdowns.js
 import { sideBar } from '../core/elements.js';
 import { isTypingTarget } from '../nav/get-focus-zone.js';
 // This is ai script, not sure if it's better, i'm doing it different for 

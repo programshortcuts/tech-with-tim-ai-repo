@@ -1,3 +1,4 @@
+// sidebar-nav
 import { setSidebarExpanded } from '../ui/toggle-sidebar.js';
 import { sideBar, sideBarBtn, mainContainer, mainTargetDiv, tutorialLink } from '../core/elements.js';
 import { clearLastCLICKEDLink, clearLastFocusedLink, getLastCLICKEDLink, getLastFocusedLink, setLastFocusedLink } from './sidebar-state.js';

@@ -1,5 +1,5 @@
 // main-script.js
-export const pageWrapper = document.querySelector('.page-wrapper') 
+export const pageWrapper = document.querySelector('.page-wrapper')
 export const mainContainer = document.querySelector('.main-container')
 import { navLessonTitle } from "../nav/nav-lesson-title-nav.js";
 import { initDarkMode } from "../dark-mode.js";
