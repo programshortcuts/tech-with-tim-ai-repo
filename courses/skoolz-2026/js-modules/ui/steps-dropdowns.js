@@ -38,54 +38,5 @@ export function initStepsDropdowns() {
             'aria-expanded',
             String(opening)
         );
-
-        /*
-        Important:
-        Do not move focus here.
-        The clicked button should remain focused.
-        */
-    });
-    document.addEventListener('keydown', e => {
-        const key = e.key.toLowerCase()
-
-        if (key === 'enter') {
-            const button = e.target.closest(
-                '.drop-step > .drop-down'
-            );
-
-            if (!button) return;
-
-            const parent = button.closest(
-                '.drop-step'
-            );
-
-            const dropdown =
-                parent?.querySelector(
-                    ':scope > .drop-snips'
-                );
-
-            if (!dropdown) return;
-
-            const opening =
-                dropdown.classList.contains('hide');
-
-            dropdown.classList.toggle(
-                'hide',
-                !opening
-            );
-
-            dropdown.inert = !opening;
-
-            button.setAttribute(
-                'aria-expanded',
-                String(opening)
-            );
-
-            /*
-            Important:
-            Do not move focus here.
-            The clicked button should remain focused.
-            */
-        }
     });
 }
