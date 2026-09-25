@@ -9,8 +9,8 @@ body {
 
 .page-header {
     /* Only the background is transparent; links and controls stay visible. */
-    /* background: rgba(0, 0, 0, 0); */
-    background-color: var(--bg-clr);
+    background: rgba(0, 0, 0, 0);
+    /* background-color: var(--bg-clr); */
 }
 
 .code-container>.copy-code {}
