@@ -183,6 +183,116 @@ function focusStep(index) {
     return true;
 }
 /* =========================================================
+   MAIN NAVIGATION TARGETS
+
+   Top-level keyboard navigation includes:
+
+   - .step-float
+   - .drop-steps-container > .drop-down
+
+   DOM order determines navigation order.
+
+   Hidden/inert dropdown steps are ignored.
+   ========================================================= */
+
+function getMainNavTargets() {
+    if (!mainTargetDiv) return [];
+
+    return [
+        ...mainTargetDiv.querySelectorAll(
+            '.step-float, ' +
+            '.drop-steps-container > .drop-down'
+        )
+    ].filter(target => {
+
+        if (target.closest('[inert]')) {
+            return false;
+        }
+
+        return target.getClientRects().length > 0;
+    });
+}
+
+
+/* =========================================================
+   FOCUS MAIN NAVIGATION TARGET
+   ========================================================= */
+
+function focusMainNavTarget(index) {
+    const targets = getMainNavTargets();
+
+    if (!targets.length) return false;
+
+    const normalized =
+        (
+            index +
+            targets.length
+        ) %
+        targets.length;
+
+    const target =
+        targets[normalized];
+
+    /*
+    If this is a step, preserve existing lastStep behavior.
+    */
+
+    if (target.matches('.step-float')) {
+        lastStep = target;
+    }
+
+    target.focus({
+        preventScroll: true
+    });
+
+    target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'center'
+    });
+
+    return true;
+}
+
+
+/* =========================================================
+   MOVE FROM CURRENT MAIN NAV TARGET
+   ========================================================= */
+
+function moveMainNavTarget(
+    target,
+    direction
+) {
+    const targets =
+        getMainNavTargets();
+
+    if (!targets.length) {
+        return false;
+    }
+
+    const currentIndex =
+        targets.indexOf(target);
+
+    /*
+    If focus is not currently one of our targets:
+
+    F -> first
+    A -> last
+    */
+
+    if (currentIndex === -1) {
+        return focusMainNavTarget(
+            direction > 0
+                ? 0
+                : targets.length - 1
+        );
+    }
+
+    return focusMainNavTarget(
+        currentIndex + direction
+    );
+}
+/* =========================================================
    FOCUS WITHIN STEP
    ========================================================= */
 function focusWithinStep(

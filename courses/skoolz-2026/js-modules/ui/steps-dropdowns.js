@@ -8,13 +8,13 @@ export function initStepsDropdowns() {
 
     document.addEventListener('click', e => {
         const button = e.target.closest(
-            '.drop-steps-container > .drop-down'
+            '.drop-step > .drop-down'
         );
 
         if (!button) return;
 
         const parent = button.closest(
-            '.drop-steps-container'
+            '.drop-step'
         );
 
         const dropdown =
@@ -50,13 +50,13 @@ export function initStepsDropdowns() {
 
         if (key === 'enter') {
             const button = e.target.closest(
-                '.drop-steps-container > .drop-down'
+                '.drop-step > .drop-down'
             );
 
             if (!button) return;
 
             const parent = button.closest(
-                '.drop-steps-container'
+                '.drop-step'
             );
 
             const dropdown =
