@@ -5,7 +5,7 @@ export function getFocusZone({ e }) {
     if (target.closest?.('.nav-lesson-title')) return 'navLessonTitle';
     if (target.closest?.('#endNxtBtn, #prevBtn')) return 'lessonButtons';
     if (target.closest?.('.page-header')) return 'letterNavMode';
-    return null;
+    return 'sideBar';
 }
 
 export function isTypingTarget(target) {
