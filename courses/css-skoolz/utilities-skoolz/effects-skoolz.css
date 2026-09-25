@@ -6,7 +6,7 @@
 .modules>li>a:focus {
     border-right: none;
     background-color: whitesmoke;
-    color: black;
+    color: black !important;
     font-weight: 999;
     outline: none;
     border-left: 1px solid var(--efx-prm);
