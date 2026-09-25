@@ -6,6 +6,12 @@
     min-width: 0;
 }
 
+main.main-container {
+    min-height: 0;
+    min-width: 0;
+    --sidebar-width: clamp(10rem, 23vw, 16rem);
+}
+
 img {
     max-height: 200px;
 }
@@ -18,4 +24,16 @@ img {
     width: fit-content;
     max-width: 100%;
     margin: 0;
+}
+
+.tutorial-link-img-container a {
+    max-width: 100%;
+}
+
+.tutorial-link-img-container img {
+    width: 100%;
+}
+
+#darkModeBtn {
+    max-width: 100%;
 }

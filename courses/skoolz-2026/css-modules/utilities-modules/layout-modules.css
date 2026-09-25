@@ -46,27 +46,19 @@ button {
 
 .tutorial-link-img-container a {
     display: block;
-    max-width: 100%;
 }
 
 .tutorial-link-img-container img {
     display: block;
-    width: 100%;
 }
 
-#darkModeBtn {
-    max-width: 100%;
-    font-size: 0.75rem;
-}
+
 
 main.main-container {
-    --sidebar-width: clamp(10rem, 23vw, 16rem);
     display: grid;
     grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
     grid-template-rows: minmax(0, 1fr) auto;
     flex: 1;
-    min-height: 0;
-    min-width: 0;
 }
 
 #mainTargetDiv {

@@ -1,5 +1,11 @@
-.page-header,
+#targetDivInjected .page-header,
 .nav-lesson-title {
-    position: relative;
+    position: sticky;
+    z-index: 4;
+}
+
+.nav-lesson-title {
+    position: fixed;
+    top: 5%;
     z-index: 4;
 }
