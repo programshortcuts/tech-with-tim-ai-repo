@@ -87,32 +87,176 @@ export async function injectFromHref(href, sourceLink = null, { fromLessonButton
     }
 }
 
-async function activateSidebarLink(link, { toggleDropdown = true, fromLessonButton = false } = {}) {
-    const repeated = getLastCLICKEDLink() === link;
+async function activateSidebarLink(
+    link,
+    {
+        toggleDropdown = true,
+        fromLessonButton = false,
+        preserveFocus = null
+    } = {}
+) {
+    const repeated =
+        getLastCLICKEDLink() === link;
+
     revealSidebarLink(link);
-    const submenu = getSidebarSubmenu(link);
-    if (toggleDropdown && submenu) setDropdownExpanded(link, submenu.classList.contains('hide'));
-    // Focus, not fetch completion, owns the visible sidebar selection.
-    link.focus({ preventScroll: true });
-    link.scrollIntoView({ block: 'nearest' });
-    const result = await injectFromHref(link.href, link, { fromLessonButton });
-    if (!result || document.activeElement !== link) return;
+
+    const submenu =
+        getSidebarSubmenu(link);
+
+    if (
+        toggleDropdown &&
+        submenu
+    ) {
+        setDropdownExpanded(
+            link,
+            submenu.classList.contains('hide')
+        );
+    }
+
+    /*
+    Normal sidebar navigation:
+    focus the sidebar link.
+
+    Lesson-button navigation:
+    DO NOT steal focus from Next / Previous.
+    */
+
+    if (!fromLessonButton) {
+        link.focus({
+            preventScroll: true
+        });
+
+        link.scrollIntoView({
+            block: 'nearest'
+        });
+    }
+
+
+    const result =
+        await injectFromHref(
+            link.href,
+            link,
+            {
+                fromLessonButton
+            }
+        );
+
+
+    if (!result) {
+        return;
+    }
+
+
+    /*
+    NEXT / PREVIOUS BUTTON NAVIGATION
+
+    Restore focus to the button that triggered navigation.
+    Do this after injection has completely finished.
+    */
+
+    if (
+        fromLessonButton &&
+        preserveFocus?.isConnected
+    ) {
+        preserveFocus.focus({
+            preventScroll: true
+        });
+
+        return;
+    }
+
+
+    /*
+    Everything below is the existing sidebar behavior.
+    */
+
+    if (
+        document.activeElement !== link
+    ) {
+        return;
+    }
+
+
     if (result.failed) {
-        sidebarLinks().find(item => item.href === result.url)?.focus();
+
+        sidebarLinks()
+            .find(
+                item =>
+                    item.href ===
+                    result.url
+            )
+            ?.focus();
+
     } else if (repeated) {
-        (mainTargetDiv.querySelector('.step-float') || mainTargetDiv).focus({ preventScroll: true });
+
+        (
+            mainTargetDiv.querySelector(
+                '.step-float'
+            ) ||
+            mainTargetDiv
+        ).focus({
+            preventScroll: true
+        });
+
     } else {
-        mainTargetDiv.querySelector('[data-auto-focus]')?.focus();
+
+        mainTargetDiv
+            .querySelector(
+                '[data-auto-focus]'
+            )
+            ?.focus();
     }
 }
 
-function navigateLesson(direction) {
-    const links = sidebarLinks();
-    if (!links.length) return;
-    const index = links.indexOf(getLastCLICKEDLink());
-    const start = index < 0 ? (direction > 0 ? -1 : 0) : index;
+function navigateLesson(
+    direction,
+    button
+) {
+    const links =
+        sidebarLinks();
+
+    if (!links.length) {
+        return;
+    }
+
+
+    const index =
+        links.indexOf(
+            getLastCLICKEDLink()
+        );
+
+
+    const start =
+        index < 0
+            ? (
+                direction > 0
+                    ? -1
+                    : 0
+            )
+            : index;
+
+
+    const targetLink =
+        links[
+        (
+            start +
+            direction +
+            links.length
+        ) %
+        links.length
+        ];
+
+
     setSidebarExpanded(true);
-    activateSidebarLink(links[(start + direction + links.length) % links.length], { fromLessonButton: true });
+
+
+    activateSidebarLink(
+        targetLink,
+        {
+            fromLessonButton: true,
+            preserveFocus: button
+        }
+    );
 }
 
 export function initInjectContentListeners() {
@@ -125,8 +269,26 @@ export function initInjectContentListeners() {
         activateSidebarLink(link);
     });
     // Native Enter on anchors emits a click; no competing keydown injector.
-    endNxtBtn?.addEventListener('click', () => navigateLesson(1));
-    prevBtn?.addEventListener('click', () => navigateLesson(-1));
+    endNxtBtn?.addEventListener(
+        'click',
+        () => {
+            navigateLesson(
+                1,
+                endNxtBtn
+            );
+        }
+    );
+
+
+    prevBtn?.addEventListener(
+        'click',
+        () => {
+            navigateLesson(
+                -1,
+                prevBtn
+            );
+        }
+    );
     mainTargetDiv.addEventListener('click', e => {
         const link = e.target.closest('a[href^="#"]');
         if (!link || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;

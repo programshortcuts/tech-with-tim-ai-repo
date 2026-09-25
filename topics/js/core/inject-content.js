@@ -33,42 +33,113 @@ function markActiveLink(link) {
     link?.setAttribute('aria-current', 'page');
 }
 
-async function activateSidebarLink(link, { focusRepeatedLesson = true } = {}) {
+async function activateSidebarLink(
+    link,
+    {
+        focusRepeatedLesson = true
+    } = {}
+) {
     if (!link) return;
 
-    const isRepeatActivation = link === lastActivatedSidebarLink;
+    const isRepeatActivation =
+        link === lastActivatedSidebarLink;
+
     lastActivatedSidebarLink = link;
+
     setLastCLICKEDLink(link);
     setLastFocusedLink(link);
-    changeTutorialLink({ target: link, currentTarget: link });
+
+    changeTutorialLink({
+        target: link,
+        currentTarget: link
+    });
 
     await injectFromHref(link.href);
+
     markActiveLink(link);
 
     requestAnimationFrame(() => {
-        if (isRepeatActivation && focusRepeatedLesson) {
+        if (
+            isRepeatActivation &&
+            focusRepeatedLesson
+        ) {
             mainTargetDiv?.focus();
-            mainTargetDiv?.scrollIntoView({ behavior: 'instant', block: 'start' });
+
+            mainTargetDiv?.scrollIntoView({
+                behavior: 'instant',
+                block: 'start'
+            });
+
         } else {
             link.focus();
         }
     });
 }
 
-async function navigateLesson(direction) {
+async function navigateLesson(
+    direction,
+    button
+) {
     const links = getSidebarLinks();
+
     if (!links.length) return;
 
-    const current = getLastCLICKEDLink();
-    const currentIndex = links.indexOf(current);
-    const startIndex = currentIndex === -1
-        ? (direction > 0 ? -1 : 0)
-        : currentIndex;
-    const targetIndex = (startIndex + direction + links.length) % links.length;
-    const targetLink = links[targetIndex];
+    const current =
+        getLastCLICKEDLink();
 
-    document.querySelector('.main-container')?.classList.remove('collapsed');
-    await activateSidebarLink(targetLink, { focusRepeatedLesson: false });
+    const currentIndex =
+        links.indexOf(current);
+
+    const startIndex =
+        currentIndex === -1
+            ? (
+                direction > 0
+                    ? -1
+                    : 0
+            )
+            : currentIndex;
+
+    const targetIndex =
+        (
+            startIndex +
+            direction +
+            links.length
+        ) %
+        links.length;
+
+    const targetLink =
+        links[targetIndex];
+
+    document
+        .querySelector('.main-container')
+        ?.classList.remove('collapsed');
+
+    await activateSidebarLink(
+        targetLink,
+        {
+            focusRepeatedLesson: false
+        }
+    );
+
+    /*
+    activateSidebarLink() schedules its own focus with RAF.
+
+    Wait TWO frames so all lesson/sidebar focus behavior
+    finishes first, then put focus back on Next/Previous.
+    */
+
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            if (
+                button &&
+                button.isConnected
+            ) {
+                button.focus({
+                    preventScroll: true
+                });
+            }
+        });
+    });
 }
 
 function handleLessonButtonKeydown(e) {
@@ -89,11 +160,21 @@ export function initInjectContentListeners() {
 
     endNxtBtn?.addEventListener('click', e => {
         e.preventDefault();
-        navigateLesson(1);
+
+        navigateLesson(
+            1,
+            endNxtBtn
+        );
     });
+
+
     prevBtn?.addEventListener('click', e => {
         e.preventDefault();
-        navigateLesson(-1);
+
+        navigateLesson(
+            -1,
+            prevBtn
+        );
     });
     endNxtBtn?.addEventListener('keydown', handleLessonButtonKeydown);
     prevBtn?.addEventListener('keydown', handleLessonButtonKeydown);
