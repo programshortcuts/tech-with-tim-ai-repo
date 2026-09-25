@@ -5,6 +5,9 @@
 .modules>li>a:active,
 .modules>li>a:focus {
     border-right: none;
+    background-color: whitesmoke;
+    color: black;
+    font-weight: 999;
     outline: none;
     border-left: 1px solid var(--efx-prm);
     border-top: 1px solid var(--efx-prm);

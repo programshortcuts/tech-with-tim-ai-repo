@@ -433,7 +433,7 @@ async function activateSidebarLink(
 
         (
             mainTargetDiv.querySelector(
-                '.step-float'
+                '.step-float,step'
             ) ||
             mainTargetDiv
         ).focus({

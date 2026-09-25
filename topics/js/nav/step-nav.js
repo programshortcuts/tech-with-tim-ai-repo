@@ -425,7 +425,7 @@ export function initStepNav() {
 
     steps = [
         ...mainTargetDiv.querySelectorAll(
-            '.step-float'
+            '.step-float,.step'
         )
     ];
 
@@ -640,7 +640,7 @@ export function stepNav({
 
     const step =
         e.target.closest(
-            '.step-float'
+            '.step-float,.step'
         );
 
 
