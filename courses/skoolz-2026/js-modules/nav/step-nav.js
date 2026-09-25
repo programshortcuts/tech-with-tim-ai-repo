@@ -959,6 +959,8 @@ export function stepNav({
             key === 'enter'
         ) {
 
+            if (!e.shiftKey && e.target.matches('a[href]')) return false;
+
             e.preventDefault();
 
             return focusStep(0);

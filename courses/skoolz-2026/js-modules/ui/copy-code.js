@@ -4,9 +4,10 @@ export function initCopyCode(root = document) {
         if (!isCopyLink(link) || link.dataset.copyLinkBound === 'true') return;
         link.dataset.copyLinkBound = 'true';
 
-        // Native Enter on an anchor also uses this click handler.
+        // Preserve native keyboard activation; mouse and programmatic clicks still copy.
         link.addEventListener('click', e => {
             if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || !isCopyLink(link)) return;
+            if (e.isTrusted && e.detail === 0 && document.activeElement === link) return;
             e.preventDefault();
             e.stopPropagation();
             link.focus({ preventScroll: true });
