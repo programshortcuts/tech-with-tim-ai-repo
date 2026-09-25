@@ -233,9 +233,20 @@ export async function injectFromHref(
         This is independent from keyboard focus.
         */
 
-        setActiveSidebarLink(
-            loadedLink || null
-        );
+        /*
+Persistent sidebar effect is ONLY for
+Next / Previous button navigation.
+
+Normal sidebar navigation uses :focus.
+*/
+
+        if (fromLessonButton) {
+            setActiveSidebarLink(
+                loadedLink || null
+            );
+        } else {
+            clearActiveSidebarLink();
+        }
 
 
         changeTutorialLink({

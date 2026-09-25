@@ -1,7 +1,12 @@
 // sidebar-nav.js
 import { setSidebarExpanded } from '../ui/toggle-sidebar.js';
 import { sideBar, sideBarBtn, mainContainer, mainTargetDiv, tutorialLink } from '../core/elements.js';
-import { clearLastCLICKEDLink, getLastCLICKEDLink, getLastFocusedLink, setLastFocusedLink } from './sidebar-state.js';
+import {
+    clearActiveSidebarLink,
+    getLastCLICKEDLink,
+    getLastFocusedLink,
+    setLastFocusedLink
+} from './sidebar-state.js';
 import { getLastStep, getSteps } from './step-nav.js';
 import { isTypingTarget } from './get-focus-zone.js';
 import { isActuallyVisible } from './letter-nav.js';
@@ -39,6 +44,14 @@ export function initSideBarListeners() {
             );
 
         if (!link) return;
+
+        /*
+        Once actual keyboard focus enters the sidebar,
+        normal :focus styling takes over.
+    
+        There must never be a second persistent highlight.
+        */
+        clearActiveSidebarLink();
 
         index =
             getSidebarLinks().indexOf(link);
