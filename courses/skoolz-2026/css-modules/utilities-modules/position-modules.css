@@ -1,0 +1,5 @@
+.page-header,
+.nav-lesson-title {
+    position: relative;
+    z-index: 4;
+}

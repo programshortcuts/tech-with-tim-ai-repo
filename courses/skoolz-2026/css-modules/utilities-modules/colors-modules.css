@@ -13,6 +13,10 @@ body {
     /* background-color: var(--bg-clr); */
 }
 
+.nav-lesson-title {
+    /* background-color: blue; */
+}
+
 .code-container>.copy-code {}
 
 .code-container>.copy-code {

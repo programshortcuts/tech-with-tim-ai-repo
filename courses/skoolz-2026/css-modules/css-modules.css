@@ -7,10 +7,19 @@
 @import url('utilities-modules/layout-modules.css?v=transparent-header-1');
 @import url('utilities-modules/colors-modules.css');
 @import url('utilities-modules/borders-modules.css');
+@import url('utilities-modules/position-modules.css');
 @import url('utilities-modules/sizing-modules.css');
+@import url('utilities-modules/spacing-modules.css');
+@import url('utilities-modules/txt-modules.css');
 
 @import url('utilities-modules/effects-modules.css');
 @import url('ui-modules/interactions-modules.css');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
 h2 {
     display: none;

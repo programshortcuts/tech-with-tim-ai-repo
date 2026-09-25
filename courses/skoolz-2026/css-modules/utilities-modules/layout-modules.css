@@ -1,46 +1,24 @@
 /* The sidebar and lesson each scroll within the available viewport. */
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-}
-
 button {
-    font: inherit;
     cursor: pointer;
 }
 
 .page-wrapper {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    height: 100dvh;
     overflow: hidden;
 }
 
 .page-header,
 .nav-lesson-title {
     flex: none;
-    position: relative;
-    z-index: 4;
-
     pointer-events: none;
-    padding: 0.75rem 1rem;
 }
 
 .page-header a,
 .page-header button,
 .nav-lesson-title h1 {
     pointer-events: auto;
-}
-
-.nav-lesson-title h1 {
-    width: fit-content;
-    max-width: 100%;
-    margin: 0;
-    font-size: 1.2rem;
 }
 
 .page-header {
@@ -52,7 +30,6 @@ button {
 .page-header-links {
     display: flex;
     flex: 1;
-    min-width: 0;
     flex-wrap: wrap;
     gap: 0.5rem 1rem;
     overflow-wrap: anywhere;
