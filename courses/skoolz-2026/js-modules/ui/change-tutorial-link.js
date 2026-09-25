@@ -2,7 +2,7 @@
 export const tutorialLink = document.querySelector('#tutorialLink')
 export function changeTutorialLink(e) {
     if (!tutorialLink) return
-    const linkEl = e.target.closest('a') || e.target.closest('.step-float')
+    const linkEl = e.target.closest('a') || e.target.closest('.step-float,.step')
     if (!linkEl) return
 
     const isSideBar = linkEl.closest('.side-bar')
@@ -21,7 +21,7 @@ export function changeTutorialLink(e) {
         return
     }
 
-    const step = e.target.closest('.step-float')
+    const step = e.target.closest('.step-float,.step')
     if (step) {
         const vidBase = step.getAttribute("data-video")
         const ts = step.getAttribute("data-timestamp")

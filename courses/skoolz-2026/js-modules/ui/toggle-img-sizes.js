@@ -25,7 +25,7 @@ function getStepMedia(step) {
    ========================================================= */
 
 function setMediaIndex(media, enlarged) {
-    const step = media?.closest('.step-float');
+    const step = media?.closest('.step-float,.step');
 
     if (!step) return;
 
@@ -141,7 +141,7 @@ export function denlargeAllImages(
 export function toggleMediaSize(media) {
     if (!media) return null;
 
-    const step = media.closest('.step-float');
+    const step = media.closest('.step-float,.step');
 
     const stepMedia = step
         ? getStepMedia(step)
@@ -222,7 +222,7 @@ export function handleImgSizes({ e }) {
     }
 
     const step =
-        e.target.closest('.step-float');
+        e.target.closest('.step-float,.step');
 
     if (!step) return null;
 

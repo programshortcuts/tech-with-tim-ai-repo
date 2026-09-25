@@ -579,7 +579,7 @@ export function initAllVideos(
 
     root
         .querySelectorAll(
-            '.step-float'
+            '.step-float,.step'
         )
         .forEach(bindStepKeyboard);
 }

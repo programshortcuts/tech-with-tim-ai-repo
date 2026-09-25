@@ -225,7 +225,7 @@ function focusMainNavTarget(index) {
     */
 
     if (
-        target.matches('.step-float')
+        target.matches('.step-float,.step')
     ) {
         lastStep = target;
     }
@@ -492,7 +492,7 @@ export function updateSteps() {
         ...(
             mainTargetDiv
                 ?.querySelectorAll(
-                    '.step-float'
+                    '.step-float,.step'
                 ) || []
         )
     ];
@@ -565,7 +565,7 @@ export function initStepNav() {
 
             const step =
                 e.target.closest(
-                    '.step-float'
+                    '.step-float,.step'
                 );
 
 
@@ -606,7 +606,7 @@ export function initStepNav() {
 
             const step =
                 e.target.closest(
-                    '.step-float'
+                    '.step-float,.step'
                 );
 
 
@@ -640,7 +640,7 @@ export function initStepNav() {
 
             const step =
                 e.target.closest(
-                    '.step-float'
+                    '.step-float,.step'
                 );
 
 
@@ -745,7 +745,7 @@ export function stepNav({
 
     const step =
         e.target.closest(
-            '.step-float'
+            '.step-float,.step'
         );
 
 

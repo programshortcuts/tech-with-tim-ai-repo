@@ -1,6 +1,8 @@
 /* step-txt/spacing-step-txt.css */
-.header-codeColor-lesson {
-    padding-left: 2.5%;
+
+.step .step-txt ul,
+.step .step-txt ol {
+    margin: 0 5%;
 }
 
 .step-float {

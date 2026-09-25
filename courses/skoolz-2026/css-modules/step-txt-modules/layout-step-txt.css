@@ -4,6 +4,14 @@
     flex-direction: row-reverse;
 }
 
+.step {
+    display: flex;
+}
+
+.step .step-txt {
+    flex-basis: 45%;
+}
+
 .no-float .step-img {
     float: none !important;
 }

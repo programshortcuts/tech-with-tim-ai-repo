@@ -1,6 +1,6 @@
 // copy-code.js
 export function initCopyCode(root = document) {
-    root.querySelectorAll('.step-txt a[href], .step-float a[href]').forEach(link => {
+    root.querySelectorAll('.step-txt a[href], .step-float a[href],.step a[href]').forEach(link => {
         if (!isCopyLink(link) || link.dataset.copyLinkBound === 'true') return;
         link.dataset.copyLinkBound = 'true';
 
@@ -34,7 +34,7 @@ export function initCopyCode(root = document) {
             element.focus({ preventScroll: true });
             copyElementText(element);
             animate(element);
-            element.closest('.step-float')?.scrollIntoView({
+            element.closest('.step-float,.step')?.scrollIntoView({
                 behavior: 'smooth',
                 block: 'nearest',
                 inline: 'center'
@@ -44,7 +44,7 @@ export function initCopyCode(root = document) {
 }
 
 function isCopyLink(link) {
-    if (!link.closest('.step-txt, .step-float')) return false;
+    if (!link.closest('.step-txt, .step-float,step')) return false;
     const href = link.getAttribute('href')?.trim();
     if (!href || href.startsWith('#')) return false;
     if (link.closest('.side-bar, .drop-down, .step-img, .step-vid, .vid-cntrl-btns, #tutorialLink') || link.querySelector('video')) return false;
