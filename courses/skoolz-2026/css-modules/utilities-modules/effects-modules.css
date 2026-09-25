@@ -1,8 +1,6 @@
-/* Sidebar classes represent focus; they must match the actual focus style. */
+/* Sidebar feedback follows real focus or a pending Next/Previous injection. */
 .side-bar-links a:focus,
-.side-bar-links a.active,
-.side-bar-links a.sideLinkChange,
-.side-bar-links a.highlight {
+.side-bar-links a.lesson-button-injecting {
     background-color: var(--module-focus-bg);
     border-color: currentColor;
     outline: none;

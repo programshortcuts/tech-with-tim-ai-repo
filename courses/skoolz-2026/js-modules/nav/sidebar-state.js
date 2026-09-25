@@ -8,8 +8,7 @@ export function setLastFocusedLink(link) {
     lastFocusedLink = link;
     sideBar.querySelectorAll('.side-bar-links-container a').forEach(item => {
         const active = item === link;
-        item.classList.toggle('sideLinkChange', active);
-        item.classList.toggle('highlight', active);
+        item.classList.remove('sideLinkChange', 'highlight', 'active');
         if (active) item.setAttribute('aria-current', 'true');
         else item.removeAttribute('aria-current');
     });
@@ -21,8 +20,8 @@ export function setLastCLICKEDLink(link) { lastClickedLink = link; }
 export function clearLastCLICKEDLink() { lastClickedLink = null; }
 export function clearLastFocusedLink() {
     lastFocusedLink = null;
-    sideBar?.querySelectorAll('.sideLinkChange, .highlight').forEach(link => {
-        link.classList.remove('sideLinkChange', 'highlight');
+    sideBar?.querySelectorAll('.side-bar-links-container a').forEach(link => {
+        link.classList.remove('sideLinkChange', 'highlight', 'active');
         link.removeAttribute('aria-current');
     });
 }

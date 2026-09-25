@@ -15,11 +15,19 @@ let request = null;
 const sidebarLinks = () => [...sideBar.querySelectorAll('.side-bar-links a[href]')];
 const homeHref = () => mainTargetDiv.dataset.href || 'homepage.html';
 
-export async function injectFromHref(href, sourceLink = null) {
+function setLessonButtonInjectionLink(link) {
+    sideBar?.querySelectorAll('.lesson-button-injecting').forEach(item => {
+        item.classList.remove('lesson-button-injecting');
+    });
+    link?.classList.add('lesson-button-injecting');
+}
+
+export async function injectFromHref(href, sourceLink = null, { fromLessonButton = false } = {}) {
     if (!href || !mainTargetDiv) return null;
     request?.abort();
     const current = new AbortController();
     request = current;
+    setLessonButtonInjectionLink(fromLessonButton ? sourceLink : null);
     mainTargetDiv.setAttribute('aria-busy', 'true');
     let url;
     let failed = false;
@@ -36,6 +44,7 @@ export async function injectFromHref(href, sourceLink = null) {
         } catch (error) {
             if (current.signal.aborted) return null;
             failed = true;
+            setLessonButtonInjectionLink(null);
             result = await load(homeHref());
         }
         if (current.signal.aborted) return null;
@@ -71,11 +80,14 @@ export async function injectFromHref(href, sourceLink = null) {
         setLastCLICKEDLink(null);
         return null;
     } finally {
-        if (request === current) mainTargetDiv.removeAttribute('aria-busy');
+        if (request === current) {
+            mainTargetDiv.removeAttribute('aria-busy');
+            setLessonButtonInjectionLink(null);
+        }
     }
 }
 
-async function activateSidebarLink(link, { toggleDropdown = true } = {}) {
+async function activateSidebarLink(link, { toggleDropdown = true, fromLessonButton = false } = {}) {
     const repeated = getLastCLICKEDLink() === link;
     revealSidebarLink(link);
     const submenu = getSidebarSubmenu(link);
@@ -83,7 +95,7 @@ async function activateSidebarLink(link, { toggleDropdown = true } = {}) {
     // Focus, not fetch completion, owns the visible sidebar selection.
     link.focus({ preventScroll: true });
     link.scrollIntoView({ block: 'nearest' });
-    const result = await injectFromHref(link.href, link);
+    const result = await injectFromHref(link.href, link, { fromLessonButton });
     if (!result || document.activeElement !== link) return;
     if (result.failed) {
         sidebarLinks().find(item => item.href === result.url)?.focus();
@@ -100,7 +112,7 @@ function navigateLesson(direction) {
     const index = links.indexOf(getLastCLICKEDLink());
     const start = index < 0 ? (direction > 0 ? -1 : 0) : index;
     setSidebarExpanded(true);
-    activateSidebarLink(links[(start + direction + links.length) % links.length]);
+    activateSidebarLink(links[(start + direction + links.length) % links.length], { fromLessonButton: true });
 }
 
 export function initInjectContentListeners() {
