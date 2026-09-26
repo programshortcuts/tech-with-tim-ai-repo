@@ -1,5 +1,6 @@
 // keyboard-nav.js
 import { setSidebarExpanded } from '../ui/toggle-sidebar.js';
+import { revealSidebarLink } from '../ui/sidebar-dropdowns.js';
 import { mainTargetDiv, mainContainer, sideBarBtn, tutorialLink, navLessonTitle, endNxtBtn, prevBtn } from '../core/elements.js';
 import { getFocusZone, isTypingTarget } from './get-focus-zone.js';
 import { letterNav } from './letter-nav.js';
@@ -28,6 +29,16 @@ export function keyboardNav({ e }) {
         return true;
     }
     if (e.metaKey || e.ctrlKey || e.altKey) return false;
+    if (key === 'h') {
+        const topLink = document.querySelector('.page-header a#homelink');
+        const sidebarLink = document.querySelector('.side-bar-links-container a:is([href="homepage.html"], [href="homepage-tool-stack.html"])');
+        const target = document.activeElement === topLink ? (sidebarLink || topLink) : topLink;
+        if (sidebarLink && target === sidebarLink) {
+            setSidebarExpanded(true);
+            revealSidebarLink(sidebarLink);
+        }
+        return focusTarget(e, target);
+    }
     if (navState.isLetterNavEnabled && /^[a-z0-9]$/.test(key)) {
         e.preventDefault();
         letterNav({ e });
@@ -36,7 +47,7 @@ export function keyboardNav({ e }) {
 
     const headerTargets = {
         b: '#backlink, #backLink', c: '#codeComandShortcuts, #codeComShortcutsLink',
-        d: '#darkModeBtn', h: '#homelink, #homePageLink'
+        d: '#darkModeBtn'
     };
     if (headerTargets[key]) return focusTarget(e, document.querySelector(headerTargets[key]));
     if (key === 'm') return handleMainFocus(e);

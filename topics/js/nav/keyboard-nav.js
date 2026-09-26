@@ -26,6 +26,20 @@ export function keyboardNav({ e }) {
         return true;
     }
 
+    if (e.key.toLowerCase() === 'h' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        const topLink = document.querySelector('.page-header a#homelink');
+        const sidebarLink = document.querySelector('.side-bar-links-container a:is([href="homepage.html"], [href="home-page.html"])');
+        const target = document.activeElement === topLink ? (sidebarLink || topLink) : topLink;
+        if (!target) return false;
+        e.preventDefault();
+        if (sidebarLink && target === sidebarLink) {
+            mainContainer.classList.remove('collapsed');
+            sideBarBtn?.setAttribute('aria-expanded', 'true');
+        }
+        target.focus();
+        return true;
+    }
+
     if (
         navState.isLetterNavEnabled &&
         !e.metaKey &&
@@ -51,8 +65,7 @@ function routeKey({ e }) {
     const fixedHeaderTargets = {
         b: '#backlink, #backLink',
         c: '#codeComandShortcuts, #codeComShortcutsLink',
-        d: '#darkModeBtn',
-        h: '#homelink, #homePageLink'
+        d: '#darkModeBtn'
     };
     const fixedHeaderTarget = fixedHeaderTargets[key];
     if (fixedHeaderTarget) {
