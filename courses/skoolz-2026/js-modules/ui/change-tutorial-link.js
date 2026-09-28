@@ -19,7 +19,7 @@ export function changeTutorialLink(e) {
     const currentTutorialHref = tutorialLink?.href || ''
 
     if (isSideBar) {
-        const vidBase = linkEl.getAttribute('data-video') || currentTutorialHref
+        const vidBase = linkEl.getAttribute('data-tutorial-link') || currentTutorialHref
         const ts = linkEl.getAttribute('data-timestamp')
         if (!vidBase) return
         let vidHref = vidBase
