@@ -18,6 +18,7 @@ export { mainTargetDiv, endNxtBtn, prevBtn };
 
 let initialized = false;
 let request = null;
+let lastSidebarActivation = null;
 const sidebarLinks = () => [...sideBar.querySelectorAll('.side-bar-links a[href]')];
 const homeHref = () => mainTargetDiv.dataset.href || 'homepage.html';
 
@@ -334,6 +335,7 @@ async function activateSidebarLink(
     {
         toggleDropdown = true,
         fromLessonButton = false,
+        fromSidebarActivation = false,
         preserveFocus = null
     } = {}
 ) {
@@ -373,6 +375,11 @@ async function activateSidebarLink(
         });
     }
 
+    // Keep consecutive activations separate from the loaded lesson used by Next / Previous.
+    const sidebarActivation = fromSidebarActivation
+        ? { link, repeated: lastSidebarActivation?.link === link }
+        : null;
+    if (fromSidebarActivation) lastSidebarActivation = sidebarActivation;
 
     const result =
         await injectFromHref(
@@ -408,16 +415,19 @@ async function activateSidebarLink(
     }
 
 
-    /*
-    Everything below is the existing sidebar behavior.
-    */
-
     if (
         document.activeElement !== link
     ) {
         return;
     }
 
+    if (fromSidebarActivation) {
+        // A focus change also invalidates an activation whose injection is still pending.
+        if (lastSidebarActivation === sidebarActivation && sidebarActivation.repeated) {
+            mainTargetDiv.focus({ preventScroll: true });
+        }
+        return;
+    }
 
     if (result.failed) {
 
@@ -508,9 +518,15 @@ export function initInjectContentListeners() {
         const link = e.target.closest('.side-bar-links a[href]');
         if (!link || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
         e.preventDefault();
-        activateSidebarLink(link);
+        activateSidebarLink(link, { fromSidebarActivation: true });
     });
     // Native Enter on anchors emits a click; no competing keydown injector.
+    sideBar.addEventListener('focusout', e => {
+        if (e.target === lastSidebarActivation?.link) lastSidebarActivation = null;
+    });
+    window.addEventListener('blur', () => {
+        lastSidebarActivation = null;
+    });
     endNxtBtn?.addEventListener(
         'click',
         () => {
