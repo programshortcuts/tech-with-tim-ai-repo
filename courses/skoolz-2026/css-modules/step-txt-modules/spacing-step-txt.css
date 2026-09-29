@@ -1,4 +1,12 @@
 /* step-txt/spacing-step-txt.css */
+.step-txt>ul {
+    margin-left: 3%;
+    margin: 0 25%;
+}
+
+.step-txt ul li {
+    line-height: 1.5;
+}
 
 .step .step-txt ul,
 .step .step-txt ol {
@@ -25,14 +33,6 @@
 .step-float>.step-txt>p {
     /* padding: 0 2%; */
     margin-top: 2%;
-    line-height: 1.5;
-}
-
-.step-txt ul {
-    margin-left: 3%;
-}
-
-.step-txt ul li {
     line-height: 1.5;
 }
 

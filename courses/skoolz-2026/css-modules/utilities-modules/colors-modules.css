@@ -23,19 +23,3 @@ body {
     background-color: var(--module-code-bg);
     color: black;
 }
-
-.t {
-    color: rgb(167, 61, 42);
-}
-
-.rb {
-    color: royalblue;
-}
-
-.gr {
-    color: goldenrod;
-}
-
-.m {
-    color: magenta;
-}
