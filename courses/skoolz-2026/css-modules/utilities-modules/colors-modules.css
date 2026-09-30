@@ -1,6 +1,11 @@
 /* Sidebar classes represent focus; they must match the actual focus style. */
 :root {
     --bg-clr: grey;
+    --module-header-surface: rgba(230, 230, 230, 0.68);
+}
+
+.dark-mode {
+    --module-header-surface: rgba(32, 29, 29, 0.68);
 }
 
 body {
@@ -8,13 +13,16 @@ body {
 }
 
 .page-header {
-    /* Only the background is transparent; links and controls stay visible. */
-    background: rgba(0, 0, 0, 0);
+    background-color: var(--module-header-surface);
     /* background-color: var(--bg-clr); */
 }
 
 .nav-lesson-title {
-    /* background-color: blue; */
+    background-color: var(--module-header-surface);
+}
+
+#darkModeBtn {
+    background-color: var(--module-header-surface);
 }
 
 .code-container>.copy-code {}
