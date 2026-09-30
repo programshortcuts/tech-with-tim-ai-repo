@@ -3,6 +3,7 @@ import { lessonURL, prepareContent } from './content-paths.js';
 import {
     clearActiveSidebarLink,
     getLastCLICKEDLink,
+    getLastFocusedLink,
     setLastCLICKEDLink,
     setActiveSidebarLink
 } from '../nav/sidebar-state.js';
@@ -342,14 +343,30 @@ async function activateSidebarLink(
     const repeated =
         getLastCLICKEDLink() === link;
 
-    revealSidebarLink(link);
-
     const submenu =
         getSidebarSubmenu(link);
 
+    // Check the state before toggling or focusing the link. A closed submenu
+    // must open first, even when this is a consecutive activation.
+    const sidebarActivation = fromSidebarActivation
+        ? {
+            link,
+            repeated: lastSidebarActivation?.link === link && (
+                !submenu || (
+                    !submenu.classList.contains('hide') &&
+                    getLastFocusedLink() === link &&
+                    repeated
+                )
+            )
+        }
+        : null;
+
+    revealSidebarLink(link);
+
     if (
         toggleDropdown &&
-        submenu
+        submenu &&
+        !sidebarActivation?.repeated
     ) {
         setDropdownExpanded(
             link,
@@ -376,9 +393,6 @@ async function activateSidebarLink(
     }
 
     // Keep consecutive activations separate from the loaded lesson used by Next / Previous.
-    const sidebarActivation = fromSidebarActivation
-        ? { link, repeated: lastSidebarActivation?.link === link }
-        : null;
     if (fromSidebarActivation) lastSidebarActivation = sidebarActivation;
 
     const result =

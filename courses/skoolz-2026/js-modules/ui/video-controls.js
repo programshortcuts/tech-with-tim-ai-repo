@@ -380,6 +380,8 @@ function bindVideoWrapper(wrapper) {
                 return;
             }
 
+            // Controls occupy their own strip; its background is not the video.
+            if (e.target.closest('.vid-cntrl-btns')) return;
 
             video.focus({ preventScroll: true });
             toggleVideoSize(
@@ -483,6 +485,7 @@ function bindStepKeyboard(step) {
 
 
             const wrapper =
+                e.target.closest('.step-vid') ||
                 step.querySelector(
                     '.step-vid.enlarge'
                 ) ||

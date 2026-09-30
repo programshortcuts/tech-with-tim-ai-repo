@@ -7,12 +7,14 @@
 
 .step-float {
     height: fit-content;
-    min-height: 220px;
+    min-height: 0;
 }
 
 .step-float>.step-img,
 .step-float>.step-vid {
-    width: 70%
+    /* Approach Mikey's 500px media width while leaving room for the text. */
+    width: min(31.25rem, max(45%, calc(100% - 18rem)));
+    max-width: 100%;
 }
 
 .step-vid>video,
@@ -21,14 +23,6 @@
     height: 100%;
 }
 
-.step-vid>video {
-    /* max-height: 200px ; */
-}
-
 .step-img>img {
     max-height: 500px !important;
-}
-
-.step-float>.step-vid {
-    width: 50%;
 }

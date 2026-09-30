@@ -34,7 +34,10 @@
 .step-float>.step-img,
 .step-float>.step-vid {
     float: right;
-
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    touch-action: manipulation;
 }
 
 .step-float>.step-txt {
@@ -66,8 +69,10 @@
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    gap: 0.75rem;
 }
 
 .step-floats-container>.step-float {
-    flex-basis: 40%;
+    flex: 1 1 40%;
+    min-width: min(98%, 20rem);
 }

@@ -46,26 +46,106 @@ pre.copy-code {
 }
 
 .vid-cntrl-btns {
-    position: relative;
+    position: static;
     display: flex;
-    flex-wrap: wrap;
+    flex: none;
+    align-items: stretch;
     width: 100%;
-    background-color: black;
-    border-radius: 6px;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    background: #252525;
+    box-sizing: border-box;
+    border-radius: 0;
 }
 
 .vid-cntrl-btns > button {
-    flex: 1 1 auto;
+    flex: 1 1 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     min-width: 0;
-    padding: 0.5rem;
+    height: 100%;
+    margin: 0;
+    padding: 0;
     color: white;
-    background-color: black;
+    background: transparent;
     border: none;
-    border-radius: 6px;
+    border-right: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 0;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.12s ease, transform 0.08s ease;
+}
+
+.vid-cntrl-btns > button:last-child {
+    border-right: 0;
 }
 
 .vid-cntrl-btns > button:hover {
-    background-color: #333;
+    background: rgba(255, 255, 255, 0.10);
+}
+
+.vid-cntrl-btns > button:focus-visible {
+    outline: 2px solid white;
+    outline-offset: -2px;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* Use the existing Tech-with-Tim playback/flash hooks for Mikey's feedback. */
+.vid-cntrl-btns > button.active {
+    background: rgba(255, 255, 255, 0.32);
+    transform: scale(0.97);
+}
+
+.step-vid.is-playing .playbtn {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.vid-cntrl-btns > button:active {
+    background: rgba(255, 255, 255, 0.30);
+}
+
+.step-vid.enlarge .vid-cntrl-btns,
+.step-vid.first-vid-enlarge .vid-cntrl-btns {
+    height: 44px;
+}
+
+.step-vid.enlarge .vid-cntrl-btns > button,
+.step-vid.first-vid-enlarge .vid-cntrl-btns > button {
+    font-size: 1.1rem;
+}
+
+/* These narrow-screen rules survive Mikey's stylesheet import cascade. */
+@media (max-width: 960px) {
+    .vid-cntrl-btns {
+        justify-content: center;
+        gap: 6px;
+    }
+
+    .vid-cntrl-btns > button {
+        min-height: 28px;
+        line-height: 1;
+    }
+
+    .vid-cntrl-btns > .playbtn {
+        min-width: 38px;
+    }
+}
+
+/* Keep the complete control row reachable in short landscape viewports. */
+.step-vid.enlarge,
+.step-vid.first-vid-enlarge {
+    max-height: 85dvh;
+    overflow: auto;
+}
+
+.step-vid.enlarge > video,
+.step-vid.first-vid-enlarge > video {
+    max-height: min(72vh, calc(85dvh - 44px - 0.5rem)) !important;
 }
 
 .copied {

@@ -1,7 +1,7 @@
 /* step-txt/spacing-step-txt.css */
-.step-txt>ul {
-    margin-left: 3%;
-    margin: 0 25%;
+.step-txt>ul,
+.step-txt>ol {
+    margin: 0 1.5rem;
 }
 
 .step-txt ul li {
@@ -14,11 +14,11 @@
 }
 
 .step-float {
-    padding-bottom: 5%;
+    padding: max(0.75rem, 2%);
 }
 
 .step-float h4 {
-    margin-top: 3%;
+    margin-top: 0.75rem;
 
 }
 
@@ -27,25 +27,28 @@
 }
 
 .step-float>.step-txt {
-    padding: 0 2%;
+    padding: 0;
 }
 
 .step-float>.step-txt>p {
     /* padding: 0 2%; */
-    margin-top: 2%;
+    margin-top: 0.75rem;
     line-height: 1.5;
 }
 
 .step-float>p {
-    margin: 1% 2%;
-    margin-top: 2.5%;
-    margin-left: 5%;
+    margin: 0.75rem 0;
 }
 
 .step-float>.code-container {
-    margin-left: 2.5%;
+    margin-left: 0;
 }
 
 .code-container {
-    margin-top: 2.5%;
+    margin-top: 0.75rem;
+}
+
+.step-float > .step-img:not(.enlarge):not(.first-vid-enlarge),
+.step-float > .step-vid:not(.enlarge):not(.first-vid-enlarge) {
+    margin: 0 0 0.75rem 1rem;
 }

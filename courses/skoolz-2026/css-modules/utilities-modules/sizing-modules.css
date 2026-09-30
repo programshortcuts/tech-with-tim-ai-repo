@@ -1,5 +1,6 @@
 .page-wrapper {
     height: 100vh;
+    height: 100dvh;
 }
 
 .page-header-links {
@@ -9,7 +10,12 @@
 main.main-container {
     min-height: 0;
     min-width: 0;
-    --sidebar-width: clamp(10rem, 23vw, 16rem);
+    --sidebar-width: 120px;
+    --lesson-width: 80vw;
+}
+
+main.main-container.collapsed {
+    --lesson-width: 100%;
 }
 
 img {

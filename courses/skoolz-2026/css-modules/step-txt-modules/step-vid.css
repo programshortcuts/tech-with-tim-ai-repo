@@ -2,14 +2,18 @@
 .step-vid {
     float: right;
     height: fit-content;
-    height: inherit;
     width: 45%;
+    overflow: hidden;
+    border: 1px solid #787878;
+    border-radius: 4px;
 }
 
 .step-vid>video {
-    width: 98%;
-    max-height: 28vh;
-
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    object-fit: contain;
 }
 
 .step-float>.step-vid>video {
