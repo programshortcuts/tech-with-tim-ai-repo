@@ -1,0 +1,4 @@
+/* Course counterpart of topics/css/components/side-bar.css. */
+.page-header a {
+    text-decoration: none;
+}
