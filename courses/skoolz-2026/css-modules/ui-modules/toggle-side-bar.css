@@ -4,7 +4,7 @@
     bottom: 10%;
     transform: scale(1.9);
     left: 3%;
-    border: none;
+    /* border: none; */
 
 
 }
@@ -24,7 +24,7 @@
 @media (max-width: 720px) {
     .main-container.collapsed>.side-bar {
         width: 8vw !important;
-        border-right-color: transparent;
+        /* border-right-color: transparent; */
     }
 
     .main-container.collapsed>#mainTargetDiv .steps-container>.step-float:not(:focus) {
