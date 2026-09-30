@@ -3,6 +3,7 @@
 .code-container {
     width: fit-content;
     min-width: 250px;
+    max-height: 50%;
 }
 
 .step-float {
