@@ -33,8 +33,7 @@
     }
 
 
-    .page-header,
-    .nav-lesson-title {
+    .page-header {
         padding: 0.5rem;
     }
 
@@ -44,7 +43,7 @@
     }
 
     .tutorial-link-img-container {
-        flex-basis: 4rem;
+        width: 4rem;
     }
 
 

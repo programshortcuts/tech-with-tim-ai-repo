@@ -1,28 +1,15 @@
 /* Sidebar classes represent focus; they must match the actual focus style. */
 :root {
     --bg-clr: grey;
-    --module-header-surface: rgba(230, 230, 230, 0.68);
-}
-
-.dark-mode {
-    --module-header-surface: rgba(32, 29, 29, 0.68);
 }
 
 body {
     background-color: var(--bg-clr);
 }
 
-.page-header {
-    background-color: var(--module-header-surface);
-    /* background-color: var(--bg-clr); */
-}
-
+.page-header,
 .nav-lesson-title {
-    background-color: var(--module-header-surface);
-}
-
-#darkModeBtn {
-    background-color: var(--module-header-surface);
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .code-container>.copy-code {}
