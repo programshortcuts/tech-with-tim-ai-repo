@@ -1,21 +1,19 @@
 /* Course counterpart of topics/css/components/side-bar.css. */
+
 .side-bar-links-container ul {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    padding: 0;
 }
 
-.side-bar-links-container li>ul:first-of-type {
-    /* margin-top: 1rem; */
+.side-bar-links-container>ul {
+    margin-top: 2%;
 }
 
-.side-bar-links-container li>ul {}
-
-.side-bar-links-container li {
-    min-width: 0;
+.side-bar-links-container ul li {
+    margin-top: 5%;
 }
+
 
 .main-container>.side-bar {
     grid-column: 1;
@@ -60,31 +58,14 @@
     font-size: 1rem;
 }
 
-.main-container.collapsed {
-    --sidebar-width: 3rem;
-}
 
-.main-container.collapsed #sideBarBtn {
-    position: fixed;
-    bottom: 10%;
-    transform: scale(1.5);
-
-}
-
-.main-container.collapsed .side-bar-links-container {
-    display: none;
-}
 
 @media (max-width: 720px) {
+
     .side-bar {
         width: 22vw;
     }
 
-    .main-container.collapsed>.side-bar {
-        /* border: none; */
-        width: 8vw !important;
-        min-width: 5% !important;
-    }
 
     .side-bar li * {
         font-size: 96% !important;

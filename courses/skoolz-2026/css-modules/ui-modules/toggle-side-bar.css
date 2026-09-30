@@ -1,5 +1,4 @@
 /* toggle-side-bar.css */
-
 .main-container.collapsed #sideBarBtn {
     position: fixed;
     bottom: 10%;
@@ -10,6 +9,20 @@
 
 }
 
+.main-container.collapsed #sideBarBtn {
+    position: fixed;
+    bottom: 10%;
+    transform: scale(1.5);
+
+}
+
 .main-container.collapsed .side-bar-links-container {
     display: none;
+}
+
+@media (max-width: 720px) {
+    .main-container.collapsed>.side-bar {
+        width: 8vw !important;
+        min-width: 5% !important;
+    }
 }
