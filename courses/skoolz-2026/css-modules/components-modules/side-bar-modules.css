@@ -35,7 +35,7 @@
     flex-direction: column;
     overflow: hidden;
     overflow-wrap: anywhere;
-    border-right: 1px solid #787878;
+    /* border-right: 1px solid #787878; */
 }
 
 #sideBarBtn {
