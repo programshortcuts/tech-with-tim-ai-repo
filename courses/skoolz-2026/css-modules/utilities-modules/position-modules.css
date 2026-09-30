@@ -1,12 +1,5 @@
 /* Sticky lesson heading inside the injected lesson */
-.page-header {
-    border: 11px solid blue;
-}
 
-.nav-lesson-title {
-    position: absolute;
-    background-color: blue top: 0
-}
 
 #targetDivInjected>header {
     position: sticky;

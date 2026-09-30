@@ -12,7 +12,7 @@
 @import url('utilities-modules/code-colors.css');
 @import url('utilities-modules/colors-modules.css');
 @import url('utilities-modules/borders-modules.css');
-/* @import url('utilities-modules/position-modules.css'); */
+@import url('utilities-modules/position-modules.css');
 @import url('utilities-modules/sizing-modules.css');
 @import url('utilities-modules/spacing-modules.css');
 @import url('utilities-modules/txt-modules.css');

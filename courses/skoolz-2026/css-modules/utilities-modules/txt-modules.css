@@ -12,3 +12,8 @@
 .nav-lesson-title h1 {
     font-size: 1rem;
 }
+
+.side-bar h3 span {
+    font-family: monospace !important;
+    border-bottom: 1px solid whitesmoke;
+}
