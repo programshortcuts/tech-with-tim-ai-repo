@@ -1,4 +1,9 @@
 /* Sticky lesson heading inside the injected lesson */
+.nav-lesson-title {
+    position: top;
+    top: 0 !important;
+}
+
 #targetDivInjected>header {
     position: sticky;
     top: 0;

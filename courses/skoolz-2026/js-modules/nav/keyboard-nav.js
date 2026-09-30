@@ -1,9 +1,10 @@
 // keyboard-nav.js
 import { setSidebarExpanded } from '../ui/toggle-sidebar.js';
 import { revealSidebarLink } from '../ui/sidebar-dropdowns.js';
-import { mainTargetDiv, mainContainer, sideBarBtn, tutorialLink, navLessonTitle, endNxtBtn, prevBtn } from '../core/elements.js';
+import { mainTargetDiv, mainContainer, sideBar, sideBarBtn, tutorialLink, navLessonTitle, endNxtBtn, prevBtn } from '../core/elements.js';
 import { getFocusZone, isTypingTarget } from './get-focus-zone.js';
-import { letterNav } from './letter-nav.js';
+import { isActuallyVisible, letterNav } from './letter-nav.js';
+import { getLastCLICKEDLink, getLastFocusedLink } from './sidebar-state.js';
 import { getSidebarFocusTarget, sideBarNav } from './sidebar-nav.js';
 import { handleNavLessonTitle } from './nav-lesson-title-nav.js';
 import { getLastStep, getSteps, stepNav } from './step-nav.js';
@@ -52,6 +53,18 @@ export function keyboardNav({ e }) {
     if (headerTargets[key]) return focusTarget(e, document.querySelector(headerTargets[key]));
     if (key === 'm') return handleMainFocus(e);
     if (key === 's') {
+        const rememberedLink = [getLastCLICKEDLink(), getLastFocusedLink()].find(link =>
+            link?.isConnected && sideBar?.contains(link) && link.matches('a[href]') &&
+            !link.closest('.drop-snips.hide') && isActuallyVisible(link)
+        );
+        // Focus only: keep lesson activation and submenu expansion in their existing paths.
+        if (navState.zone === 'mainTargetDiv' && (
+            e.target === mainTargetDiv ||
+            (e.target.matches?.('.step-float') && isActuallyVisible(e.target))
+        )) {
+            return focusTarget(e, rememberedLink || sideBarBtn);
+        }
+        if (e.target === rememberedLink) return focusTarget(e, sideBarBtn, true);
         if (navState.zone === 'sideBar' && e.target !== sideBarBtn) return sideBarNav({ e, navState });
         if (e.target !== sideBarBtn) return focusTarget(e, sideBarBtn, true);
         setSidebarExpanded(true);
