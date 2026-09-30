@@ -42,7 +42,6 @@
     display: block;
     flex: none;
     z-index: 2;
-    left: 2%;
     cursor: pointer;
     background-color: inherit;
 }
@@ -69,6 +68,8 @@
     margin: 1rem 0 0;
     font-size: 1rem;
 }
+
+
 
 @media (max-width: 720px) {
 
