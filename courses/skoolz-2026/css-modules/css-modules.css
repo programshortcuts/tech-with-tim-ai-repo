@@ -1,7 +1,7 @@
 /* css-modules.css */
 @import url('step-txt-modules/step-txt-modules.css');
 @import url('components-modules/side-bar-modules.css');
-@import url('dark-mode-modules.css');
+/* @import url('dark-mode-modules.css'); */
 @import url('responsive-modules.css?v=transparent-header-1');
 /* UI */
 @import url('ui-modules/toggle-side-bar.css');
@@ -11,7 +11,7 @@
 
 @import url('utilities-modules/code-colors.css');
 @import url('utilities-modules/colors-modules.css');
-@import url('utilities-modules/borders-modules.css');
+/* @import url('utilities-modules/borders-modules.css'); */
 @import url('utilities-modules/position-modules.css');
 @import url('utilities-modules/sizing-modules.css');
 @import url('utilities-modules/spacing-modules.css');
