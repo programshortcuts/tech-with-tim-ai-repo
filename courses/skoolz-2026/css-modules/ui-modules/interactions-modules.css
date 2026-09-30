@@ -34,10 +34,10 @@ pre.copy-code {
     box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.7);
 }
 
-.step-img.enlarge > img,
-.step-img.first-vid-enlarge > img,
-.step-vid.enlarge > video,
-.step-vid.first-vid-enlarge > video {
+.step-img.enlarge>img,
+.step-img.first-vid-enlarge>img,
+.step-vid.enlarge>video,
+.step-vid.first-vid-enlarge>video {
     display: block;
     width: 100%;
     height: auto;
@@ -60,7 +60,7 @@ pre.copy-code {
     border-radius: 0;
 }
 
-.vid-cntrl-btns > button {
+.vid-cntrl-btns>button {
     flex: 1 1 0;
     display: flex;
     align-items: center;
@@ -72,7 +72,6 @@ pre.copy-code {
     color: white;
     background: transparent;
     border: none;
-    border-right: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 0;
     font-family: inherit;
     font-size: 1rem;
@@ -81,22 +80,22 @@ pre.copy-code {
     transition: background-color 0.12s ease, transform 0.08s ease;
 }
 
-.vid-cntrl-btns > button:last-child {
+.vid-cntrl-btns>button:last-child {
     border-right: 0;
 }
 
-.vid-cntrl-btns > button:hover {
+.vid-cntrl-btns>button:hover {
     background: rgba(255, 255, 255, 0.10);
 }
 
-.vid-cntrl-btns > button:focus-visible {
+.vid-cntrl-btns>button:focus-visible {
     outline: 2px solid white;
     outline-offset: -2px;
     background: rgba(255, 255, 255, 0.12);
 }
 
 /* Use the existing Tech-with-Tim playback/flash hooks for Mikey's feedback. */
-.vid-cntrl-btns > button.active {
+.vid-cntrl-btns>button.active {
     background: rgba(255, 255, 255, 0.32);
     transform: scale(0.97);
 }
@@ -105,7 +104,7 @@ pre.copy-code {
     background: rgba(255, 255, 255, 0.16);
 }
 
-.vid-cntrl-btns > button:active {
+.vid-cntrl-btns>button:active {
     background: rgba(255, 255, 255, 0.30);
 }
 
@@ -114,8 +113,8 @@ pre.copy-code {
     height: 44px;
 }
 
-.step-vid.enlarge .vid-cntrl-btns > button,
-.step-vid.first-vid-enlarge .vid-cntrl-btns > button {
+.step-vid.enlarge .vid-cntrl-btns>button,
+.step-vid.first-vid-enlarge .vid-cntrl-btns>button {
     font-size: 1.1rem;
 }
 
@@ -126,12 +125,12 @@ pre.copy-code {
         gap: 6px;
     }
 
-    .vid-cntrl-btns > button {
+    .vid-cntrl-btns>button {
         min-height: 28px;
         line-height: 1;
     }
 
-    .vid-cntrl-btns > .playbtn {
+    .vid-cntrl-btns>.playbtn {
         min-width: 38px;
     }
 }
@@ -143,8 +142,8 @@ pre.copy-code {
     overflow: auto;
 }
 
-.step-vid.enlarge > video,
-.step-vid.first-vid-enlarge > video {
+.step-vid.enlarge>video,
+.step-vid.first-vid-enlarge>video {
     max-height: min(72vh, calc(85dvh - 44px - 0.5rem)) !important;
 }
 

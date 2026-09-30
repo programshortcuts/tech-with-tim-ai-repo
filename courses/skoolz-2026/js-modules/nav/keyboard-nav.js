@@ -62,7 +62,7 @@ export function keyboardNav({ e }) {
             e.target === mainTargetDiv ||
             (e.target.matches?.('.step-float') && isActuallyVisible(e.target))
         )) {
-            return focusTarget(e, rememberedLink || sideBarBtn);
+            return focusTarget(e, rememberedLink || sideBarBtn, true);
         }
         if (e.target === rememberedLink) return focusTarget(e, sideBarBtn, true);
         if (navState.zone === 'sideBar' && e.target !== sideBarBtn) return sideBarNav({ e, navState });

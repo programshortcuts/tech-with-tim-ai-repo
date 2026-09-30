@@ -23,6 +23,5 @@
 @media (max-width: 720px) {
     .main-container.collapsed>.side-bar {
         width: 8vw !important;
-        min-width: 5% !important;
     }
 }
