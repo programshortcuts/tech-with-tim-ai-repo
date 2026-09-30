@@ -68,6 +68,13 @@
     --sidebar-width: 3rem;
 }
 
+.main-container.collapsed #sideBarBtn {
+    position: fixed;
+    bottom: 10%;
+    transform: scale(1.5);
+
+}
+
 .main-container.collapsed .side-bar-links-container {
     display: none;
 }

@@ -5,8 +5,7 @@
 
 .nav-lesson-title {
     position: absolute;
-    background-color: blue !important;
-    top: 0 !important;
+    background-color: blue top: 0
 }
 
 #targetDivInjected>header {
