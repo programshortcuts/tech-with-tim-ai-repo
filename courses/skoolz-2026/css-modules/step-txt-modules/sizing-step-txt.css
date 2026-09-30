@@ -1,18 +1,8 @@
 /* step-txt/step-txt.css */
-:root {
-    --code-height-max: 33vh;
-}
 
 .code-container {
+    width: fit-content;
     min-width: 250px;
-    width: 250px;
-    height: var(--code-height-max);
-    max-height: var(--code-height-max);
-}
-
-.code-container .copy-code {
-    height: 100%;
-    width: 100%;
 }
 
 .step-float {

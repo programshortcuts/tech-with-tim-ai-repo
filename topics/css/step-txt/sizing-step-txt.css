@@ -1,15 +1,13 @@
 /* step-txt/step-txt.css */
 
 .code-container {
-    /* width: fit-content; */
-    width: 100%;
-    min-width: 450px;
-    clear: both;
+    width: fit-content;
+    min-width: 250px;
 }
 
 .step-float {
     height: fit-content;
-    /* min-height: 220px; */
+    min-height: 220px;
 }
 
 .step-float>.step-img,
