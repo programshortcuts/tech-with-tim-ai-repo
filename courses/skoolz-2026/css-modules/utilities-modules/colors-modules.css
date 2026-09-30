@@ -3,6 +3,15 @@
     --bg-clr: grey;
 }
 
+.page-header a:visited {
+    color: white
+}
+
+
+.side-bar a:visited {
+    color: blue
+}
+
 body {
     background-color: var(--bg-clr);
 }
