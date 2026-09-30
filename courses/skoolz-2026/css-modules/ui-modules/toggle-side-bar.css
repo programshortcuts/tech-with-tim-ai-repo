@@ -25,4 +25,8 @@
         width: 8vw !important;
         border-right-color: transparent;
     }
+
+    .main-container.collapsed>#mainTargetDiv .steps-container>.step-float:not(:focus) {
+        border-left-color: transparent;
+    }
 }
