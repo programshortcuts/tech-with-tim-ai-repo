@@ -27,6 +27,12 @@
     float: none;
 }
 
+@media (min-width: 721px) {
+    .step-float .code-container {
+        min-width: 45%;
+    }
+}
+
 @media (max-width: 720px) {
     #mainTargetDiv {
         --lesson-gutter: 0.5rem;

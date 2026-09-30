@@ -20,6 +20,11 @@
     margin-left: 3%;
 }
 
+.side-bar-links ul>li>ul {
+
+    margin-left: 3%;
+}
+
 
 .main-container>.side-bar {
     grid-column: 1;
@@ -82,6 +87,11 @@
     .side-bar-links>li>ul>li>a>*,
     .side-bar-links>li>ul>li>a {
         font-size: 80% !important;
+    }
+
+    .side-bar-links>li>ul>li>ul>li>a>*,
+    .side-bar-links>li>ul>li>ul>li>a {
+        font-size: 88% !important;
     }
 
     .side-bar-links>li>ul>li>a {
