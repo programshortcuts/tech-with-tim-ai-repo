@@ -23,5 +23,6 @@
 @media (max-width: 720px) {
     .main-container.collapsed>.side-bar {
         width: 8vw !important;
+        border-right-color: transparent;
     }
 }
