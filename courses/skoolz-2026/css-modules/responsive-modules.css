@@ -19,8 +19,8 @@
 }
 
 /* Nested cards have less room than a full lesson, even on a wide screen. */
-.step-floats-container > .step-float > .step-img:not(.enlarge):not(.first-vid-enlarge),
-.step-floats-container > .step-float > .step-vid:not(.enlarge):not(.first-vid-enlarge) {
+.step-floats-container>.step-float>.step-img:not(.enlarge):not(.first-vid-enlarge),
+.step-floats-container>.step-float>.step-vid:not(.enlarge):not(.first-vid-enlarge) {
     width: 100%;
     max-width: 100%;
     margin: 0 0 0.75rem;
@@ -47,9 +47,6 @@
         flex-basis: 4rem;
     }
 
-    .side-bar-links {
-        font-size: 0.85rem;
-    }
 
     .no-float {
         flex-direction: column !important;
@@ -57,16 +54,16 @@
 
     .step-float>.step-img:not(.enlarge):not(.first-vid-enlarge),
     .step-float>.step-vid:not(.enlarge):not(.first-vid-enlarge),
-    .step-floats-container > .step-float > .step-img:not(.enlarge):not(.first-vid-enlarge),
-    .step-floats-container > .step-float > .step-vid:not(.enlarge):not(.first-vid-enlarge) {
+    .step-floats-container>.step-float>.step-img:not(.enlarge):not(.first-vid-enlarge),
+    .step-floats-container>.step-float>.step-vid:not(.enlarge):not(.first-vid-enlarge) {
         width: 100%;
         max-width: 18.75rem;
         margin: 0 0 0.75rem;
         float: none;
     }
 
-    .step-float > .step-vid:not(.enlarge):not(.first-vid-enlarge) > video,
-    .step-float > .step-img:not(.enlarge):not(.first-vid-enlarge) > img {
+    .step-float>.step-vid:not(.enlarge):not(.first-vid-enlarge)>video,
+    .step-float>.step-img:not(.enlarge):not(.first-vid-enlarge)>img {
         max-height: 15.625rem !important;
     }
 
@@ -74,7 +71,7 @@
         flex-direction: column;
     }
 
-    .step-floats-container > .step-float {
+    .step-floats-container>.step-float {
         flex-basis: auto;
     }
 }

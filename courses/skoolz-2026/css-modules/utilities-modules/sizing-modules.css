@@ -10,8 +10,6 @@
 main.main-container {
     min-height: 0;
     min-width: 0;
-    --sidebar-width: 120px;
-    --lesson-width: 80vw;
 }
 
 main.main-container.collapsed {
