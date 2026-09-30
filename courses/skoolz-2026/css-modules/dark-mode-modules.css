@@ -1,9 +1,5 @@
 /* Retain the Topics dark theme without loading shared topic styles. */
-:root {
-    color-scheme: light;
-    --module-focus-bg: rgba(101, 157, 152, 0.5);
-    --module-code-bg: rgb(135, 139, 140);
-}
+
 
 
 

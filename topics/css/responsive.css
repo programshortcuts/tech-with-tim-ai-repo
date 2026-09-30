@@ -16,8 +16,8 @@
     }
 
     .dark-mode .side-bar {
-        border-top: none !important;
-        border-top: 2px solid black !important;
+        /* border-top: none !important; */
+        /* border-top: 2px solid black !important; */
     }
 
     .collapsed #sideBarBtn {

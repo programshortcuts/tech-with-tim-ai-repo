@@ -1,4 +1,14 @@
 /* Sidebar feedback follows real focus or a pending Next/Previous injection. */
+:root {
+    color-scheme: light;
+    --module-focus-bg: rgba(101, 157, 152, 0.5);
+    --module-code-bg: rgb(135, 139, 140);
+}
+
+.dark-mode .step-float:focus {
+    background-color: rgb(34, 63, 73);
+}
+
 .side-bar-links a:focus,
 .side-bar-links a.lesson-button-injecting,
 .side-bar-links a.sideLinkChange,
@@ -35,9 +45,7 @@ button:focus-visible,
 }
 
 
-.dark-mode .step-float:focus {
-    background-color: rgb(34, 63, 73);
-}
+
 
 .step-float.step-clicked {
     box-shadow: 0 0 2px 2px rgb(55, 55, 123);

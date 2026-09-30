@@ -13,7 +13,7 @@
 }
 
 .no-float .step-img {
-    float: none !important;
+    float: none;
 }
 
 .step {
@@ -27,10 +27,11 @@
     overflow-wrap: normal;
 }
 
-.step-float::after {
-    /* content: ""; */
-    /* display: block; */
-    /* clear: both; */
+.step-float>.step-img:after,
+.step-float>.step-vid:after {
+    content: "";
+    display: block;
+    clear: both;
 }
 
 .step-float>.step-img,
