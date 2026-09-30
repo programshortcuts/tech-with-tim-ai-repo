@@ -8,8 +8,15 @@ body {
 }
 
 .page-header,
+.page-header-links,
 .nav-lesson-title {
-    background-color: rgba(0, 0, 0, 0);
+    background-color: var(--bg-clr);
+}
+
+.dark-mode .page-header,
+.dark-mode .page-header-links,
+.dark-mode .nav-lesson-title {
+    background-color: #201d1d;
 }
 
 .code-container>.copy-code {}
