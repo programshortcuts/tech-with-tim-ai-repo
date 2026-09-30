@@ -12,6 +12,8 @@ button {
 .page-header,
 .nav-lesson-title {
     flex: none;
+    /* Keep both shell rows above normal media layers (1–3). */
+    z-index: 4;
     pointer-events: none;
 }
 
@@ -22,8 +24,6 @@ button {
 }
 
 .page-header {
-    /* Above the overlapping lesson pane and normal media layers (1–3). */
-    z-index: 4;
     display: flex;
     align-items: flex-start;
     gap: 0.75rem;
@@ -69,15 +69,11 @@ main.main-container {
     min-width: 0;
     min-height: 0;
     width: min(100%, var(--lesson-width));
-    /* Start below the controls, then let lessons scroll behind them. */
-    margin-top: calc(-1 * var(--module-header-height, 0px));
     padding: var(--lesson-gutter, 1rem);
-    padding-top: calc(var(--module-header-height, 0px) + var(--lesson-gutter, 1rem));
     overflow: auto;
     overscroll-behavior: contain;
     overflow-wrap: anywhere;
     scroll-padding-block: 1rem;
-    scroll-padding-top: calc(var(--module-header-height, 0px) + 1rem);
 }
 
 /* Injected blocks follow the lesson pane's reference width. */

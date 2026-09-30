@@ -172,23 +172,6 @@ export async function injectFromHref(
         }
 
 
-        const title =
-            mainTargetDiv.querySelector(
-                '#lessonTitle'
-            );
-
-
-        if (
-            title &&
-            navLessonTitle
-        ) {
-            navLessonTitle
-                .querySelector('h1')
-                .textContent =
-                title.textContent.trim();
-        }
-
-
         mainTargetDiv.scrollTo(
             0,
             0
@@ -219,6 +202,12 @@ export async function injectFromHref(
                             link.href === url
                     );
 
+        const title = navLessonTitle?.querySelector(':scope > h1');
+        if (loadedLink && title) {
+            title.replaceChildren(
+                ...[...loadedLink.childNodes].map(node => node.cloneNode(true))
+            );
+        }
 
         /*
         Track lesson for navigation.

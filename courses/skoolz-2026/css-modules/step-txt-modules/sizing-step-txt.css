@@ -12,9 +12,9 @@
 
 .step-float>.step-img,
 .step-float>.step-vid {
-    /* Approach Mikey's 500px media width while leaving room for the text. */
-    width: min(31.25rem, max(45%, calc(100% - 18rem)));
-    max-width: 100%;
+    /* Leave text room when possible, and keep media visible in narrow cards. */
+    width: min(31.25rem, max(18.75rem, calc(100% - 19rem)));
+    max-width: calc(100% - 1rem);
 }
 
 .step-vid>video,

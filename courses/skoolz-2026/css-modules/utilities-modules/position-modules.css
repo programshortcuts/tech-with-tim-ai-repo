@@ -1,6 +1,11 @@
 /* Sticky lesson heading inside the injected lesson */
+.page-header {
+    border: 11px solid blue;
+}
+
 .nav-lesson-title {
-    position: top;
+    position: absolute;
+    background-color: blue !important;
     top: 0 !important;
 }
 
@@ -13,5 +18,5 @@
 
 #lessonTitle {
     margin: 0;
-    padding: 0.75rem 0;
+    /* padding: 0.75rem 0; */
 }

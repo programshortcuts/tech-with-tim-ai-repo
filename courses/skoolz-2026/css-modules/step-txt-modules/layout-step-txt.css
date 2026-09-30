@@ -23,6 +23,8 @@
 
 .step-float {
     display: block;
+    /* Move whole words below a float instead of splitting them into letters. */
+    overflow-wrap: normal;
 }
 
 .step-float::after {
@@ -43,6 +45,12 @@
 .step-float>.step-txt {
     display: block;
     overflow: visible;
+}
+
+.step-float .code-container {
+    /* Move the code box below media when its text cannot fit alongside it. */
+    display: flow-root;
+    min-width: min(100%, 18rem);
 }
 
 .step-float>.step-txt>p>a {

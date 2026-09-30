@@ -1,20 +1,23 @@
 /* components/page-header.css */
-.page-header{
+.page-header {
     background-color: inherit;
     position: sticky;
     top: 0%;
     height: 5vh;
     z-index: 9999;
 }
+
 .page-header-links {
     display: flex;
     /* height: 90%; */
     height: 100%;
 }
+
 .page-header-links a:active,
-.page-header-links a:focus{
+.page-header-links a:focus {
     color: black;
 }
+
 .page-header-links a {
     display: inline-flex;
     height: 100%;
@@ -24,6 +27,7 @@
     color: darkgray;
     border-top: none;
 }
+
 .tutorial-link-img-container {
     position: fixed;
     display: flex;

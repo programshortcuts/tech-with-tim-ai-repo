@@ -29,6 +29,9 @@ export function prepareContent(html, sourceURL) {
             el.setAttribute(name, new URL(path, base).href);
         });
     });
+    doc.querySelectorAll('#targetDivInjected > header').forEach(header => {
+        if (header.querySelector('#lessonTitle')) header.remove();
+    });
     const content = doc.querySelector('#targetDivInjected, #targetDiv') || doc.body;
     return [...content.childNodes];
 }
