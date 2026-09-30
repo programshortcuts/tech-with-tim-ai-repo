@@ -1052,6 +1052,8 @@ export function stepNav({
             e.target === step
         ) {
 
+            console.log()
+            // if (itemsIn(step)[0].tagName == 'A'){}
             itemsIn(step)[0]
                 ?.focus();
         }
