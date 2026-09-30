@@ -77,8 +77,13 @@
 
 @media (max-width: 720px) {
     .side-bar {
-        width: 150px;
-        min-width: 50px !important;
+        width: 22vw;
+    }
+
+    .main-container.collapsed>.side-bar {
+        /* border: none; */
+        width: 8vw !important;
+        min-width: 5% !important;
     }
 
     .side-bar li * {

@@ -1,0 +1,15 @@
+/* toggle-side-bar.css */
+
+.main-container.collapsed #sideBarBtn {
+    position: fixed;
+    bottom: 10%;
+    transform: scale(1.9);
+    left: 3%;
+    border: none;
+
+
+}
+
+.main-container.collapsed .side-bar-links-container {
+    display: none;
+}
