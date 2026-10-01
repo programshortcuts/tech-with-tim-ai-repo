@@ -34,7 +34,9 @@ button:focus-visible,
     /* background-color: rgb(34, 63, 73); */
     box-shadow: 0 0px 4px 4px rgb(34, 63, 73);
     box-shadow: 1px 1px 4px 4px rgb(135, 151, 156);
-    border: 2px solid blue;
+    border: 5px solid blue !important;
+    border-radius: 8px !important;
+    /* background-color: blue; */
 }
 
 .step-float:focus {

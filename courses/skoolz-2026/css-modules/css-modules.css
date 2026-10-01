@@ -6,7 +6,8 @@
 @import url('components-modules/side-bar-modules.css');
 
 /* UI */
-@import url('dark-mode-modules.css');
+@import url('ui-modules/copyCode.css');
+@import url('ui-modules/dark-mode-modules.css');
 @import url('ui-modules/toggle-side-bar.css');
 @import url('ui-modules/interactions-modules.css');
 /* Utilities */
