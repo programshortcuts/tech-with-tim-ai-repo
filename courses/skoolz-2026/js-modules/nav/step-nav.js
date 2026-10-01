@@ -38,6 +38,10 @@ const itemsIn = step =>
             ) || []
         )
     ];
+const getStepActivationFocusTarget = step =>
+    step?.querySelector('.copy-code') ||
+    step?.querySelector('a[href]') ||
+    null;
 const resetVideos = step =>
     step
         ?.querySelectorAll('video')
@@ -487,6 +491,9 @@ export function initStepNav() {
                 el: step,
                 smooth: true
             });
+            getStepActivationFocusTarget(step)?.focus({
+                preventScroll: true
+            });
         }
     );
     updateSteps();
@@ -720,9 +727,8 @@ export function stepNav({
         else if (
             e.target === step
         ) {
-            console.log()
             // if (itemsIn(step)[0].tagName == 'A'){}
-            itemsIn(step)[0]
+            getStepActivationFocusTarget(step)
                 ?.focus();
         }
         /* =================================================
