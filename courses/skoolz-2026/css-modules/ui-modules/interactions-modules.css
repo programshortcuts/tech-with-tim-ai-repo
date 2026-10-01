@@ -1,173 +1,165 @@
-/* Media and copy feedback follow the same hooks as the Topics scripts. */
-.step-img,
-.step-vid {
-    position: relative;
-    z-index: 1;
-}
-
-pre.copy-code {
-    position: relative;
-    z-index: 2;
-}
-
-.step-vid.is-playing {
-    z-index: 3;
-}
+/* interactions-modules.css */
+/* =========================================================
+   ENLARGED IMAGE / VIDEO
+   Page remains visible behind media
+   ========================================================= */
 
 .step-img.enlarge,
 .step-vid.enlarge,
 .step-img.first-vid-enlarge,
 .step-vid.first-vid-enlarge {
     position: fixed;
+
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
     z-index: 10;
-    width: min(90vw, 64rem);
-    max-width: 90vw;
+
+    width: min(94vw, 72rem);
+    max-width: 94vw;
+
     height: auto;
-    max-height: 85vh;
+    max-height: 92dvh;
+
     margin: 0;
+    padding: 0;
+
     float: none;
-    padding: 0.25rem;
-    background: #201d1d;
-    box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.7);
+
+    background: transparent;
+
+    box-shadow: none;
+
+    border: none;
+    border-radius: 0;
+
+    overflow: auto;
 }
+
+
+/* =========================================================
+   MEDIA INSIDE ENLARGED CONTAINER
+   ========================================================= */
 
 .step-img.enlarge>img,
 .step-img.first-vid-enlarge>img,
 .step-vid.enlarge>video,
 .step-vid.first-vid-enlarge>video {
     display: block;
+
     width: 100%;
+    max-width: 100%;
+
     height: auto;
-    max-height: 72vh !important;
+
+    max-height: 80dvh !important;
+
     object-fit: contain;
-}
 
-.vid-cntrl-btns {
-    position: static;
-    display: flex;
-    flex: none;
-    align-items: stretch;
-    width: 100%;
-    height: 40px;
-    margin: 0;
-    padding: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    background: #252525;
-    box-sizing: border-box;
-    border-radius: 0;
-}
-
-.vid-cntrl-btns>button {
-    flex: 1 1 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 0;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    color: white;
     background: transparent;
-    border: none;
-    border-radius: 0;
-    font-family: inherit;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.12s ease, transform 0.08s ease;
 }
 
-.vid-cntrl-btns>button:last-child {
-    border-right: 0;
-}
 
-.vid-cntrl-btns>button:hover {
-    background: rgba(255, 255, 255, 0.10);
-}
+/* =========================================================
+   SMALLER SCREENS
+   ========================================================= */
 
-.vid-cntrl-btns>button:focus-visible {
-    outline: 2px solid white;
-    outline-offset: -2px;
-    background: rgba(255, 255, 255, 0.12);
-}
-
-/* Use the existing Tech-with-Tim playback/flash hooks for Mikey's feedback. */
-.vid-cntrl-btns>button.active {
-    background: rgba(255, 255, 255, 0.32);
-    transform: scale(0.97);
-}
-
-.step-vid.is-playing .playbtn {
-    background: rgba(255, 255, 255, 0.16);
-}
-
-.vid-cntrl-btns>button:active {
-    background: rgba(255, 255, 255, 0.30);
-}
-
-.step-vid.enlarge .vid-cntrl-btns,
-.step-vid.first-vid-enlarge .vid-cntrl-btns {
-    height: 44px;
-}
-
-.step-vid.enlarge .vid-cntrl-btns>button,
-.step-vid.first-vid-enlarge .vid-cntrl-btns>button {
-    font-size: 1.1rem;
-}
-
-/* These narrow-screen rules survive Mikey's stylesheet import cascade. */
 @media (max-width: 960px) {
-    .vid-cntrl-btns {
-        justify-content: center;
-        gap: 6px;
+
+    .step-img.enlarge,
+    .step-vid.enlarge,
+    .step-img.first-vid-enlarge,
+    .step-vid.first-vid-enlarge {
+        width: 97vw;
+        max-width: 97vw;
+
+        max-height: 94dvh;
+
+        margin: 0;
+        padding: 0;
+
+        background: transparent;
+
+        box-shadow: none;
+
+        border: none;
+        border-radius: 0;
+
+        overflow: auto;
     }
 
-    .vid-cntrl-btns>button {
-        min-height: 28px;
-        line-height: 1;
+    .step-img.enlarge>img,
+    .step-img.first-vid-enlarge>img,
+    .step-vid.enlarge>video,
+    .step-vid.first-vid-enlarge>video {
+        width: 100%;
+        max-width: 100%;
+
+        height: auto;
+
+        max-height: 86dvh !important;
+
+        object-fit: contain;
+
+        background: transparent;
+    }
+}
+
+
+/* =========================================================
+   PHONE SIZE
+   ========================================================= */
+
+@media (max-width: 720px) {
+
+    .step-img.enlarge,
+    .step-vid.enlarge,
+    .step-img.first-vid-enlarge,
+    .step-vid.first-vid-enlarge {
+        width: 98vw;
+        max-width: 98vw;
+
+        max-height: 96dvh;
+
+        margin: 0;
+        padding: 0;
+
+        background: transparent;
+
+        box-shadow: none;
+
+        border: none;
+        border-radius: 0;
+
+        overflow: auto;
     }
 
-    .vid-cntrl-btns>.playbtn {
-        min-width: 38px;
+    .step-img.enlarge>img,
+    .step-img.first-vid-enlarge>img {
+        width: 100%;
+        max-width: 100%;
+
+        height: auto;
+
+        max-height: 91dvh !important;
+
+        object-fit: contain;
+
+        background: transparent;
     }
-}
 
-/* Keep the complete control row reachable in short landscape viewports. */
-.step-vid.enlarge,
-.step-vid.first-vid-enlarge {
-    max-height: 85dvh;
-    overflow: auto;
-}
+    .step-vid.enlarge>video,
+    .step-vid.first-vid-enlarge>video {
+        width: 100%;
+        max-width: 100%;
 
-.step-vid.enlarge>video,
-.step-vid.first-vid-enlarge>video {
-    max-height: min(72vh, calc(85dvh - 44px - 0.5rem)) !important;
-}
+        height: auto;
 
-.copied {
-    position: relative;
-    box-shadow: 0 0 3px 2px whitesmoke;
-    background-color: whitesmoke !important;
-    color: black !important;
-}
+        max-height: calc(94dvh - 48px) !important;
 
-#popElLetterNav,
-#popupLetterNav {
-    position: fixed;
-    bottom: 4rem;
-    left: 1rem;
-    z-index: 11;
-    opacity: 0;
-    pointer-events: none;
-    font: bold 1.5rem monospace;
-    color: limegreen;
-    text-shadow: 0 0 2px black;
-}
+        object-fit: contain;
 
-#popElLetterNav.animate,
-#popupLetterNav.animate {
-    opacity: 1;
+        background: transparent;
+    }
 }

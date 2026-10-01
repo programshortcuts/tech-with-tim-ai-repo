@@ -23,5 +23,6 @@ function initMain() {
     window.addEventListener('keydown', e => keyboardNav({ e }));
 }
 
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initMain, { once: true });
-else initMain();
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMain, { once: true });
+} else initMain();

@@ -9,6 +9,9 @@ function navigationLabel(element) {
     const source = element.matches('.step-float,.step')
         ? element.querySelector('h1, h2, h3, h4, h5, h6')
         : element;
+
+    console.log(source);
+
     return source?.textContent?.trim().toLowerCase() || '';
 }
 
@@ -25,7 +28,7 @@ export function letterNav({ e }) {
     if (!e.key || e.metaKey || e.ctrlKey || e.altKey || isTypingTarget(e.target)) return false;
     const key = e.key.toLowerCase();
     if (!/^[a-z0-9]$/.test(key)) return false;
-    const candidates = [...document.querySelectorAll('a[href], button, [tabindex], [data-nav-target], .step-float,.step')]
+    const candidates = [...document.querySelectorAll('a[href], button, [tabindex], [data-nav-target],.  step-float,.step, .side-bar a')]
         .filter(element => !element.disabled && isActuallyVisible(element));
     const matches = candidates.filter(element => navigationLabel(element).startsWith(key));
     if (!matches.length) return false;

@@ -50,3 +50,13 @@ button:focus-visible,
 .step-float.step-clicked {
     box-shadow: 0 0 2px 2px rgb(55, 55, 123);
 }
+
+.inject-content-btns-container button:active,
+.inject-content-btns-container button:focus {
+    background: whitesmoke !important;
+    color: black;
+}
+
+.inject-content-btns-container button:active {
+    border: 2px solid black;
+}
