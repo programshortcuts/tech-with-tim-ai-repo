@@ -1,4 +1,5 @@
 /* Sidebar classes represent focus; they must match the actual focus style. */
+
 :root {
     --bg-clr: grey;
 }
@@ -16,11 +17,14 @@ body {
     background-color: var(--bg-clr);
 }
 
-.page-header,
+.page-header
 .page-header-links,
 .nav-lesson-title {
-    background-color: var(--bg-clr);
+    /* background-color: var(--bg-clr); */
+    background-color: rgba(0, 0, 0, 0)!important;
+    background-color: blue ;
 }
+
 
 .dark-mode .page-header,
 .dark-mode .page-header-links,
