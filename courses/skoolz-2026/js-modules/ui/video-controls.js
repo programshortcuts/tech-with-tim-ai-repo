@@ -428,28 +428,67 @@ function bindVideoWrapper(wrapper) {
             );
         }
     );
+    /*
+Keep a pointer press on a control button from moving focus
+and triggering the step's focusout/reset behavior.
+The existing click handler still performs the button action.
+*/
+    wrapper.addEventListener('pointerdown', e => {
+        const button = e.target.closest('.vid-cntrl-btns button');
+
+        if (
+            !button ||
+            button.closest('.step-vid') !== wrapper ||
+            e.button !== 0
+        ) {
+            return;
+        }
+
+        e.preventDefault();
+    }, { passive: false });
 
 
     /* =====================================================
        PLAY
        ===================================================== */
 
-    video.addEventListener(
-        'play',
-        () => {
+    // video.addEventListener(
+    //     'play',
+    //     () => {
 
-            clearVideoEndState(video);
-            pauseOtherVideos(video);
+    //         clearVideoEndState(video);
+    //         pauseOtherVideos(video);
 
-            wrapper.classList.add(
-                'is-playing'
-            );
+    //         wrapper.classList.add(
+    //             'is-playing'
+    //         );
 
-            updatePlayButton(video);
-        }
-    );
+    //         updatePlayButton(video);
+    //     }
+    // );
 
+    /* =====================================================
+       PLAY — CENTER VIDEO WITHOUT MOVING FOCUS
+       ===================================================== */
 
+    video.addEventListener('play', () => {
+        clearVideoEndState(video);
+        pauseOtherVideos(video);
+
+        wrapper.classList.add('is-playing');
+
+        updatePlayButton(video);
+
+        requestAnimationFrame(() => {
+            if (!video.isConnected || video.paused) return;
+
+            video.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+                inline: 'nearest'
+            });
+        });
+    });
     /* =====================================================
        PAUSE
 
