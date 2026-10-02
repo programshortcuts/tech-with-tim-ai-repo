@@ -72,17 +72,13 @@
 
 
 @media (max-width: 720px) {
-
     .side-bar {
         width: 22vw;
     }
-
-
     .side-bar-links>h3,
     .side-bar-links>li>a {
         font-size: 82% !important;
     }
-
     .side-bar-links>li>a {
         margin-left: 3%;
     }
