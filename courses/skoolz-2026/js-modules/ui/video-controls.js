@@ -396,38 +396,6 @@ function bindVideoWrapper(wrapper) {
            enlarge/play or shrink/pause
        ===================================================== */
 
-    wrapper.addEventListener(
-        'click',
-        e => {
-
-            const button =
-                e.target.closest(
-                    '.vid-cntrl-btns button'
-                );
-
-            e.preventDefault();
-            e.stopPropagation();
-
-
-            if (button) {
-                handleControlButton(
-                    button,
-                    video
-                );
-
-                return;
-            }
-
-            // Controls occupy their own strip; its background is not the video.
-            if (e.target.closest('.vid-cntrl-btns')) return;
-
-            video.focus({ preventScroll: true });
-            toggleVideoSize(
-                wrapper,
-                video
-            );
-        }
-    );
     /*
 Keep a pointer press on a control button from moving focus
 and triggering the step's focusout/reset behavior.
@@ -446,7 +414,36 @@ The existing click handler still performs the button action.
 
         e.preventDefault();
     }, { passive: false });
+    wrapper.addEventListener('click', e => {
+        const button = e.target.closest('.vid-cntrl-btns button');
 
+        // Control buttons perform their action without changing size.
+        if (
+            button &&
+            button.closest('.step-vid') === wrapper
+        ) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            handleControlButton(button, video);
+            return;
+        }
+
+        // Tapping the control strip itself must not toggle size.
+        if (e.target.closest('.vid-cntrl-btns')) {
+            e.stopPropagation();
+            return;
+        }
+
+        // Only clicking the actual video toggles its size.
+        if (e.target !== video) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        video.focus({ preventScroll: true });
+        toggleVideoSize(wrapper, video);
+    });
 
     /* =====================================================
        PLAY
