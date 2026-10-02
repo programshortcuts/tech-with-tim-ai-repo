@@ -6,6 +6,41 @@ import {
 
 
 const CONTROL_FLASH_TIME = 180;
+const pendingEndSeeks = new WeakMap();
+
+function clearVideoEndState(video) {
+    const pendingSeek = pendingEndSeeks.get(video);
+    if (pendingSeek) {
+        video.removeEventListener('loadedmetadata', pendingSeek);
+        video.removeEventListener('durationchange', pendingSeek);
+        pendingEndSeeks.delete(video);
+    }
+    video.closest('.step-vid')?.classList.remove('video-paused-at-end');
+}
+
+function pauseAtVideoEnd(video) {
+    clearVideoEndState(video);
+    video.pause();
+
+    const seekToLastFrame = () => {
+        if (!Number.isFinite(video.duration) || video.duration <= 0) return false;
+
+        clearVideoEndState(video);
+        // Stay before the ended event, which normally restores the poster.
+        video.currentTime = Math.max(0, video.duration - 0.05);
+        video.pause();
+        video.closest('.step-vid')?.classList.add('video-paused-at-end');
+        return true;
+    };
+
+    if (seekToLastFrame()) return;
+
+    pendingEndSeeks.set(video, seekToLastFrame);
+    video.addEventListener('loadedmetadata', seekToLastFrame);
+    video.addEventListener('durationchange', seekToLastFrame);
+    // Lessons use preload="none", so request metadata without starting playback.
+    if (video.readyState === 0) video.load();
+}
 
 
 /* =========================================================
@@ -123,6 +158,7 @@ function pauseOtherVideos(currentVideo) {
 function playVideo(video) {
     if (!video) return;
 
+    clearVideoEndState(video);
     pauseOtherVideos(video);
 
     const playPromise = video.play();
@@ -161,6 +197,7 @@ function togglePlay(video) {
 export function resetVideoToPoster(video) {
     if (!video) return;
 
+    clearVideoEndState(video);
     video.pause();
 
     if (video.poster) {
@@ -184,6 +221,7 @@ export function resetVideoToPoster(video) {
 function seek(video, amount) {
     if (!video) return;
 
+    clearVideoEndState(video);
     const duration =
         Number.isFinite(video.duration)
             ? video.duration
@@ -400,6 +438,7 @@ function bindVideoWrapper(wrapper) {
         'play',
         () => {
 
+            clearVideoEndState(video);
             pauseOtherVideos(video);
 
             wrapper.classList.add(
@@ -445,9 +484,29 @@ function bindVideoWrapper(wrapper) {
             resetVideoToPoster(video);
         }
     );
+    // Clear the finished highlight if another control seeks away.
+    video.addEventListener('seeking', () => {
+        if (!wrapper.classList.contains('video-paused-at-end')) {
+            return;
+        }
 
+        const endTime = Math.max(0, video.duration - 0.05);
+
+        if (
+            !Number.isFinite(endTime) ||
+            Math.abs(video.currentTime - endTime) > 0.01
+        ) {
+            clearVideoEndState(video);
+        }
+    });
+
+    // Clear the visual state when the video is reloaded/reset.
+    video.addEventListener('emptied', () => {
+        wrapper.classList.remove('video-paused-at-end');
+    });
 
     updatePlayButton(video);
+
 }
 
 
@@ -503,6 +562,20 @@ function bindStepKeyboard(step) {
                 );
 
             if (!video) return;
+
+            if (e.shiftKey && e.key === 'ArrowLeft') {
+                e.preventDefault();
+                clearVideoEndState(video);
+                video.pause();
+                video.currentTime = 0;
+                return;
+            }
+
+            if (e.shiftKey && e.key === 'ArrowRight') {
+                e.preventDefault();
+                pauseAtVideoEnd(video);
+                return;
+            }
 
 
             /* =================================================
