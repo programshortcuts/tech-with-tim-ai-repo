@@ -8,7 +8,10 @@
     overflow-y: scroll;
     max-height: 20vh;
 }
-
+.step-float ul,
+.step-float ol{
+    width: 100%;
+}
 .code-container>.copy-code {
     width: 100%;
     height: 100%;
